@@ -1,0 +1,110 @@
+/* Importação das Fontes do Google */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+/* Reset Básico e Estilo Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #000000;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container Principal do Formulário */
+.form-container {
+    background-color: #121212; /* Um preto um pouco mais suave para o container */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #5B3A92;
+}
+
+/* Cabeçalho com Logo e Título */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Lora', serif;
+    color: #EB8046;
+    font-size: 2.2rem;
+}
+
+/* Grupo de Inputs (Label + Input) */
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #1f1f1f;
+    border: 1px solid #5B3A92;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efeito de Foco nos Inputs */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+    outline: none;
+    border-color: #EB8046;
+    box-shadow: 0 0 10px rgba(235, 128, 70, 0.3);
+}
+
+/* Placeholder dos Inputs */
+input::placeholder {
+    color: #888;
+}
+
+/* Botão de Envio */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #EB8046;
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #f09562;
+    transform: translateY(-2px);
+}
