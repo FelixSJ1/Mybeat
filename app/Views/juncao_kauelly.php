@@ -52,7 +52,7 @@
                     <li><a href="AdicaoDeDadosF.php">Adicionar Dados</a></li>
                     <li><a href="Listar_giovana.php">Listar Dados</a></li>
                     <li><a href="EditMyBeat.php">Editar Dados</a></li>
-                    <li><a href="music_removal.php">Excluir Dados</a></li>
+                    <li><a href="musicremoval.php">Excluir Dados</a></li>
                 </ul>
             </nav>
         </aside>
