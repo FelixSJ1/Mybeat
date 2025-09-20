@@ -133,7 +133,11 @@ html,body{
 
 /* buttons */
 .btn{
-  -webkit-appearance:none;
+  /* reset native appearance for buttons/inputs */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
   border:0;
   cursor:pointer;
   padding:8px 12px;
