@@ -10,7 +10,9 @@ if (!isset($message)) $message = '';
   <title>my_beat — Music Removal</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../../../public/css/musicremoval.css">
+
 </head>
 <body>
 
@@ -23,7 +25,7 @@ if (!isset($message)) $message = '';
           <div class="sub">Gerenciamento</div>
         </div>
       </div>
-      
+
     </header>
 
     <?php if (!empty($message)): ?>
