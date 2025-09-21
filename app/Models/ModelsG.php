@@ -51,31 +51,31 @@ class Musica {
     }
 
     public function getAll($q = '') {
-        if ($q !== '') {
-            $sql = "SELECT m.id_musica, m.titulo AS titulo_musica,
-                           a.titulo AS titulo_album, a.id_album, a.capa_album_url,
-                           ar.nome AS artista, m.duracao_segundos, m.numero_faixa
-                    FROM Musicas m
-                    JOIN Albuns a   ON m.id_album = a.id_album
-                    JOIN Artistas ar ON m.id_artista = ar.id_artista
-                    WHERE m.titulo LIKE ? OR ar.nome LIKE ? OR a.titulo LIKE ?
-                    ORDER BY m.titulo ASC";
-            $stmt = $this->conn->prepare($sql);
-            $like = "%{$q}%";
-            $stmt->bind_param('sss', $like, $like, $like);
-            $stmt->execute();
-            return $stmt->get_result();
-        } else {
-            $sql = "SELECT m.id_musica, m.titulo AS titulo_musica,
-                           a.titulo AS titulo_album, a.id_album, a.capa_album_url,
-                           ar.nome AS artista, m.duracao_segundos, m.numero_faixa
-                    FROM Musicas m
-                    JOIN Albuns a   ON m.id_album = a.id_album
-                    JOIN Artistas ar ON m.id_artista = ar.id_artista
-                    ORDER BY m.titulo ASC";
-            return $this->conn->query($sql);
-        }
+    if ($q !== '') {
+        $sql = "SELECT m.id_musica, m.titulo AS titulo_musica,
+                       a.titulo AS titulo_album, a.id_album, a.capa_album_url,
+                       ar.nome AS artista, m.duracao_segundos, m.numero_faixa
+                FROM Musicas m
+                JOIN Albuns a   ON m.id_album = a.id_album
+                JOIN Artistas ar ON m.id_artista = ar.id_artista
+                WHERE m.titulo LIKE ? OR ar.nome LIKE ? OR a.titulo LIKE ?
+                ORDER BY a.id_album ASC, m.numero_faixa ASC";
+        $stmt = $this->conn->prepare($sql);
+        $like = "%{$q}%";
+        $stmt->bind_param('sss', $like, $like, $like);
+        $stmt->execute();
+        return $stmt->get_result();
+    } else {
+        $sql = "SELECT m.id_musica, m.titulo AS titulo_musica,
+                       a.titulo AS titulo_album, a.id_album, a.capa_album_url,
+                       ar.nome AS artista, m.duracao_segundos, m.numero_faixa
+                FROM Musicas m
+                JOIN Albuns a   ON m.id_album = a.id_album
+                JOIN Artistas ar ON m.id_artista = ar.id_artista
+                ORDER BY a.id_album ASC, m.numero_faixa ASC";
+        return $this->conn->query($sql);
     }
+}
 
     public function getById($id) {
     $stmt = $this->conn->prepare("SELECT m.*, 
