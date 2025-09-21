@@ -4,7 +4,18 @@ define('BASE_URL', 'http://localhost/Mybeat');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+include("../config/conector.php");
+include("../Controllers/ControllerF.php");
+
+$controller = new ControllerF($conn);
+$msgs = $controller->processarRequisicao();
+
+$msg_artista = $msgs['artista'];
+$msg_album   = $msgs['album'];
+$msg_musica  = $msgs['musica'];
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,156 +24,58 @@ error_reporting(E_ALL);
     <title>Adicionar Conteúdo - myBeat</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --primary-color: #5B3A92;
-            --secondary-color: #EB8046;
-            --text-light: #FFFFFF;
-            --background-dark: #000000;
-            --form-background: #1a1a1a;
-            --input-background: #333333;
-            --border-color: #444444;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-        header {
-            background-color: var(--primary-color);
-            padding: 15px 0;
-            border-bottom: 2px solid var(--secondary-color);
-            text-align: center;
-        }
-
-        header .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .logo { height: 50px; width: auto; }
-        .page-title {
-            font-family: 'Lora', serif;
-            font-size: 2.5em;
-            color: var(--text-light);
-            margin: 0;
-        }
-
-        .form-section {
-            background-color: var(--form-background);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            margin-top: 40px;
-        }
-        
-        .form-title {
-            font-family: 'Lora', serif;
-            color: var(--secondary-color);
-            margin-top: 0;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        input[type="url"],
-        select {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background-color: var(--input-background);
-            color: var(--text-light);
-            font-size: 1em;
-            font-family: 'Open Sans', sans-serif;
-            transition: border-color 0.3s ease;
-        }
-        
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-        }
-
-        input:focus, select:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-        }
-
-        .btn-submit {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--secondary-color);
-            color: var(--text-light);
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .btn-submit:hover {
-            background-color: #d16e3c;
-            transform: translateY(-2px);
-        }
-
-        footer {
-            background-color: var(--primary-color);
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 2px solid var(--secondary-color);
-        }
-
-        footer p { margin: 0; font-size: 0.9em; }
-    </style>
+    <link rel="stylesheet" href="../../public/css/styleF.css">
 </head>
 <body>
     <header>
         <div class="container">
-           
             <h1 class="page-title">Adicionar Conteúdo</h1>
         </div>
     </header>
 
     <main class="container">
 
+        <!-- Formulário de Artistas -->
+        <section class="form-section">
+            <h2 class="form-title">Adicionar Novo Artista</h2>
+            <?php if($msg_artista) echo "<p class='alert'>$msg_artista</p>"; ?>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="nome_artista">Nome do Artista:</label>
+                    <input type="text" id="nome_artista" name="nome_artista" required>
+                </div>
+                <div class="form-group">
+                    <label for="biografia_artista">Biografia:</label>
+                    <textarea id="biografia_artista" name="biografia_artista" rows="5" style="width:100%; padding:12px; border:1px solid var(--border-color); border-radius:5px; background-color:var(--input-background); color:var(--text-light); font-family:'Open Sans', sans-serif;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="foto_artista_url">URL da Foto do Artista:</label>
+                    <input type="url" id="foto_artista_url" name="foto_artista_url" placeholder="https://exemplo.com/foto.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="ano_inicio_atividade">Ano de Início da Atividade:</label>
+                    <input type="number" id="ano_inicio_atividade" name="ano_inicio_atividade" min="1900" max="2099" step="1" placeholder="Ex: 2010">
+                </div>
+                <div class="form-group">
+                    <label for="pais_origem">País de Origem:</label>
+                    <input type="text" id="pais_origem" name="pais_origem" placeholder="Ex: Brasil">
+                </div>
+                <button type="submit" class="btn-submit">Adicionar Artista</button>
+            </form>
+        </section>
+
+        <!-- Formulário de Álbuns -->
         <section class="form-section">
             <h2 class="form-title">Adicionar Novo Álbum</h2>
+            <?php if($msg_album) echo "<p class='alert'>$msg_album</p>"; ?>
             <form action="#" method="POST">
                 <div class="form-group">
                     <label for="titulo_album">Título do Álbum:</label>
                     <input type="text" id="titulo_album" name="titulo_album" required>
                 </div>
                 <div class="form-group">
-                    <label for="id_artista_album">Artista:</label>
-                    <select id="id_artista_album" name="id_artista_album" required>
-                        <option value="">Selecione um Artista</option>
-                        <option value="1">Artista Exemplo 1</option>
-                        <option value="2">Artista Exemplo 2</option>
-                    </select>
+                    <label for="busca_artista">Artista(s) dos Albuns:</label>
+                    <input type="text" id="busca_artista" name="busca_artista" placeholder="Digite o nome do artista" required>
                 </div>
                 <div class="form-group">
                     <label for="data_lancamento">Data de Lançamento:</label>
@@ -189,9 +102,10 @@ error_reporting(E_ALL);
             </form>
         </section>
 
-
+        <!-- Formulário de Músicas -->
         <section class="form-section">
             <h2 class="form-title">Adicionar Nova Música</h2>
+            <?php if($msg_musica) echo "<p class='alert'>$msg_musica</p>"; ?>
             <form action="#" method="POST">
                 <div class="form-group">
                     <label for="titulo_musica">Título da Música:</label>
@@ -199,20 +113,11 @@ error_reporting(E_ALL);
                 </div>
                 <div class="form-group">
                     <label for="id_album_musica">Álbum:</label>
-                    <select id="id_album_musica" name="id_album_musica" required>
-                        <option value="">Selecione o Álbum</option>
-                        <option value="single">É single!</option>
-                        <option value="1">Álbum Exemplo 1</option>
-                        <option value="2">Álbum Exemplo 2</option>
-                    </select>
+                    <input type="text" id="id_album_musica" name="album_musica" required>
                 </div>
-                 <div class="form-group">
-                    <label for="id_artista_musica">Artista da Música:</label>
-                    <select id="id_artista_musica" name="id_artista_musica" required>
-                        <option value="">Selecione o Artista</option>
-                        <option value="1">Artista Exemplo 1</option>
-                        <option value="2">Artista Exemplo 2</option>
-                    </select>
+                <div class="form-group">
+                    <label for="busca_artista_musica">Artista da Música:</label>
+                    <input type="text" id="busca_artista_musica" name="busca_artista_musica" placeholder="Digite o nome do artista" required>
                 </div>
                 <div class="form-group">
                     <label for="duracao_segundos">Duração (em segundos):</label>
