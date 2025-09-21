@@ -6,95 +6,14 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include("../config/conector.php");
+include("../Controllers/ControllerF.php");
 
-// Inicializa variáveis de mensagens
-$msg_artista = '';
-$msg_album = '';
-$msg_musica = '';
+$controller = new ControllerF($conn);
+$msgs = $controller->processarRequisicao();
 
-// Inserção de artista
-if(isset($_POST['nome_artista']) && !empty($_POST['nome_artista'])){
-    $nome_artista = $_POST['nome_artista'];
-    $biografia = $_POST['biografia_artista'] ?? '';
-    $foto_url = $_POST['foto_artista_url'] ?? '';
-    $ano_inicio = $_POST['ano_inicio_atividade'] ?? null;
-    $pais_origem = $_POST['pais_origem'] ?? '';
-
-    $sql = "INSERT INTO Artistas (nome, biografia, foto_artista_url, ano_inicio_atividade, pais_origem)
-            VALUES ('$nome_artista', '$biografia', '$foto_url', ".($ano_inicio ? $ano_inicio : "NULL").", '$pais_origem')";
-
-    if(mysqli_query($conn, $sql)){
-        $msg_artista = "Artista adicionado com sucesso!";
-    } else {
-        $msg_artista = "Erro ao adicionar artista.";
-    }
-}
-
-// Inserção de álbum
-if(isset($_POST['titulo_album']) && !empty($_POST['titulo_album'])){
-    $titulo_do_album = $_POST['titulo_album'];
-    $nome_artista_album = $_POST['busca_artista'];
-
-    $result = mysqli_query($conn, "SELECT id_artista FROM Artistas WHERE nome = '$nome_artista_album' LIMIT 1");
-    $row = mysqli_fetch_assoc($result);
-    $id_artista = $row['id_artista'] ?? null;
-    $data_lancamento = $_POST['data_lancamento'];
-    $url_da_capa = $_POST['capa_album_url'];
-    $genero_album = $_POST['genero'];
-    $tipo_album = $_POST['tipo'];
-
-    if($id_artista) {
-        $sql = "INSERT INTO Albuns (titulo, id_artista, data_lancamento,capa_album_url,genero,tipo) 
-                VALUES ('$titulo_do_album', '$id_artista', '$data_lancamento','$url_da_capa','$genero_album','$tipo_album')";
-        if(mysqli_query($conn, $sql)){
-            $msg_album = "Álbum adicionado com sucesso!";
-        } else {
-            $msg_album = "Erro ao adicionar álbum.";
-        }
-    } else {
-        $msg_album = "Artista não encontrado!";
-    }
-}
-
-// Inserção de música
-if(isset($_POST['titulo_musica']) && !empty($_POST['titulo_musica'])){
-    $titulo_da_musica = $_POST['titulo_musica'];
-    $nome_album = $_POST['album_musica']; // Nome digitado no formulário
-    $nome_artista_da_musica = $_POST['busca_artista_musica'];
-    $duracao = $_POST['duracao_segundos'];
-    $numero_da_faixa = $_POST['numero_faixa'];
-
-    // Busca pelo artista
-    $result_artista = mysqli_query($conn, "SELECT id_artista FROM Artistas WHERE nome = '$nome_artista_da_musica' LIMIT 1");
-    $row_artista = mysqli_fetch_assoc($result_artista);
-    $id_artista_da_musica = $row_artista['id_artista'] ?? null;
-
-    // Busca pelo álbum
-    $id_album = null;
-    if(strtolower(trim($nome_album)) !== 'single') {
-        $result_album = mysqli_query($conn, "SELECT id_album FROM Albuns WHERE titulo = '$nome_album' LIMIT 1");
-        $row_album = mysqli_fetch_assoc($result_album);
-        $id_album = $row_album['id_album'] ?? null;
-    }
-
-    // Validação antes de inserir
-    if(!$id_artista_da_musica){
-        $msg_musica = "Artista não encontrado!";
-    } elseif(strtolower(trim($nome_album)) !== 'single' && !$id_album){
-        $msg_musica = "Álbum não encontrado!";
-    } else {
-        $id_album_inserir = strtolower(trim($nome_album)) === 'single' ? null : $id_album;
-
-        $sql = "INSERT INTO Musicas (titulo, id_album, id_artista, duracao_segundos, numero_faixa) 
-                VALUES ('$titulo_da_musica', ".($id_album_inserir ? $id_album_inserir : "NULL").", '$id_artista_da_musica', '$duracao', '$numero_da_faixa')";
-        
-        if(mysqli_query($conn,$sql)){
-            $msg_musica = "Música adicionada com sucesso!";
-        } else {
-            $msg_musica = "Erro ao adicionar música.";
-        }
-    }
-}
+$msg_artista = $msgs['artista'];
+$msg_album   = $msgs['album'];
+$msg_musica  = $msgs['musica'];
 ?>
 
 <!DOCTYPE html>
