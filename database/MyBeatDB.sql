@@ -58,4 +58,4 @@ CREATE TABLE Avaliacoes (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_album) REFERENCES Albuns(id_album),
     UNIQUE KEY `review_unica_por_usuario_album` (id_usuario, id_album)
-);
+);      
