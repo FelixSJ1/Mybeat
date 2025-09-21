@@ -8,6 +8,8 @@ error_reporting(E_ALL);
 include("../config/conector.php");
 include("../Controllers/ControllerF.php");
 
+
+
 $controller = new ControllerF($conn);
 $msgs = $controller->processarRequisicao();
 
@@ -133,11 +135,6 @@ $msg_musica  = $msgs['musica'];
 
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; <?php echo date("Y"); ?> myBeat. Todos os direitos reservados.</p>
-        </div>
-    </footer>
 
 </body>
 </html>
