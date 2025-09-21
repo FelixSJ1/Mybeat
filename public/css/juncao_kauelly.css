@@ -1,0 +1,150 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* cabeçalho */
+.admin-header {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    gap: 20px;
+    background-color: #000;
+    border-bottom: 2px solid #A64AC9;
+}
+
+.admin-header .logo {
+    border: 2px solid #A64AC9;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.user-profile {
+    width: 40px;
+    height: 40px;
+    background-color: #EB8046;
+    border-radius: 50%;
+    border: 2px solid #A64AC9;
+    cursor: pointer;
+    margin-left: auto; 
+}
+
+.main-container {
+    display: flex;
+}
+
+/* menu lateral */
+.admin-menu {
+    width: 280px;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+    padding: 30px;
+    border-right: 2px solid #A64AC9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.menu-title {
+    font-size: 2.0rem;
+    font-weight: bold;
+    text-align: center;
+    color: #EB8046;
+}
+
+.menu-navigation {
+    width: 100%;
+}
+
+.menu-navigation ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-navigation a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: 2px solid #A64AC9;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 200px;
+}
+
+.menu-navigation a:hover {
+    background-color: #EB8046;
+    color: #000;
+    border-color: #EB8046;
+    cursor: pointer;
+}
+
+/* janela pop-up */
+.popup-overlay-css {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.popup-overlay-css:target,
+#add-data-popup:target,
+#list-data-popup:target,
+#edit-data-popup:target,
+#delete-data-popup:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup-content-css {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #A64AC9;
+    width: 400px;
+    position: relative;
+    border: 2px solid #A64AC9;
+    text-align: center;
+}
+
+.close-btn-css {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-content-css h3 {
+    color: #A64AC9;
+    margin-bottom: 20px;
+}
+
+.content-area {
+    flex: 1;
+    padding: 30px;
+}
