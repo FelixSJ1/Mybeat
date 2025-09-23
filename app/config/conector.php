@@ -5,7 +5,7 @@ $db_server = "localhost";
 $db_user = "root";
 $db_pass = "";
 $db_name = "MyBeatDB";
-$db_port = 3307;
+$db_port = "";
 
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
