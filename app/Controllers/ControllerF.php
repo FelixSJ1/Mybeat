@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../config/conexao.php";
 require_once __DIR__ . "/../Models/ModelF.php";
 
 class ControllerF {
