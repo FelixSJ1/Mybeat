@@ -7,7 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="../../public/css/juncao_kauelly.css">
+    <link rel="stylesheet" href="/Mybeat/public/css/juncao_kauelly.css">
 
     <style>
         :root {
@@ -48,11 +48,11 @@
         <aside class="admin-menu">
             <h2 class="menu-title">Gerenciar Dados</h2>
             <nav class="menu-navigation">
-                <ul>
-                    <li><a href="AdicaoDeDadosF.php">Adicionar Dados</a></li>
-                    <li><a href="Listar_giovana.php">Listar Dados</a></li>
-                    <li><a href="EditMyBeatViews.php">Editar Dados</a></li>
-                    <li><a href="musicremoval.php">Excluir Dados</a></li>
+                 <ul>
+                    <li><a href="index.php?page=adicionar">Adicionar Dados</a></li>
+                    <li><a href="index.php?page=listar">Listar Dados</a></li>
+                    <li><a href="index.php?page=editar">Editar Dados</a></li>
+                    <li><a href="index.php?page=excluir">Excluir Dados</a></li>
                 </ul>
             </nav>
         </aside>
