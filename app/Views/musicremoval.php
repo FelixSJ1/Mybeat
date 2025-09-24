@@ -69,14 +69,14 @@ $message = isset($_GET['msg']) ? trim($_GET['msg']) : '';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MyBeat — Remoção</title>
-  <link rel="stylesheet" href="../../public/css/musicremoval.css">
+  <link rel="stylesheet" href="/MyBeat/public/css/musicremoval.css">
 </head>
 <body>
   <main class="page-main">
     <header class="site-header">
       <div class="brand">
         <!-- logo: se o nome do arquivo for diferente no seu projeto, ajuste apenas o src -->
-        <img src="../../public/images/LogoF.png" alt="MyBeat" class="logo" />
+        <img src="/MyBeat/public/images/LogoF.png" alt="MyBeat" class="logo" />
         <div class="brand-texts">
           <h1 class="site-title">MyBeat</h1>
           <div class="site-sub">Remoção — Gerencie Artistas, Álbuns e Músicas</div>
