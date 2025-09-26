@@ -29,12 +29,12 @@ if ($controller === 'home' && $action === 'index') {
         <meta charset="UTF-8">
         <title>MyBeat - Início</title>
         <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/MyBeat/public/css/PaginaListarGiovana.css">
+        <link rel="stylesheet" href="../../public/css/PaginaListarGiovana.css">
     </head>
     <body>
     <header>
         <div class="logo">
-            <a href="/MyBeat/public/"><img src="/MyBeat/public/images/LogoF.png" alt="Logo MyBeat"></a>
+            <a href="listar_giovana.php"><img src="../../public/images/LogoF.png" alt="Logo MyBeat"></a>
         </div>
         <div class="search-bar">
             <form method="GET" action="listar_giovana.php">

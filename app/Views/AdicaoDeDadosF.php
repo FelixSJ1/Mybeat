@@ -5,8 +5,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once ROOT_PATH . 'app' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'conector.php';
-require_once ROOT_PATH . 'app' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'ControllerF.php';
+include("../config/conector.php");
+include("../Controllers/ControllerF.php");
 
 
 
@@ -26,7 +26,7 @@ $msg_musica  = $msgs['musica'];
     <title>Adicionar Conteúdo - myBeat</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/MyBeat/public/css/styleF.css">
+    <link rel="stylesheet" href="../../public/css/styleF.css">
 </head>
 <body>
     <header>

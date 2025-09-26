@@ -51,9 +51,9 @@ $data = $controller->handleRequest($action, $type, $id);
     <?php endif; ?>
 
     <p>
-       <a href="?page=editar&action=list&type=artistas">Artistas</a> |
-       <a href="?page=editar&action=list&type=albuns">Álbuns</a> |
-       <a href="?page=editar&action=list&type=musicas">Músicas</a>
+        <a href="?action=list&type=artistas">Artistas</a> |
+        <a href="?action=list&type=albuns">Álbuns</a> |
+        <a href="?action=list&type=musicas">Músicas</a>
     </p>
 
     <hr>
