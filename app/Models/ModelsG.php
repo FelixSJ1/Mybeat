@@ -1,10 +1,15 @@
 <?php
-require_once __DIR__ . '/../config/conexao.php';
+
+require_once __DIR__ . '/../config/conector.php';
+
+
 
 class Album {
     private $conn;
     public function __construct($conn = null) {
-        $this->conn = $conn ?: Database::getInstance()->getConnection();
+
+        $this->conn = $conn;
+
     }
 
     public function getAll($q = '') {

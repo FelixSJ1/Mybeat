@@ -1,5 +1,7 @@
 <?php
-require_once __DIR__ . "/../config/conexao.php";
+
+require_once __DIR__ . "/../config/conector.php";
+
 require_once __DIR__ . '/../models/ModelsG.php';
 
 class HomeController {

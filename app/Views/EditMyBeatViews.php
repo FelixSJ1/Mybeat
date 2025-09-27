@@ -5,10 +5,11 @@ declare(strict_types=1);
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../config/databaseAA.php';
+require_once __DIR__ . '/../config/conector.php';
 require_once __DIR__ . '/../Controllers/EditMyBeatControllers.php';
 
-$controller = new EditMyBeatControllers($pdo);
+$controller = new EditMyBeatControllers($conn);
+
 
 $action = $_GET['action'] ?? 'home';
 $type = $_GET['type'] ?? null;
@@ -73,6 +74,7 @@ $data = $controller->handleRequest($action, $type, $id);
         <?php endif; ?>
 
 
+
     <?php elseif ($action === 'list' && $type === 'albuns'): ?>
         <h1>Lista de Álbuns</h1>
         <?php if (!empty($data['albuns'])): ?>
@@ -86,8 +88,7 @@ $data = $controller->handleRequest($action, $type, $id);
         <?php else: ?>
             <p class="small">Nenhum álbum encontrado.</p>
         <?php endif; ?>
-
-
+  
     <?php elseif ($action === 'list' && $type === 'musicas'): ?>
         <h1>Lista de Músicas</h1>
         <?php if (!empty($data['musicas'])): ?>
