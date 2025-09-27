@@ -14,7 +14,7 @@ class Music_Removal_Model {
     private function getConnection() {
         if ($this->pdo) return $this->pdo;
 
-        $host = getenv('DB_HOST') ?: '127.0.0.1';
+        $host = getenv('DB_HOST') ?: '127.0.0.1:3307';
         $db   = getenv('DB_NAME') ?: 'MyBeatDB';
         $user = getenv('DB_USER') ?: 'root';
         $pass = getenv('DB_PASS') ?: '';

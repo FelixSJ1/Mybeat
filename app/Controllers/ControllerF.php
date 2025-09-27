@@ -1,4 +1,8 @@
 <?php
+<<<<<<< Updated upstream
+=======
+require_once __DIR__ . "/../config/conector.php";
+>>>>>>> Stashed changes
 require_once __DIR__ . "/../Models/ModelF.php";
 
 class ControllerF {
