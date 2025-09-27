@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 class EditMyBeatModels {
+
     private mysqli $conn;
 
     public function __construct(mysqli $conn) {
@@ -103,3 +104,4 @@ class EditMyBeatModels {
     }
 }
 ?>
+
