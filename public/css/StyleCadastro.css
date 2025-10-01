@@ -1,0 +1,224 @@
+/* style.css - VERSÃO ESTÁTICA */
+
+/* --- Configurações Gerais e Fundo --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Efeito de brilho ESTÁTICO no fundo */
+.background-glow::before,
+.background-glow::after {
+    content: '';
+    position: absolute;
+    filter: blur(150px);
+    opacity: 0.4;
+    border-radius: 50%;
+}
+
+.background-glow::before {
+    background: #ff8c00; /* Laranja */
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    left: -10%;
+}
+
+.background-glow::after {
+    background: #8a2be2; /* Roxo */
+    width: 350px;
+    height: 350px;
+    bottom: -15%;
+    right: -15%;
+}
+
+/* --- Container Principal --- */
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+/* --- Caixa do Formulário (Efeito Vidro) --- */
+.form-box {
+    width: 400px;
+    padding: 40px;
+    background: rgba(25, 25, 25, 0.6);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    text-align: center;
+}
+
+/* --- Logo e Título --- */
+.logo {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.logo span {
+    color: #ff8c00;
+}
+
+.form-box h2 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #cccccc;
+}
+
+/* --- Campos de Input --- */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: transparent;
+    border: 1.5px solid #555;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+    background-color: #212121;
+    padding: 0 5px;
+}
+
+.input-group input:focus,
+.input-group input:valid {
+    border-color: #8a2be2;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+    top: 0;
+    font-size: 12px;
+    color: #8a2be2;
+}
+
+.input-group:nth-child(1) input:focus,
+.input-group:nth-child(1) input:valid {
+    border-color: #ff8c00;
+}
+.input-group:nth-child(1) input:focus + label,
+.input-group:nth-child(1) input:valid + label {
+    color: #ff8c00;
+}
+
+/* --- Checkbox de Termos --- */
+.terms-group {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.terms-group input[type="checkbox"] {
+    margin-right: 10px;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+.terms-group input[type="checkbox"]:checked {
+    background-color: #8a2be2;
+    border-color: #8a2be2;
+}
+
+.terms-group input[type="checkbox"]:checked::before {
+    content: '\2713';
+    display: block;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    line-height: 15px;
+}
+
+.terms-group a {
+    color: #ff8c00;
+    text-decoration: none;
+}
+
+.terms-group a:hover {
+    text-decoration: underline;
+}
+
+/* --- Botão de Cadastrar --- */
+.btn-register {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #ff8c00, #8a2be2);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.btn-register:hover {
+    /* Efeito de hover sutil, apenas escurecendo um pouco o gradiente */
+    background: linear-gradient(45deg, #e67e00, #7b24cb);
+}
+
+
+/* --- Links e Login Social --- */
+.login-link p, .login-link a {
+    color: #aaa;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.login-link a {
+    color: #ff8c00;
+    font-weight: 600;
+}
+
+.social-login {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icon {
+    color: #aaa;
+    font-size: 20px;
+}
+
+.social-icon:hover {
+    color: #fff;
+}
