@@ -2,10 +2,14 @@
 declare(strict_types=1);
 
 
+
+require_once __DIR__ . '/../../config/databaseAA.php';
+=======
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../config/conector.php';
+
 require_once __DIR__ . '/../Controllers/EditMyBeatControllers.php';
 
 $controller = new EditMyBeatControllers($conn);
@@ -17,7 +21,6 @@ $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
 $data = $controller->handleRequest($action, $type, $id);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -25,20 +28,10 @@ $data = $controller->handleRequest($action, $type, $id);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyBeat</title>
-    <style>
-        body { background: #000; color: #fff; font-family: "Open Sans", sans-serif; padding: 20px; }
-        h1 { font-family: "Lora", serif; color: #eb8046; margin-bottom: 12px; }
-        .card { background: #111; border: 1px solid #2a2a2a; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
-        label { color: #eb8046; font-family: "Lora"; font-weight: bold; display:block; margin-top:8px; }
-        textarea { width:100%; min-height:110px; background:#000; color:#fff; border-radius:10px; border:3px solid #eb8046; padding:8px; }
-        input[type="text"], input[type="number"], select { width:100%; padding:8px; border-radius:8px; border:1px solid #eb8046; background:#5b3a92; color:#eb8046; }
-        .btn { background:#eb8046; color:#000; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; margin-top:8px; }
-        .small { font-size:0.9rem; color:#ccc; }
-        a { color:#eb8046; text-decoration:none; }
-        .user-icon { position: fixed; top: 20px; right: 20px; width: 36px; height: 36px; 
-        border-radius: 50%; background-color: #eb8046; color: #000; font-size: 18px; 
-        font-weight: bold; display: flex; align-items: center; justify-content: center; }
-    </style>
+
+    <link rel="stylesheet" href="../../public/css/EditMyBeatStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <div class="user-icon">U</div>
@@ -74,7 +67,6 @@ $data = $controller->handleRequest($action, $type, $id);
         <?php endif; ?>
 
 
-
     <?php elseif ($action === 'list' && $type === 'albuns'): ?>
         <h1>Lista de Álbuns</h1>
         <?php if (!empty($data['albuns'])): ?>
@@ -88,7 +80,7 @@ $data = $controller->handleRequest($action, $type, $id);
         <?php else: ?>
             <p class="small">Nenhum álbum encontrado.</p>
         <?php endif; ?>
-  
+
     <?php elseif ($action === 'list' && $type === 'musicas'): ?>
         <h1>Lista de Músicas</h1>
         <?php if (!empty($data['musicas'])): ?>
@@ -103,7 +95,7 @@ $data = $controller->handleRequest($action, $type, $id);
             <p class="small">Nenhuma música encontrada.</p>
         <?php endif; ?>
 
-    <?php elseif ($action === 'edit' && $type === 'artista' && !empty($data['artista'])): 
+    <?php elseif ($action === 'edit' && $type === 'artista' && !empty($data['artista'])):
         $artista = $data['artista'];
     ?>
         <h1>Editar Artista: <?= htmlspecialchars($artista['nome'] ?? '') ?></h1>
@@ -128,7 +120,7 @@ $data = $controller->handleRequest($action, $type, $id);
             <button type="submit" class="btn">Salvar alterações</button>
         </form>
 
-    <?php elseif ($action === 'edit' && $type === 'album' && !empty($data['album'])): 
+    <?php elseif ($action === 'edit' && $type === 'album' && !empty($data['album'])):
         $album = $data['album'];
     ?>
         <h1>Editar Álbum: <?= htmlspecialchars($album['titulo'] ?? '') ?></h1>
