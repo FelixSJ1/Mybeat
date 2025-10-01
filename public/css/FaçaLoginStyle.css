@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-
-
 body {
     background: #000; 
     color: #fff; 
@@ -13,45 +11,45 @@ body {
     min-height: 100vh;
 }
 
-h1 {
-    font-family: "Lora", serif;
-    color: #9147ff; 
-    margin-bottom: 12px;
-    text-align: center; 
-}
-
-.card {
+.login-card {
     background: #1c1c1c; 
     border: 1px solid #333; 
     padding: 40px 30px; 
     border-radius: 20px; 
     margin-bottom: 12px;
     max-width: 400px; 
-}
-
-label {
-    color: #fff;
-    font-family: "Lora", serif;
-    font-weight: bold;
-    display: block;
-    margin-top: 8px;
-}
-
-textarea {
     width: 100%;
-    min-height: 110px;
-    background: #2a2a2a; 
-    color: #fff;
-    border-radius: 10px;
-    border: 3px solid #9147ff; 
-    padding: 8px;
-    box-sizing: border-box;
-    margin-bottom: 15px; 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
-input[type="text"],
-input[type="number"],
-select {
+.logo {
+    font-family: "Lora", serif;
+    color: #fff;
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.music-icon {
+    color: #9147ff;
+}
+
+h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+label,
+textarea {
+    display: none;
+}
+
+input[type="email"],
+input[type="password"] {
     width: 100%;
     padding: 15px; 
     border-radius: 8px; 
@@ -62,8 +60,12 @@ select {
     margin-bottom: 15px; 
 }
 
-.btn {
-   
+input:focus {
+    border-color: #9147ff;
+    outline: none;
+}
+
+.login-button {
     background: linear-gradient(to right, #ff8c3a, #9147ff);
     color: #fff; 
     border: none;
@@ -74,9 +76,19 @@ select {
     width: 100%;
     font-size: 1.1rem;
     font-weight: bold;
+    transition: opacity 0.3s;
 }
 
-.small {
+.login-button:hover {
+    opacity: 0.9;
+}
+
+.extra-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.extra-links p {
     font-size: 0.9rem;
     color: #ccc; 
 }
@@ -84,6 +96,12 @@ select {
 a {
     color: #ffc800;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.small {
+    font-size: 0.9rem;
+    color: #ccc; 
 }
 
 .user-icon {
@@ -93,7 +111,7 @@ a {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: #703cbf; /
+    background-color: #703cbf;
     color: #000;
     font-size: 18px;
     font-weight: bold;
