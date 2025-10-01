@@ -1,1 +1,13 @@
-Options -Indexes
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Estas duas linhas são as mais importantes para resolver o problema.
+  # Elas dizem ao servidor: "Se o arquivo ou diretório solicitado já existe, 
+  # não aplique a regra abaixo e sirva-o diretamente."
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Se a requisição não for para um arquivo ou pasta real,
+  # então redirecione para o index.php para que o roteador MVC cuide disso.
+  RewriteRule ^(.*)$ public/index.php?url=$1 [QSA,L]
+</IfModule>
