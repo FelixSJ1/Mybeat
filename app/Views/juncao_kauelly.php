@@ -4,7 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Admin - MyBeat</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="../../public/css/juncao_kauelly.css">
+
+    <style>
+        :root {
+            --primary-color: #5B3A92;
+            --secondary-color: #EB8046;
+            --text-light: #FFFFFF;
+            --background-dark: #000000;
+            --form-background: #1a1a1a;
+            --input-background: #333333;
+            --border-color: #444444;
+        }
+
+        /* Estilos globais */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Títulos */
+        .page-title, .form-title, .menu-title {
+            font-family: 'Lora', serif;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -18,46 +49,14 @@
             <h2 class="menu-title">Gerenciar Dados</h2>
             <nav class="menu-navigation">
                 <ul>
-                    <li><a href="#add-data-popup">Adicionar Dados</a></li>
-                    <li><a href="#list-data-popup">Listar Dados</a></li>
-                    <li><a href="#edit-data-popup">Editar Dados</a></li>
-                    <li><a href="#delete-data-popup">Excluir Dados</a></li>
+                    <li><a href="AdicaoDeDadosF.php">Adicionar Dados</a></li>
+                    <li><a href="Listar_giovana.php">Listar Dados</a></li>
+                    <li><a href="EditMyBeatViews.php">Editar Dados</a></li>
+                    <li><a href="musicremoval.php">Excluir Dados</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <div class="popup-overlay-css" id="add-data-popup">
-            <div class="popup-content-css">
-                <a href="#" class="close-btn-css">&times;</a>
-                <h3>Adicionar Dados</h3>
-                <p>O formulário de adição de dados virá aqui.</p>
-            </div>
-        </div>
-
-        <div class="popup-overlay-css" id="list-data-popup">
-            <div class="popup-content-css">
-                <a href="#" class="close-btn-css">&times;</a>
-                <h3>Listar Dados</h3>
-                <p>A tabela de dados virá aqui.</p>
-            </div>
-        </div>
-
-        <div class="popup-overlay-css" id="edit-data-popup">
-            <div class="popup-content-css">
-                <a href="#" class="close-btn-css">&times;</a>
-                <h3>Editar Dados</h3>
-                <p>O formulário de edição de dados virá aqui.</p>
-            </div>
-        </div>
-
-        <div class="popup-overlay-css" id="delete-data-popup">
-            <div class="popup-content-css">
-                <a href="#" class="close-btn-css">&times;</a>
-                <h3>Excluir Dados</h3>
-                <p>A confirmação de exclusão virá aqui.</p>
-            </div>
-        </div>
-        
         <main class="content-area"></main>
     </div>
 

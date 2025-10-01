@@ -1,13 +1,18 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . "/../config/conector.php";
+
+
 require_once __DIR__ . '/../Models/EditMyBeatModels.php';
 
 class EditMyBeatControllers {
     private EditMyBeatModels $model;
 
-    public function __construct(PDO $pdo) {
-        $this->model = new EditMyBeatModels($pdo);
+
+    public function __construct(mysqli $conn) {
+        $this->model = new EditMyBeatModels($conn);
+
     }
 
     public function handleRequest(string $action, ?string $type = null, ?int $id = null): array {
@@ -98,3 +103,6 @@ class EditMyBeatControllers {
         return $data;
     }
 }
+
+?>
+

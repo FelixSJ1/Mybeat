@@ -4,13 +4,13 @@
     box-sizing: border-box;
 }
 
-
 body {
     background-color: #000; 
     color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+/* ==== HEADER ==== */
 header {
     display: flex;
     align-items: center;
@@ -18,27 +18,27 @@ header {
     gap: 20px;
 }
 
-
-/* Logo */
-.logo {
-    border: 2px solid #A64AC9; 
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    color: #fff;
+.logo img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
 }
 
-
-/* Barra de pesquisa */
 .search-bar {
     flex-grow: 1;
     display: flex;
     justify-content: center;
 }
 
+.search-bar form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
 .search-bar input {
-    width: 50%; 
+    width: 50%;
+    max-width: 600px;
     padding: 10px 16px;
     border: 2px solid #A64AC9;
     border-radius: 25px;
@@ -47,8 +47,6 @@ header {
     font-size: 16px;
 }
 
-
-/* Bolinha do usuário no canto direito */
 .user-circle {
     width: 40px;
     height: 40px;
@@ -56,11 +54,10 @@ header {
     border-radius: 50%;
     flex-shrink: 0;
     cursor: pointer;
-    margin-left: auto; 
+    margin-left: auto;
 }
 
-
-/* ===== MAIN LAYOUT ===== */
+/* ==== LAYOUT PRINCIPAL ==== */
 main {
     display: flex;
     justify-content: flex-start;
@@ -69,45 +66,61 @@ main {
     padding: 30px 40px;
 }
 
-
-/* Seções */
 section {
     flex: 1;
 }
 
-
-section h2 {
-    margin-bottom: 20px;
-    color: #fff;
+section h2, section h3 {
+    margin-bottom: 15px;
+    margin-top: 20px;
+    color: #A64AC9;
+    font-family: 'Lora', serif;
 }
 
-
-/* ===== LISTAS ===== */
 ul {
     list-style: none;
 }
 
+/* ==== LINKS ==== */
+ul li a {
+    text-decoration: none;
+    font-family: 'Lora', serif;
+}
 
-li {
+ul li a.titulo-musica,
+ul li a.titulo-album {
+    font-size: 19px;
+    color: #EB8046;
+    font-weight: 800;
+}
+
+ul li a:hover {
+    opacity: 0.8;
+}
+
+/* ==== INFOS ==== */
+.info {
     display: flex;
-    align-items: flex-start;
-    gap: 25px;
-    margin-bottom: 25px;
-    min-height: 120px;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    max-width: 400px;
 }
 
-
-/* ID do item */
-.item-id {
-    width: 25px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
+.info p {
+    font-size: 14px;
+    line-height: 1.3;
+    color: #A64AC9;
 }
 
+.info p strong {
+    min-width: 120px;
+    display: inline-block;
+}
 
-/* Capa do álbum/single */
+/* ==== CAPAS ==== */
 .cover {
     width: 120px;
     height: 120px;
@@ -116,86 +129,102 @@ li {
     border-radius: 10px;
     flex-shrink: 0;
     transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
 }
-
-
+.cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .cover:hover {
     transform: scale(1.05);
     cursor: pointer;
     box-shadow: 0 0 10px #A64AC9;
 }
 
+/* ==== MÚSICAS ==== */
+.musicas ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 10px;
+}
 
-/* Informações à direita da capa */
-.info {
+.faixa-numero,
+.duracao {
+    font-size: 12px;
+    color: #A64AC9;
+    margin-left: 12px;
+}
+
+/* ==== SINGLES & ÁLBUNS LISTAGEM ==== */
+.singles ul li,
+.albuns ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 25px;
+    min-height: 120px;
+    padding-bottom: 12px;
+}
+
+/* ==== DETALHES DO ÁLBUM ==== */
+.album-detalhes .info {
+    max-width: 500px;
+    padding: 20px;
+}
+
+/* ==== AVALIAÇÕES ==== */
+.avaliacoes {
+    background-color: #000; /* fundo preto */
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.avaliacoes ul {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    flex: 1;
-    padding-right: 10px;
+    gap: 12px;
 }
 
-
-.info p {
-    font-size: 14px;
-    line-height: 1.3;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+.avaliacoes li {
+    background-color: rgba(166, 74, 201, 0.2); /* roxo translúcido */
+    border: 1px solid #A64AC9;
+    padding: 12px;
+    border-radius: 8px;
 }
 
-
-/* Alinhar labels dos campos */
-.info p strong {
-    width: 80px;
-    display: inline-block;
+.avaliacoes p {
+    margin-bottom: 6px;
+    line-height: 1.4;
 }
 
+.avaliacoes .nota {
+    color: #EB8046;
+    font-weight: bold;
+}
+
+.avaliacoes .data {
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* ==== RESPONSIVIDADE ==== */
 @media (max-width: 1024px) {
-    main {
-        gap: 30px;
-    }
-    .cover {
-        width: 100px;
-        height: 100px;
-    }
+    main { gap: 30px; }
+    .cover { width: 100px; height: 100px; }
 }
-
 
 @media (max-width: 768px) {
-    main {
-        flex-direction: column;
-        align-items: center;
-    }
-
-
-    .search-bar input {
-        width: 90%;
-    }
-
-
-    section {
-        width: 100%;
-    }
-
-
-    .cover {
-        width: 90px;
-        height: 90px;
-    }
+    main { flex-direction: column; align-items: center; }
+    .search-bar input { width: 90%; }
+    section { width: 100%; }
+    .cover { width: 90px; height: 90px; }
 }
-
 
 @media (max-width: 480px) {
-    .cover {
-        width: 70px;
-        height: 70px;
-    }
-    .info p strong {
-        width: 60px;
-    }
-    li {
-        gap: 15px;
-    }
+    .cover { width: 70px; height: 70px; }
+    .info p strong { width: 60px; }
+    li { gap: 15px; }
 }
-
-
