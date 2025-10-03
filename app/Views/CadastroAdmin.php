@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Conta - myBeat</title>
-    <link rel="stylesheet" href="../../public/css/StyleCadastro.css">
+    <title>Cadastro de Administrador - myBeat</title>
+    <link rel="stylesheet" href="../../public/css/AdminCadastro.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -19,7 +18,7 @@
             <div class="logo">
                 myBeat<span>♪</span>
             </div>
-            <h2>Criar sua conta</h2>
+            <h2>Criar Conta de Administrador</h2>
 
             <form action="#" method="POST">
                 <div class="input-group">
@@ -37,28 +36,14 @@
                     <label for="password">Senha</label>
                 </div>
 
-                <div class="input-group">
-                    <input type="password" id="confirm_password" name="confirm_password" required>
-                    <label for="confirm_password">Confirmar senha</label>
-                </div>
-
-                <div class="terms-group">
-                    <input type="checkbox" id="terms" name="terms">
-                    <label for="terms">Concordo com os <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a></label>
-                </div>
-
-                <button type="submit" class="btn-register">Cadastrar</button>
+                <button type="submit" class="btn-register">Cadastrar Administrador</button>
             </form>
 
             <div class="login-link">
-                <p>Já tem uma conta? <a href="FaçaLoginMyBeat.php">Faça login</a></p>
-                <p>Deseja criar uma conta de<a  href= "CadastroAdmin.php"> administrador?</a></p>
+                <p>Já é um administrador? <a href="FaçaLoginMyBeat.php">Faça login</a></p>
+                 <p>Deseja criar uma conta de <a href= "cadastro.php"> usuário?</a></p>
             </div>
-
-            <div class="social-login">
-                <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
-                
-            </div>
+            
         </div>
     </div>
 

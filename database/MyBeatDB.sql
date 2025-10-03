@@ -59,3 +59,12 @@ CREATE TABLE Avaliacoes (
     FOREIGN KEY (id_album) REFERENCES Albuns(id_album),
     UNIQUE KEY `review_unica_por_usuario_album` (id_usuario, id_album)
 );      
+
+CREATE TABLE Administradores (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    nome_admin VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    hash_senha VARCHAR(255) NOT NULL,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    administrador BOOLEAN NOT NULL DEFAULT TRUE
+);
