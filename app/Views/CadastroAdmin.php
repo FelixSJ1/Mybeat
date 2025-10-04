@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -16,11 +19,24 @@
     <div class="container">
         <div class="form-box">
             <div class="logo">
-                myBeat<span>♪</span>
+                <span>myBeat</span>
+                <img src="../../public/images/LogoF.png" alt="LOGO">
             </div>
             <h2>Criar Conta de Administrador</h2>
 
-            <form action="#" method="POST">
+            <?php
+            if (isset($_SESSION['mensagem_erro'])) {
+                echo '<div class="mensagem-erro">' . $_SESSION['mensagem_erro'] . '</div>';
+                unset($_SESSION['mensagem_erro']);
+            }
+
+            if (isset($_SESSION['mensagem_sucesso'])) {
+                echo '<div class="mensagem-sucesso">' . $_SESSION['mensagem_sucesso'] . '</div>';
+                unset($_SESSION['mensagem_sucesso']);
+            }
+            ?>
+
+            <form action="../models/processa_cadastro_admin.php" method="POST">
                 <div class="input-group">
                     <input type="text" id="username" name="username" required>
                     <label for="username">Nome de usuário</label>
@@ -36,14 +52,18 @@
                     <label for="password">Senha</label>
                 </div>
 
+                <div class="input-group">
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <label for="confirm_password">Confirmar senha</label>
+                </div>
+
                 <button type="submit" class="btn-register">Cadastrar Administrador</button>
             </form>
 
             <div class="login-link">
                 <p>Já é um administrador? <a href="FaçaLoginMyBeat.php">Faça login</a></p>
-                 <p>Deseja criar uma conta de <a href= "cadastro.php"> usuário?</a></p>
+                <p>Deseja criar uma conta de <a href="cadastro.php">usuário?</a></p>
             </div>
-            
         </div>
     </div>
 

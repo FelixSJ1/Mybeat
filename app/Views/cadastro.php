@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -17,11 +20,19 @@
     <div class="container">
         <div class="form-box">
             <div class="logo">
-                myBeat<span>♪</span>
+                <span>myBeat</span>
+                <img src="../../public/images/LogoF.png" alt="LOGO">
             </div>
             <h2>Criar sua conta</h2>
 
-            <form action="#" method="POST">
+            <?php
+            if (isset($_SESSION['mensagem_erro'])) {
+                echo '<div class="mensagem-erro">' . $_SESSION['mensagem_erro'] . '</div>';
+                unset($_SESSION['mensagem_erro']); 
+            }
+            ?>
+
+            <form action="../models/processa_cadastro.php" method="POST">
                 <div class="input-group">
                     <input type="text" id="username" name="username" required>
                     <label for="username">Nome de usuário</label>
@@ -43,7 +54,7 @@
                 </div>
 
                 <div class="terms-group">
-                    <input type="checkbox" id="terms" name="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
                     <label for="terms">Concordo com os <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a></label>
                 </div>
 
@@ -52,12 +63,11 @@
 
             <div class="login-link">
                 <p>Já tem uma conta? <a href="FaçaLoginMyBeat.php">Faça login</a></p>
-                <p>Deseja criar uma conta de<a  href= "CadastroAdmin.php"> administrador?</a></p>
+                <p>Deseja criar uma conta de <a href="CadastroAdmin.php">administrador?</a></p>
             </div>
 
             <div class="social-login">
                 <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
-                
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-/* style.css - VERSÃO ESTÁTICA */
+
 
 /* --- Configurações Gerais e Fundo --- */
 * {
@@ -19,7 +19,7 @@ body {
     position: relative;
 }
 
-/* Efeito de brilho ESTÁTICO no fundo */
+/* Efeito de brilho no fundo */
 .background-glow::before,
 .background-glow::after {
     content: '';
@@ -66,6 +66,10 @@ body {
 
 /* --- Logo e Título --- */
 .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;       /* Espaço entre texto e imagem */
     font-size: 36px;
     font-weight: 700;
     color: #fff;
@@ -73,7 +77,13 @@ body {
 }
 
 .logo span {
-    color: #ff8c00;
+    color: #ff8c00;   /* Cor do texto */
+}
+
+.logo img {
+    width: 40px;
+    height: 50px;
+    object-fit: contain;
 }
 
 .form-box h2 {
@@ -190,10 +200,8 @@ body {
 }
 
 .btn-register:hover {
-    /* Efeito de hover sutil, apenas escurecendo um pouco o gradiente */
     background: linear-gradient(45deg, #e67e00, #7b24cb);
 }
-
 
 /* --- Links e Login Social --- */
 .login-link p, .login-link a {
@@ -221,4 +229,25 @@ body {
 
 .social-icon:hover {
     color: #fff;
+}
+
+/* --- Mensagens de Sucesso e Erro --- */
+.mensagem-erro {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    border: 1px solid #ff4d4d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mensagem-sucesso {
+    color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid #4CAF50;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
 }
