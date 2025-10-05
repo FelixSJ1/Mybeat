@@ -13,7 +13,7 @@ CREATE TABLE Usuarios (
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Cria a tabela de Artistas com os campos adicionais
+
 CREATE TABLE Artistas (
     id_artista INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -54,8 +54,17 @@ CREATE TABLE Avaliacoes (
     id_album INT NOT NULL,
     nota DECIMAL(3, 1),
     texto_review TEXT,
-    data_avaliacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- CAMPO ADICIONADO
+    data_avaliacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_album) REFERENCES Albuns(id_album),
     UNIQUE KEY `review_unica_por_usuario_album` (id_usuario, id_album)
 );      
+
+CREATE TABLE Administradores (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    nome_admin VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    hash_senha VARCHAR(255) NOT NULL,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    administrador BOOLEAN NOT NULL DEFAULT TRUE
+);

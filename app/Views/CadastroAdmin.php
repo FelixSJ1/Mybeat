@@ -6,12 +6,11 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Conta - myBeat</title>
-    <link rel="stylesheet" href="../../public/css/StyleCadastro.css">
+    <title>Cadastro de Administrador - myBeat</title>
+    <link rel="stylesheet" href="../../public/css/AdminCadastro.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -23,16 +22,21 @@ session_start();
                 <span>myBeat</span>
                 <img src="../../public/images/LogoF.png" alt="LOGO">
             </div>
-            <h2>Criar sua conta</h2>
+            <h2>Criar Conta de Administrador</h2>
 
             <?php
             if (isset($_SESSION['mensagem_erro'])) {
                 echo '<div class="mensagem-erro">' . $_SESSION['mensagem_erro'] . '</div>';
-                unset($_SESSION['mensagem_erro']); 
+                unset($_SESSION['mensagem_erro']);
+            }
+
+            if (isset($_SESSION['mensagem_sucesso'])) {
+                echo '<div class="mensagem-sucesso">' . $_SESSION['mensagem_sucesso'] . '</div>';
+                unset($_SESSION['mensagem_sucesso']);
             }
             ?>
 
-            <form action="../models/processa_cadastro.php" method="POST">
+            <form action="../models/processa_cadastro_admin.php" method="POST">
                 <div class="input-group">
                     <input type="text" id="username" name="username" required>
                     <label for="username">Nome de usuário</label>
@@ -53,21 +57,12 @@ session_start();
                     <label for="confirm_password">Confirmar senha</label>
                 </div>
 
-                <div class="terms-group">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">Concordo com os <a href="#">Termos de Serviço</a> e <a href="#">Política de Privacidade</a></label>
-                </div>
-
-                <button type="submit" class="btn-register">Cadastrar</button>
+                <button type="submit" class="btn-register">Cadastrar Administrador</button>
             </form>
 
             <div class="login-link">
-                <p>Já tem uma conta? <a href="FaçaLoginMyBeat.php">Faça login</a></p>
-                <p>Deseja criar uma conta de <a href="CadastroAdmin.php">administrador?</a></p>
-            </div>
-
-            <div class="social-login">
-                <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+                <p>Já é um administrador? <a href="FaçaLoginMyBeat.php">Faça login</a></p>
+                <p>Deseja criar uma conta de <a href="cadastro.php">usuário?</a></p>
             </div>
         </div>
     </div>

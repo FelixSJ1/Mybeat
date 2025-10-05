@@ -26,7 +26,7 @@
             </form>
 
             <div class="extra-links">
-                <p>Não tem uma conta? <a href="#" class="signup-link">Crie sua conta</a></p>
+                <p>Não tem uma conta? <a href="cadastro.php" class="signup-link">Crie sua conta</a></p>
             </div>
 
         </div>
