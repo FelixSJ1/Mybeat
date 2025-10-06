@@ -31,7 +31,7 @@ class AlbumController {
     }
 
     public function detalhes() {
-        $id_album = (int)($_GET['id_album'] ?? 0);
+        $id_album = (int)($_GET['id'] ?? $_GET['id_album'] ?? 0);
         $album      = $this->albumModel->getById($id_album);
         $musicas    = $this->albumModel->getMusicas($id_album);
         $avaliacoes = $this->avaliacaoModel->getByAlbum($id_album);
@@ -47,7 +47,8 @@ class MusicaController {
     }
 
     public function detalhes() {
-        $id_musica = (int)($_GET['id_musica'] ?? 0);
+        // aceita tanto ?id=123 quanto ?id_musica=123
+        $id_musica = (int)($_GET['id'] ?? $_GET['id_musica'] ?? 0);
         $musica = $this->musicaModel->getById($id_musica);
         require __DIR__ . '/../views/detalhes_musica.php';
     }
