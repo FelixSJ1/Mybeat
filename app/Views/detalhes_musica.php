@@ -25,7 +25,7 @@
                     <?php echo htmlspecialchars($musica['titulo']); ?>
                 </a>
             </h2>
-            <p><strong>Artista:</strong> <?php echo htmlspecialchars($musica['artista']); ?></p>
+            <p><strong>Artista:</strong> <?php echo htmlspecialchars($musica['nome_artista']); ?></p>
             <p><strong>Álbum:</strong>
                 <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo $musica['id_album']; ?>" class="titulo-album">
                     <?php echo htmlspecialchars($musica['titulo_album']); ?>

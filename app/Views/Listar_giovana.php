@@ -82,7 +82,7 @@ if ($controller === 'home' && $action === 'index') {
                                         <?php echo htmlspecialchars($row['titulo_album']); ?>
                                     </a>
                                 </p>
-                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['artista']); ?></p>
+                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista']); ?></p>
                                 <p><strong>Duração:</strong> <?php echo gmdate("i:s", (int)$row['duracao_segundos']); ?></p>
                                 <p><strong>Faixa nº:</strong> <?php echo htmlspecialchars($row['numero_faixa']); ?></p>
                             </div>
@@ -113,7 +113,7 @@ if ($controller === 'home' && $action === 'index') {
                                         <?php echo htmlspecialchars($row['titulo']); ?>
                                     </a>
                                 </p>
-                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['artista']); ?></p>
+                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista']); ?></p>
                                 <p><strong>Lançamento:</strong> <?php echo htmlspecialchars($row['data_lancamento']); ?></p>
                                 <p><strong>Gênero:</strong> <?php echo htmlspecialchars($row['genero']); ?></p>
                                 <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['tipo']); ?></p>

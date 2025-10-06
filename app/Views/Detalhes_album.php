@@ -21,7 +21,7 @@
         </div>
         <div class="info">
             <h2><?php echo htmlspecialchars($album['titulo']); ?></h2>
-            <p><strong>Artista:</strong> <?php echo htmlspecialchars($album['artista']); ?></p>
+            <p><strong>Artista:</strong> <?php echo htmlspecialchars($album['nome_artista']); ?></p>
             <p><strong>Lançamento:</strong> <?php echo htmlspecialchars($album['data_lancamento']); ?></p>
             <p><strong>Gênero:</strong> <?php echo htmlspecialchars($album['genero']); ?></p>
             <p><strong>Tipo:</strong> <?php echo htmlspecialchars($album['tipo']); ?></p>
