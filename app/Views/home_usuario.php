@@ -152,7 +152,7 @@ function build_search_query($q) {
                 <?php else: ?>
                     <?php foreach ($albums as $al): ?>
                         <div class="album-card card">
-                            <a href="../../avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+                            <a href="/Mybeat/app/Views/listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
                                 <div class="cover">
                                     <?php if (!empty($al['capa_album_url'])): ?>
                                         <img src="<?php echo htmlspecialchars($al['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($al['titulo']); ?>">

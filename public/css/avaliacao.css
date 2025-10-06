@@ -1,3 +1,12 @@
+/* ISOLAMENTO TOTAL DO CSS */
+.avaliacao-page, 
+.avaliacao-page * {
+  all: revert;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* VARIÁVEIS DE TEMA*/
 :root {
   --dark-bg: #121212;
   --primary-purple: #9b59b6;
@@ -7,26 +16,35 @@
   --container-bg: #1e1e1e;
 }
 
-body {
+/* BODY E ESTRUTURA GERAL */
+.avaliacao-page {
+  background-color: var(--dark-bg);
+  color: var(--text-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.avaliacao-page body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
   background-color: var(--dark-bg);
   color: var(--text-light);
 }
 
-.container {
-   max-width: 1200px;
-   margin: 0 auto;
-   padding: 0 20px;
+/* CONTAINERS E CABEÇALHO */
+.avaliacao-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-header {
+.avaliacao-page header {
   background-color: var(--container-bg);
   padding: 20px 0;
   border-bottom: 1px solid var(--primary-purple);
 }
 
-header .container {
+.avaliacao-page header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,19 +55,58 @@ header .container {
   align-items: center;
 }
 
-.logo img {
+.avaliacao-page .logo {
+  display: flex;
+  align-items: center;
+}
+
+.avaliacao-page .logo img {
   height: 40px;
   margin-right: 15px;
 }
 
-.logo h1 {
+.avaliacao-page .logo h1 {
   font-size: 1.8rem;
   color: var(--primary-purple);
   margin: 0;
 }
 
-/* Layout */
-.page-layout {
+.avaliacao-page .logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.avaliacao-page .logo-link img {
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.avaliacao-page .logo-link h1 {
+  font-size: 1.8rem;
+  color: var(--primary-purple);
+  margin: 0;
+  line-height: 1;
+}
+
+
+.avaliacao-page .user-profile {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-orange);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.avaliacao-page .user-profile:hover {
+  box-shadow: 0 0 10px var(--primary-orange);
+}
+
+/* LAYOUT PRINCIPAL */
+.avaliacao-page .page-layout {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 10px;
@@ -57,46 +114,46 @@ header .container {
   max-width: 1200px;
 }
 
-.left-panel .album-cover {
+.avaliacao-page .left-panel .album-cover {
   width: 72%;
   aspect-ratio: 1 / 1;
-  object-fit: cover;   
+  object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   display: block;
 }
 
-.center-panel .music-title {
+.avaliacao-page .center-panel .music-title {
   font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
-.center-panel .artist-name {
+.avaliacao-page .center-panel .artist-name {
   font-size: 1.3rem;
   color: var(--primary-purple);
   margin-bottom: 5px;
 }
 
-.center-panel .album-info {
+.avaliacao-page .center-panel .album-info {
   font-size: 1rem;
   color: var(--text-dark);
   margin-bottom: 20px;
 }
 
-.rating-display {
-  font-size: 1.0rem;
+.avaliacao-page .rating-display {
+  font-size: 1rem;
   color: var(--primary-orange);
   font-weight: bold;
 }
 
-.rating-display .rating-text {
+.avaliacao-page .rating-display .rating-text {
   font-size: 1rem;
   color: var(--text-dark);
   margin-left: 10px;
 }
 
-/* Coluna Direita */
-.right-panel {
+/* PAINEL DIREITO (AÇÕES) */
+.avaliacao-page .right-panel {
   background-color: var(--container-bg);
   padding: 20px;
   border-radius: 8px;
@@ -105,7 +162,7 @@ header .container {
   gap: 15px;
 }
 
-.action-btn {
+.avaliacao-page .action-btn {
   background: none;
   border: 1px solid var(--primary-purple);
   color: var(--text-light);
@@ -115,42 +172,43 @@ header .container {
   transition: 0.3s;
 }
 
-.action-btn:hover {
+.avaliacao-page .action-btn:hover {
   background-color: var(--primary-purple);
   color: var(--dark-bg);
 }
 
-.star-rating-box {
+/* Avaliação com estrelas */
+.avaliacao-page .star-rating-box {
   margin: 0 auto 1px auto;
-  text-align: center; 
+  text-align: center;
 }
 
-.star-rating {
+.avaliacao-page .star-rating {
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
   gap: 5px;
 }
 
-.star-rating input {
+.avaliacao-page .star-rating input {
   display: none;
 }
 
-.star-rating label {
+.avaliacao-page .star-rating label {
   font-size: 2rem;
   color: #555;
   cursor: pointer;
   transition: color 0.3s;
 }
 
-.star-rating input:checked ~ label,
-.star-rating label:hover,
-.star-rating label:hover ~ label {
+.avaliacao-page .star-rating input:checked ~ label,
+.avaliacao-page .star-rating label:hover,
+.avaliacao-page .star-rating label:hover ~ label {
   color: var(--primary-orange);
 }
 
-/* Review */
-.review-section {
+/*  REVIEWS */
+.avaliacao-page .review-section {
   max-width: 1170px;
   margin: 0 auto 20px auto;
   background-color: var(--container-bg);
@@ -158,13 +216,13 @@ header .container {
   border-radius: 8px;
 }
 
-.review-section h2 {
+.avaliacao-page .review-section h2 {
   color: var(--primary-purple);
   margin: 0 auto 20px auto;
 }
 
-.review-section textarea {
-  width: 97%; 
+.avaliacao-page .review-section textarea {
+  width: 97%;
   margin: 0 auto 20px auto;
   display: block;
   background-color: var(--dark-bg);
@@ -175,8 +233,8 @@ header .container {
   font-size: 1rem;
 }
 
-.btn-submit {
-  width: auto; 
+.avaliacao-page .btn-submit {
+  width: auto;
   padding: 15px 25px;
   background-color: var(--primary-orange);
   border: none;
@@ -188,55 +246,12 @@ header .container {
   transition: 0.3s;
 }
 
-.btn-submit:hover {
+.avaliacao-page .btn-submit:hover {
   background-color: #d35400;
 }
 
-footer {
-  background-color: var(--container-bg);
-  padding: 20px 0;
-  text-align: center;
-  border-top: 1px solid var(--primary-purple);
-  margin-top: 40px;
-}
-
-footer p {
-  margin: 0;
-  color: var(--text-dark);
-}
-
-.user-profile {
-  width: 40px;                 
-  height: 40px;
-  background-color: var(--primary-orange); 
-  border-radius: 50%;          
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.user-profile:hover {
-  box-shadow: 0 0 10px var(--primary-orange); 
-}
-
-.logo-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-}
-
-.logo-link:hover h1 {
-  color: --primary-orange;
-  transition: color 0.2s ease;
-}
-
-.logo img {
-  height: 40px;
-  margin-right: 10px;
-}
-
-/*  LISTA DE MÚSICAS DO ÁLBUM  */
-.tracklist-section {
+/* LISTA DE MÚSICAS */
+.avaliacao-page .tracklist-section {
   max-width: 1157px;
   margin: 30px auto;
   background-color: var(--container-bg);
@@ -244,19 +259,19 @@ footer p {
   border-radius: 8px;
 }
 
-.tracklist-section h2 {
+.avaliacao-page .tracklist-section h2 {
   color: var(--primary-purple);
   margin-bottom: 15px;
   text-align: left;
 }
 
-.tracklist {
+.avaliacao-page .tracklist {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.tracklist li {
+.avaliacao-page .tracklist li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -264,33 +279,33 @@ footer p {
   border-bottom: 1px solid #333;
 }
 
-.tracklist li:last-child {
+.avaliacao-page .tracklist li:last-child {
   border-bottom: none;
 }
 
-.track-number {
+.avaliacao-page .track-number {
   color: var(--primary-orange);
   font-weight: bold;
 }
 
-.track-title {
+.avaliacao-page .track-title {
   flex-grow: 1;
   margin-left: 10px;
 }
 
-.track-duration {
+.avaliacao-page .track-duration {
   color: var(--text-dark);
   font-size: 0.9rem;
 }
 
-.no-tracks {
+.avaliacao-page .no-tracks {
   text-align: center;
   color: var(--text-dark);
   padding: 10px;
 }
 
-/*   COMENTÁRIOS E AVALIAÇÕES    */
-.comments-section {
+/* COMENTÁRIOS */
+.avaliacao-page .comments-section {
   max-width: 1157px;
   margin: 30px auto;
   background-color: var(--container-bg);
@@ -298,48 +313,49 @@ footer p {
   border-radius: 8px;
 }
 
-.comments-section h2 {
+.avaliacao-page .comments-section h2 {
   color: var(--primary-purple);
   margin-bottom: 20px;
 }
 
-.comment-box {
+.avaliacao-page .comment-box {
   border-bottom: 1px solid #333;
   padding: 15px 0;
 }
 
-.comment-box:last-child {
+.avaliacao-page .comment-box:last-child {
   border-bottom: none;
 }
 
-.comment-header {
+.avaliacao-page .comment-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-.user-name {
+.avaliacao-page .user-name {
   font-weight: bold;
   color: var(--primary-orange);
 }
 
-.user-rating {
+.avaliacao-page .user-rating {
   color: var(--primary-orange);
   font-size: 1.1rem;
 }
 
-.comment-text {
+.avaliacao-page .comment-text {
   color: var(--text-light);
   font-size: 1rem;
 }
 
-.no-comments {
+.avaliacao-page .no-comments {
   color: var(--text-dark);
   text-align: center;
 }
 
-.alert-success {
+/* ALERTAS E FOOTER */
+.avaliacao-page .alert-success {
   background-color: #d4edda;
   color: #155724;
   padding: 10px 15px;
@@ -348,11 +364,24 @@ footer p {
   font-weight: bold;
 }
 
-.alert-error {
+.avaliacao-page .alert-error {
   background-color: #f8d7da;
   color: #721c24;
   padding: 10px 15px;
   border-radius: 8px;
   margin-bottom: 15px;
   font-weight: bold;
+}
+
+.avaliacao-page footer {
+  background-color: var(--container-bg);
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid var(--primary-purple);
+  margin-top: 40px;
+}
+
+.avaliacao-page footer p {
+  margin: 0;
+  color: var(--text-dark);
 }
