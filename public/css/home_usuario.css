@@ -1,0 +1,338 @@
+:root {
+    --page-max-width: 1100px;
+    --page-side-padding: 24px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    background: #0b0b0b;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+header,
+.filter-bar,
+main {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 0 var(--page-side-padding);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #151515;
+}
+
+.logo .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+.logo img {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+.site-title {
+    color: #A64AC9;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Lora', serif;
+    line-height: 1;
+    letter-spacing: 0.2px;
+}
+
+.search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.search-bar form {
+    width: 40%;
+    max-width: 900px;
+}
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 22px;
+    border: 2px solid #A64AC9;
+    background: transparent;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+}
+
+.user-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #EB8046; /* fallback caso a imagem não carregue */
+    flex-shrink: 0;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* importante: recorta a imagem no círculo */
+}
+
+.user-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    background: #0f0f10;
+    border-bottom: 1px solid #151515;
+}
+
+
+.filter-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.filter-item label {
+    color: #bbb;
+    font-size: 13px;
+}
+
+.filter-item select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #EB8046;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 9px 38px 9px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.12s, transform 0.08s;
+}
+
+.filter-item::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 65%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid rgba(255, 255, 255, 0.95);
+    pointer-events: none;
+}
+
+.spacer { flex: 1; }
+.filter-info { color: #bbb; font-size: 14px; }
+
+main {
+    padding: 20px 0;
+}
+
+/* TÍTULOS */
+.carrossel-section h2,
+.musicas-section h2 {
+    margin-bottom: 12px;
+    color: #A64AC9;
+    font-family: 'Lora', serif;
+    font-size: 20px;
+}
+
+.carousel-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.carousel {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 8px;
+    width: 100%;
+    margin: 0 auto;
+}
+.carousel::-webkit-scrollbar { height: 9px; }
+.carousel::-webkit-scrollbar-thumb {
+    background: #222;
+    border-radius: 6px;
+}
+
+.carousel .album-card {
+    min-width: 170px;
+    max-width: 190px;
+    background: #151517;
+    border: 1px solid rgba(166, 74, 201, 0.18);
+    border-radius: 10px;
+    padding: 8px;
+    transition: transform 0.18s;
+}
+.carousel .album-card:hover {
+    transform: translateY(-5px);
+}
+
+.album-card .cover {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.album-card .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.album-info {
+    padding-top: 8px;
+}
+.album-info h3 {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.album-info h3 a {
+    color: #fff;
+    text-decoration: none;
+}
+.album-info .small {
+    color: #bbb;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+.album-info .meta {
+    color: #9b9;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.carousel-btn {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: 1px solid #222;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.musicas-section {
+    margin-top: 24px;
+}
+.musicas ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+}
+.musica-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(166, 74, 201, 0.06);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.small-cover {
+    width: 78px;
+    height: 78px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+.small-cover img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+}
+
+.info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.titulo-musica {
+    font-weight: 700;
+    color: #EB8046;
+    text-decoration: none;
+    font-size: 15px;
+}
+.titulo-album {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.info p {
+    color: #ccc;
+    font-size: 14px;
+}
+.meta {
+    color: #aaa;
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    :root { --page-max-width: 900px; }
+    .search-bar form { max-width: 700px; }
+    .carousel .album-card { min-width: 150px; }
+    .album-card .cover { height: 150px; }
+}
+@media (max-width: 600px) {
+    :root { --page-max-width: 100%; --page-side-padding: 12px; }
+    header { padding: 10px 0; }
+    .filter-bar { flex-wrap: wrap; gap: 8px; }
+    .album-card .cover { height: 130px; }
+    .small-cover { width: 64px; height: 64px; padding: 5px; }
+}
+
+.empty {
+    padding: 16px;
+    color: #999;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    border: 1px dashed #222;
+    min-width: 260px;
+    text-align: center;
+}
