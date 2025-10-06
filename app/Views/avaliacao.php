@@ -26,9 +26,9 @@
         </div>
     </header>
 
-    <form action="/Mybeat/salvar-avaliacao-album" method="POST">
+    <form action="listar_giovana.php?controller=avaliacaoUsuario&action=salvar" method="POST">
         <main>
-  <div class="container page-layout">
+       <div class="container page-layout">
     
     <!-- Lado esquerdo: capa -->
     <aside class="left-panel">
@@ -94,6 +94,12 @@
 
     <button type="submit" class="btn-submit">Salvar</button>
   </section>
+
+  <?php if (!empty($_GET['msg']) && $_GET['msg'] === 'success'): ?>
+    <div class="alert-success">✅ Comentário adicionado com sucesso!</div>
+  <?php elseif (!empty($_GET['msg']) && $_GET['msg'] === 'error'): ?>
+    <div class="alert-error">❌ Erro ao salvar o comentário.</div>
+  <?php endif; ?>
 
   <!-- COMENTÁRIOS E AVALIAÇÕES EXISTENTES -->
   <section class="comments-section">
