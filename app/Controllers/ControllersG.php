@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . "/../config/conector.php";
-
 require_once __DIR__ . '/../models/ModelsG.php';
 
 class HomeController {
@@ -25,44 +24,51 @@ class HomeController {
 class AlbumController {
     private $albumModel;
     private $avaliacaoModel;
+
     public function __construct($conn) {
         $this->albumModel     = new Album($conn);
         $this->avaliacaoModel = new Avaliacao($conn);
     }
+
     public function detalhes() {
-        $id = (int)($_GET['id'] ?? 0);
-        $album      = $this->albumModel->getById($id);
-        $musicas    = $this->albumModel->getMusicas($id);
-        $avaliacoes = $this->avaliacaoModel->getByAlbum($id);
+        $id_album = (int)($_GET['id'] ?? $_GET['id_album'] ?? 0);
+        $album      = $this->albumModel->getById($id_album);
+        $musicas    = $this->albumModel->getMusicas($id_album);
+        $avaliacoes = $this->avaliacaoModel->getByAlbum($id_album);
         require __DIR__ . '/../views/detalhes_album.php';
     }
 }
 
 class MusicaController {
     private $musicaModel;
+
     public function __construct($conn) {
         $this->musicaModel = new Musica($conn);
     }
+
     public function detalhes() {
-        $id = (int)($_GET['id'] ?? 0);
-        $musica = $this->musicaModel->getById($id);
+        // aceita tanto ?id=123 quanto ?id_musica=123
+        $id_musica = (int)($_GET['id'] ?? $_GET['id_musica'] ?? 0);
+        $musica = $this->musicaModel->getById($id_musica);
         require __DIR__ . '/../views/detalhes_musica.php';
     }
 }
 
 class AvaliacaoController {
     private $avaliacaoModel;
+
     public function __construct($conn) {
         $this->avaliacaoModel = new Avaliacao($conn);
     }
+
     public function salvar() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id_usuario = 1; // fixo, até ter login
+            $id_usuario = 1; // fixo até login estar implementado
             $id_album   = (int)$_POST['id_album'];
             $nota       = (float)$_POST['nota'];
-            $texto      = trim($_POST['texto_review']);
-            $this->avaliacaoModel->adicionar($id_usuario, $id_album, $nota, $texto);
-            header("Location: listar_giovana.php?controller=album&action=detalhes&id=$id_album");
+            $texto_review = trim($_POST['texto_review']);
+            $this->avaliacaoModel->adicionar($id_usuario, $id_album, $nota, $texto_review);
+            header("Location: listar_giovana.php?controller=album&action=detalhes&id_album=$id_album");
             exit;
         }
     }

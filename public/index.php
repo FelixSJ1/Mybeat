@@ -15,8 +15,8 @@
                 <h1>MyBeat</h1>
             </div>
             <div class="cta-header">
-                <a href="#" class="btn-login">Login</a>
-                <a href="#" class="btn-registrar">Criar conta</a>
+                <a href="../app/Views/FaçaLoginMyBeat.php" class="btn-login">Login</a>
+                <a href="../app/Views/cadastro.php" class="btn-registrar">Criar conta</a>
             </div>
         </div>
     </header>
