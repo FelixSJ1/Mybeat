@@ -11,7 +11,7 @@ class LoginControllersADM
 {
     private LoginADMModels $loginModel;
     
-    private const REDIRECT_SUCCESS = '../../index.php';
+    private const REDIRECT_SUCCESS = '../../app/Views/admin.php';
     private const REDIRECT_FAILURE = '../../Views/FaçaLoginMyBeatADM.php'; 
 
     public function __construct()
