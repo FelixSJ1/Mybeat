@@ -18,7 +18,7 @@
      <header>
         <div class="container">
             <div class="logo">
-                <a href="/Mybeat/public/index.php" class="logo-link">
+                <a href="/Mybeat/app/Views/home_usuario.php" class="logo-link">
                     <img src="/Mybeat/public/images/LogoF.png" alt="Mybeat Logo">
                     <h1>MyBeat</h1>
                 </a>
@@ -47,8 +47,21 @@
                         (<?= htmlspecialchars(date('Y', strtotime($album['data_lancamento'] ?? 'now'))) ?>)
                     </p>
                     <div class="rating-display">
-                        ★★★★☆
-                        <span class="rating-text">4.0 / 5</span>
+                        <?php
+                        // Arredonda a média para o número inteiro mais próximo para desenhar as estrelas
+                            $mediaArredondada = round($album['media_nota'] ?? 0);
+
+                            // Desenha as estrelas preenchidas e vazias
+                            for ($i = 1; $i <= 5; $i++) {
+                                echo $i <= $mediaArredondada ? '★' : '☆';
+                            }
+                        ?>
+                        <span class="rating-text">
+                            <?= number_format($album['media_nota'] ?? 0, 1) ?> / 5
+                            <span style="color: var(--text-dark); font-weight: normal;">
+                                (<?= $album['total_avaliacoes'] ?? 0 ?> avaliações)
+                            </span>
+                        </span>
                     </div>
                 </section>
 
@@ -111,7 +124,7 @@
                     <?php foreach ($avaliacoes as $avaliacao): ?>
                         <div class="comment-box">
                             <div class="comment-header">
-                                <span class="user-name"><?= htmlspecialchars($avaliacao['nome_usuario']) ?></span>
+                                <span class="user-name"><?= htmlspecialchars($avaliacao['nome_exibicao']) ?></span>
                                 <span class="user-rating">
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
                                         <?= $i <= $avaliacao['nota'] ? '★' : '☆' ?>

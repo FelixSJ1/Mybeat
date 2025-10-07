@@ -27,7 +27,8 @@ class AvaliacaoUsuarioController {
     public function salvar() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
-            $id_usuario = $_SESSION['id_usuario'] ?? null;
+            
+            $id_usuario = $_SESSION['user_id'] ?? null;
             if (!$id_usuario) {
                 header("Location: /Mybeat/app/views/FaçaLoginMyBeat.php");
                 exit;
@@ -39,7 +40,7 @@ class AvaliacaoUsuarioController {
 
             if ($id_album > 0 && $nota > 0) {
                 $this->avaliacaoModel->adicionar($id_usuario, $id_album, $nota, $texto_review);
-                header("Location: avaliacao.php?id_album=$id_album&msg=success");
+                header("Location: /Mybeat/public/listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=$id_album&msg=success");
                 exit;
             } else {
                 header("Location: avaliacao.php?id_album=$id_album&msg=error");

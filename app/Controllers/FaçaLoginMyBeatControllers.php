@@ -49,13 +49,13 @@ if (!$hashFromDb) {
 
 if (password_verify($senha, $hashFromDb)) {
     session_regenerate_id(true);
-    $_SESSION['user_id'] = $user['id_usuario'];
+    $_SESSION['id_usuario'] = $user['id_usuario'];
     $_SESSION['user_name'] = $user['nome_exibicao'] ?? $user['nome_usuario'];
     $_SESSION['logged_in'] = true;
 
     unset($_SESSION['error'], $_SESSION['old_email']);
 
-    header('Location: ../../public/index.php');
+    header('Location: /Mybeat/app/Views/home_usuario.php');
     exit;
 } else {
     redirect_with_message('../../app/Views/FaçaLoginMyBeat.php', 'error', 'E-mail ou senha inválidos.');

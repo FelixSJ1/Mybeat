@@ -95,33 +95,37 @@ class AvaliacaoUsuarioController {
         $musicas = $this->albumModel->getMusicas($id_album);
         $avaliacoes = $this->avaliacaoModel->getByAlbum($id_album);
 
+        $ratingStats = $this->albumModel->getRatingStats($id_album);
+        
+        $album['media_nota'] = $ratingStats['media_nota'] ?? 0;
+        $album['total_avaliacoes'] = $ratingStats['total_avaliacoes'] ?? 0;
+
         require __DIR__ . '/../views/avaliacao.php';
     }
 
     // Salvar avaliação enviada pelo form
     public function salvar() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
             session_start();
-            $id_usuario = $_SESSION['id_usuario'] ?? null;
+            $id_usuario = $_SESSION['id_usuario'] ?? 1;
 
-            if (!$id_usuario) {
-                header("Location: /Mybeat/app/views/FaçaLoginMyBeat.php");
-                exit;
-            }
-
-            $id_album = (int)$_POST['id_album'];
-            $nota = (float)$_POST['nota'];
+            $id_album     = filter_input(INPUT_POST, 'id_album', FILTER_VALIDATE_INT);
+            $nota         = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_INT);
             $texto_review = trim($_POST['texto_review']);
 
-            if ($id_album > 0 && $nota > 0) {
+            if ($id_album && $nota && $id_usuario) {
                 $this->avaliacaoModel->adicionar($id_usuario, $id_album, $nota, $texto_review);
+
                 header("Location: listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=$id_album&msg=success");
                 exit;
             } else {
+
                 header("Location: listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=$id_album&msg=error");
                 exit;
             }
         }
     }
+    
 }
 

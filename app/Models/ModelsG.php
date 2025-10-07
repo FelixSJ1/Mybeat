@@ -94,6 +94,18 @@ class Album {
                 LIMIT {$limit}";
         return $this->conn->query($sql);
     }
+    public function getRatingStats($id_album) {
+        $stmt = $this->conn->prepare(
+            "SELECT AVG(nota) as media_nota, COUNT(id_avaliacao) as total_avaliacoes
+            FROM Avaliacoes
+            WHERE id_album = ?"
+        );
+        if (!$stmt) return null;
+    
+        $stmt->bind_param("i", $id_album);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 }
 
 class Musica {
@@ -156,7 +168,7 @@ class Avaliacao {
     }
     
     public function getByAlbum($id_album) {
-        $stmt = $this->conn->prepare("SELECT av.*, u.nome_exibicao
+        $stmt = $this->conn->prepare("SELECT av.*, COALESCE(u.nome_exibicao, u.nome_usuario) AS nome_exibicao
                                       FROM Avaliacoes av
                                       JOIN Usuarios u ON av.id_usuario = u.id_usuario
                                       WHERE av.id_album = ?
