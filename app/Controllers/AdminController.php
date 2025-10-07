@@ -2,6 +2,21 @@
 // app/Controllers/AdminController.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
+// --- INÍCIO: Checagem de Acesso: apenas administradores podem acessar este controller ---
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+// Se não estiver logado como admin, redireciona para a tela de login de administrador
+if (empty($_SESSION['admin_logged']) || $_SESSION['admin_logged'] !== true) {
+    // opcional: guarda destino para após login (se quiser usar)
+    $_SESSION['after_admin_login_redirect'] = $_SERVER['REQUEST_URI'] ?? '/';
+
+    // redireciona para a view de login ADM (mesmo arquivo que o projeto usa)
+    header('Location: ../Views/FaçaLoginMyBeatADM.php');
+    exit;
+}
+// --- FIM: Checagem de Acesso ---
+
+
 require_once __DIR__ . '/../Models/AdminModel.php';
 
 // tenta incluir conector (NÃO modifica o conector)

@@ -135,7 +135,33 @@ class AdminModel {
         }
     }
 
-    public function deleteReview(int $reviewId): bool {
+    
+
+    /**
+     * Retorna todas as avaliações (com dados do usuário e álbum)
+     */
+    public function allReviews(): array {
+        $sql = "SELECT a.id_avaliacao AS id, a.texto_review AS texto, a.nota, a.data_avaliacao,
+                       u.id_usuario AS usuario_id, u.nome_usuario, u.nome_exibicao,
+                       al.id_album, al.titulo AS album_title
+                FROM Avaliacoes a
+                LEFT JOIN Usuarios u ON a.id_usuario = u.id_usuario
+                LEFT JOIN Albuns al ON a.id_album = al.id_album
+                ORDER BY a.data_avaliacao DESC";
+        if ($this->pdo) {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } else {
+            $res = $this->mysqli->query($sql);
+            if (!$res) return [];
+            $rows = $res->fetch_all(MYSQLI_ASSOC);
+            $res->free();
+            return $rows ?: [];
+        }
+    }
+
+public function deleteReview(int $reviewId): bool {
         $sql = "DELETE FROM Avaliacoes WHERE id_avaliacao = :id";
         if ($this->pdo) {
             $stmt = $this->pdo->prepare($sql);
