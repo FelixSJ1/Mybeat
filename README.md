@@ -20,7 +20,7 @@ Funcionalidades:
 
 Sprint 2: Criação da divisão de papéis entre administrador e usuário
 
-Valor do sprint: Habilitar a criação de usuários e administradores para um teste mais efetivo das próximas funções
+Valor do sprint: permitir a criação de usuários e administradores para um teste mais efetivo das próximas funções
 
 Funcionalidades:
 
