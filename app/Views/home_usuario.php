@@ -163,7 +163,7 @@ function build_search_query($q) {
                             </a>
                             <div class="album-info">
                                 <h3>
-                                    <a href="../../avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>">
+                                    <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>">
                                         <?php echo htmlspecialchars($al['titulo']); ?>
                                     </a>
                                 </h3>
