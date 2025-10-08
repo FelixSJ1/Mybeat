@@ -1,269 +1,170 @@
 <?php
 // app/Models/music_removal_model.php
 class Music_Removal_Model {
-    private $pdo = null;
+    private $conn = null;
 
-    public function __construct(PDO $pdo = null) {
-        if ($pdo instanceof PDO) { $this->pdo = $pdo; return; }
-        $this->getConnection();
-        if (!$this->pdo) {
-            throw new Exception("Falha ao obter conexão PDO no Music_Removal_Model. Verifique a configuração do BD.");
+    public function __construct($conn = null) {
+        if ($conn instanceof mysqli) { $this->conn = $conn; return; }
+        $candidate = __DIR__ . '/../config/conector.php';
+        if (file_exists($candidate)) {
+            require_once $candidate;
+            if (isset($conn) && $conn instanceof mysqli) { $this->conn = $conn; return; }
+            if (isset($GLOBALS['conn']) && $GLOBALS['conn'] instanceof mysqli) { $this->conn = $GLOBALS['conn']; return; }
         }
+        $db_server = getenv('DB_SERVER') ?: '127.0.0.1';
+        $db_user = getenv('DB_USER') ?: 'root';
+        $db_pass = getenv('DB_PASS') ?: '';
+        $db_name = getenv('DB_NAME') ?: 'MyBeatDB';
+        $db_port = getenv('DB_PORT') ?: 3306;
+        $m = @new mysqli($db_server, $db_user, $db_pass, $db_name, $db_port);
+        if ($m && !$m->connect_errno) { $m->set_charset('utf8'); $this->conn = $m; return; }
+        throw new Exception("Falha ao obter conexão MySQLi no Music_Removal_Model. Verifique app/config/conector.php");
     }
 
-    private function getConnection() {
-        if ($this->pdo) return $this->pdo;
+    private function ensureConnection() { return ($this->conn instanceof mysqli) ? $this->conn : null; }
 
-        $host = getenv('DB_HOST') ?: '127.0.0.1:3307';
-        $db   = getenv('DB_NAME') ?: 'MyBeatDB';
-        $user = getenv('DB_USER') ?: 'root';
-        $pass = getenv('DB_PASS') ?: '';
-        $charset = 'utf8mb4';
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-        try {
-            $options = [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false,
-            ];
-            $pdo = new PDO($dsn, $user, $pass, $options);
-            $this->pdo = $pdo;
-            return $pdo;
-        } catch (Throwable $e) {
-            // tenta arquivos de conexão do projeto (se houver) — sem instanciar classes externas
-            $candidates = [
-                __DIR__ . '/../../Database/database.php',
-                __DIR__ . '/../../database.php',
-                __DIR__ . '/../../config/database.php',
-                __DIR__ . '/../Database/database.php',
-                __DIR__ . '/../../app/Database/database.php'
-            ];
-            foreach ($candidates as $file) {
-                if (file_exists($file)) {
-                    try {
-                        require_once $file;
-                        if (isset($pdo) && $pdo instanceof PDO) { $this->pdo = $pdo; return $this->pdo; }
-                        if (isset($db) && $db instanceof PDO) { $this->pdo = $db; return $this->pdo; }
-                        if (isset($database) && $database instanceof PDO) { $this->pdo = $database; return $this->pdo; }
-                        if (isset($conn) && $conn instanceof PDO) { $this->pdo = $conn; return $this->pdo; }
-                        if (isset($connection) && $connection instanceof PDO) { $this->pdo = $connection; return $this->pdo; }
-                    } catch (Throwable $ex) { /* ignora */ }
-                }
-            }
-            error_log("Music_Removal_Model::getConnection error: " . $e->getMessage());
-            return null;
-        }
+    public function all() {
+        $conn = $this->ensureConnection(); if (!$conn) return array();
+        $sql = "SELECT m.id_musica AS id, m.titulo AS title, m.id_artista AS artist_id, m.id_album AS album_id,
+                       a.nome AS artist_name, al.titulo AS album_title
+                FROM musicas m
+                LEFT JOIN artistas a ON a.id_artista = m.id_artista
+                LEFT JOIN albuns al ON al.id_album = m.id_album
+                ORDER BY m.titulo ASC";
+        $res = $conn->query($sql);
+        if (!$res) return array();
+        $out = array();
+        while ($row = $res->fetch_assoc()) $out[] = $row;
+        return $out;
     }
 
-    // lista músicas
-    public function all(): array {
-        $pdo = $this->getConnection();
-        if (!$pdo) return [];
-        try {
-            $sql = "SELECT m.id_musica AS id, m.titulo AS title, a.nome AS artist_name, al.titulo AS album_title
-                    FROM Musicas m
-                    LEFT JOIN Artistas a ON m.id_artista = a.id_artista
-                    LEFT JOIN Albuns al ON m.id_album = al.id_album
-                    ORDER BY m.titulo ASC";
-            $stmt = $pdo->query($sql);
-            $rows = $stmt->fetchAll();
-            $out = [];
-            foreach ($rows as $r) {
-                $out[] = [
-                    'id' => $r['id'] ?? ($r['id_musica'] ?? null),
-                    'title' => $r['title'] ?? ($r['titulo'] ?? null),
-                    'artist_name' => $r['artist_name'] ?? ($r['nome'] ?? null),
-                    'album_title' => $r['album_title'] ?? ($r['titulo_album'] ?? null)
-                ];
-            }
-            return $out;
-        } catch (Throwable $e) {
-            error_log("Music_Removal_Model::all error: " . $e->getMessage());
-            return [];
-        }
+    public function allAlbums() {
+        $conn = $this->ensureConnection(); if (!$conn) return array();
+        $sql = "SELECT al.id_album AS id, al.titulo AS title, al.id_artista AS artist_id,
+                       a.nome AS artist_name, al.data_lancamento AS release_date,
+                       (SELECT COUNT(*) FROM musicas m WHERE m.id_album = al.id_album) AS songs_count
+                FROM albuns al
+                LEFT JOIN artistas a ON al.id_artista = a.id_artista
+                ORDER BY al.titulo ASC";
+        $res = $conn->query($sql);
+        $out = array(); if ($res) while ($r = $res->fetch_assoc()) $out[] = $r;
+        return $out;
     }
 
-    public function allAlbums(): array {
-        $pdo = $this->getConnection();
-        if (!$pdo) return [];
-        try {
-            $sql = "SELECT al.id_album AS id, al.titulo AS title, al.id_artista AS artist_id,
-                           a.nome AS artist_name, al.data_lancamento AS release_date,
-                           (SELECT COUNT(*) FROM Musicas m WHERE m.id_album = al.id_album) AS songs_count
-                    FROM Albuns al
-                    LEFT JOIN Artistas a ON al.id_artista = a.id_artista
-                    ORDER BY al.titulo ASC";
-            $stmt = $pdo->query($sql);
-            $rows = $stmt->fetchAll();
-            $out = [];
-            foreach ($rows as $r) {
-                $out[] = [
-                    'id' => $r['id'] ?? ($r['id_album'] ?? null),
-                    'title' => $r['title'] ?? ($r['titulo'] ?? null),
-                    'artist_name' => $r['artist_name'] ?? ($r['nome'] ?? null),
-                    'release_date' => $r['release_date'] ?? null,
-                    'songs_count' => isset($r['songs_count']) ? (int)$r['songs_count'] : 0
-                ];
-            }
-            return $out;
-        } catch (Throwable $e) {
-            error_log("Music_Removal_Model::allAlbums error: " . $e->getMessage());
-            return [];
-        }
+    public function allArtists() {
+        $conn = $this->ensureConnection(); if (!$conn) return array();
+        $sql = "SELECT ar.id_artista AS id, ar.nome AS name, ar.biografia AS bio,
+                       (SELECT COUNT(*) FROM albuns al WHERE al.id_artista = ar.id_artista) AS albums_count,
+                       (SELECT COUNT(*) FROM musicas m WHERE m.id_artista = ar.id_artista) AS songs_count
+                FROM artistas ar
+                ORDER BY ar.nome ASC";
+        $res = $conn->query($sql);
+        $out = array(); if ($res) while ($r = $res->fetch_assoc()) $out[] = $r;
+        return $out;
     }
 
-    public function allArtists(): array {
-        $pdo = $this->getConnection();
-        if (!$pdo) return [];
-        try {
-            $sql = "SELECT a.id_artista AS id, a.nome AS name,
-                           (SELECT COUNT(*) FROM Albuns al WHERE al.id_artista = a.id_artista) AS albums_count,
-                           (SELECT COUNT(*) FROM Musicas m WHERE m.id_artista = a.id_artista) AS songs_count
-                    FROM Artistas a
-                    ORDER BY a.nome ASC";
-            $stmt = $pdo->query($sql);
-            $rows = $stmt->fetchAll();
-            $out = [];
-            foreach ($rows as $r) {
-                $out[] = [
-                    'id' => $r['id'] ?? ($r['id_artista'] ?? null),
-                    'name' => $r['name'] ?? ($r['nome'] ?? null),
-                    'albums_count' => isset($r['albums_count']) ? (int)$r['albums_count'] : 0,
-                    'songs_count' => isset($r['songs_count']) ? (int)$r['songs_count'] : 0
-                ];
-            }
-            return $out;
-        } catch (Throwable $e) {
-            error_log("Music_Removal_Model::allArtists error: " . $e->getMessage());
-            return [];
-        }
+    public function countSongsByAlbum($albumId) {
+        $conn = $this->ensureConnection(); if (!$conn) return 0;
+        $stmt = $conn->prepare("SELECT COUNT(*) AS c FROM musicas WHERE id_album = ?");
+        $stmt->bind_param('i',$albumId);
+        $stmt->execute();
+        $r = $stmt->get_result()->fetch_assoc();
+        return isset($r['c']) ? (int)$r['c'] : 0;
     }
 
-    // contadores
-    public function countSongsByAlbum($albumId): int {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 0;
-        try {
-            $stmt = $pdo->prepare("SELECT COUNT(*) AS cnt FROM Musicas WHERE id_album = :id");
-            $stmt->execute(['id' => $albumId]);
-            $r = $stmt->fetch();
-            return isset($r['cnt']) ? (int)$r['cnt'] : 0;
-        } catch (Throwable $e) {
-            error_log("countSongsByAlbum error: " . $e->getMessage());
-            return 0;
-        }
+    public function countAlbumsByArtist($artistId) {
+        $conn = $this->ensureConnection(); if (!$conn) return 0;
+        $stmt = $conn->prepare("SELECT COUNT(*) AS c FROM albuns WHERE id_artista = ?");
+        $stmt->bind_param('i',$artistId);
+        $stmt->execute();
+        $r = $stmt->get_result()->fetch_assoc();
+        return isset($r['c']) ? (int)$r['c'] : 0;
     }
 
-    public function countAlbumsByArtist($artistId): int {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 0;
-        try {
-            $stmt = $pdo->prepare("SELECT COUNT(*) AS cnt FROM Albuns WHERE id_artista = :id");
-            $stmt->execute(['id' => $artistId]);
-            $r = $stmt->fetch();
-            return isset($r['cnt']) ? (int)$r['cnt'] : 0;
-        } catch (Throwable $e) {
-            error_log("countAlbumsByArtist error: " . $e->getMessage());
-            return 0;
-        }
+    public function countSongsByArtist($artistId) {
+        $conn = $this->ensureConnection(); if (!$conn) return 0;
+        $stmt = $conn->prepare("SELECT COUNT(*) AS c FROM musicas WHERE id_artista = ?");
+        $stmt->bind_param('i',$artistId);
+        $stmt->execute();
+        $r = $stmt->get_result()->fetch_assoc();
+        return isset($r['c']) ? (int)$r['c'] : 0;
     }
 
-    public function countSongsByArtist($artistId): int {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 0;
+    public function deleteSong($id) {
+        $conn = $this->ensureConnection(); if (!$conn) return false;
         try {
-            $stmt = $pdo->prepare("SELECT COUNT(*) AS cnt FROM Musicas WHERE id_artista = :id");
-            $stmt->execute(['id' => $artistId]);
-            $r = $stmt->fetch();
-            return isset($r['cnt']) ? (int)$r['cnt'] : 0;
-        } catch (Throwable $e) {
-            error_log("countSongsByArtist error: " . $e->getMessage());
-            return 0;
-        }
-    }
-
-    // deleções
-    public function deleteSong(int $id) {
-        $pdo = $this->getConnection();
-        if (!$pdo) return false;
-        try {
-            $stmt = $pdo->prepare("DELETE FROM Musicas WHERE id_musica = :id");
-            $stmt->execute(['id' => $id]);
-            return $stmt->rowCount() > 0;
+            $stmt = $conn->prepare("DELETE FROM musicas WHERE id_musica = ?");
+            $stmt->bind_param('i',$id);
+            $stmt->execute();
+            return ($stmt->affected_rows > 0);
         } catch (Throwable $e) {
             error_log("deleteSong error: " . $e->getMessage());
             return false;
         }
     }
 
-    public function deleteAlbum(int $id) {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 'Conexão com o banco indisponível';
+    public function deleteAlbum($id) {
+        $conn = $this->ensureConnection(); if (!$conn) return 'Conexão com o banco indisponível';
+        $songs = $this->countSongsByAlbum($id);
+        if ($songs > 0) return "Existem {$songs} músicas vinculadas a este álbum. Use remoção forçada para remover também.";
         try {
-            $count = $this->countSongsByAlbum($id);
-            if ($count > 0) return "Existem {$count} músicas vinculadas a este álbum. Confirme para remover também as músicas.";
-            $stmt = $pdo->prepare("DELETE FROM Albuns WHERE id_album = :id");
-            $stmt->execute(['id' => $id]);
-            return $stmt->rowCount() > 0 ? true : 'Álbum não encontrado';
+            $stmt = $conn->prepare("DELETE FROM albuns WHERE id_album = ?");
+            $stmt->bind_param('i',$id);
+            $stmt->execute();
+            return ($stmt->affected_rows > 0);
         } catch (Throwable $e) {
             error_log("deleteAlbum error: " . $e->getMessage());
-            return 'Erro no banco de dados';
+            return 'Erro ao apagar álbum';
         }
     }
 
-    public function deleteAlbumForce(int $id) {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 'Conexão com o banco indisponível';
+    public function deleteAlbumForce($id) {
+        $conn = $this->ensureConnection(); if (!$conn) return 'Conexão com o banco indisponível';
         try {
-            $pdo->beginTransaction();
-            $stmt1 = $pdo->prepare("DELETE FROM Musicas WHERE id_album = :id");
-            $stmt1->execute(['id' => $id]);
-            $stmt2 = $pdo->prepare("DELETE FROM Albuns WHERE id_album = :id");
-            $stmt2->execute(['id' => $id]);
-            $pdo->commit();
+            $conn->begin_transaction();
+            $stmt1 = $conn->prepare("DELETE FROM musicas WHERE id_album = ?");
+            $stmt1->bind_param('i',$id); $stmt1->execute();
+            $stmt2 = $conn->prepare("DELETE FROM albuns WHERE id_album = ?");
+            $stmt2->bind_param('i',$id); $stmt2->execute();
+            $conn->commit();
             return true;
         } catch (Throwable $e) {
-            if ($pdo->inTransaction()) $pdo->rollBack();
+            // tenta rollback de forma segura (sem referenciar propriedade)
+            try { $conn->rollback(); } catch (Throwable $_) {}
             error_log("deleteAlbumForce error: " . $e->getMessage());
             return 'Erro ao apagar álbum e suas músicas';
         }
     }
 
-    public function deleteArtist(int $id) {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 'Conexão com o banco indisponível';
+    public function deleteArtist($id) {
+        $conn = $this->ensureConnection(); if (!$conn) return 'Conexão com o banco indisponível';
+        $albums = $this->countAlbumsByArtist($id); $songs = $this->countSongsByArtist($id);
+        if ($albums > 0 || $songs > 0) return "Existem {$albums} álbuns e {$songs} músicas vinculadas ao artista. Use remoção forçada para apagar tudo.";
         try {
-            $albums = $this->countAlbumsByArtist($id);
-            $songs = $this->countSongsByArtist($id);
-            if ($albums > 0 || $songs > 0) return "Existem {$albums} álbuns e {$songs} músicas vinculadas a este artista. Confirme para remover dependências.";
-            $stmt = $pdo->prepare("DELETE FROM Artistas WHERE id_artista = :id");
-            $stmt->execute(['id' => $id]);
-            return $stmt->rowCount() > 0 ? true : 'Artista não encontrado';
+            $stmt = $conn->prepare("DELETE FROM artistas WHERE id_artista = ?");
+            $stmt->bind_param('i',$id);
+            $stmt->execute();
+            return ($stmt->affected_rows > 0);
         } catch (Throwable $e) {
             error_log("deleteArtist error: " . $e->getMessage());
-            return 'Erro no banco de dados';
+            return 'Erro ao apagar artista';
         }
     }
 
-    public function deleteArtistForce(int $id) {
-        $pdo = $this->getConnection();
-        if (!$pdo) return 'Conexão com o banco indisponível';
+    public function deleteArtistForce($id) {
+        $conn = $this->ensureConnection(); if (!$conn) return 'Conexão com o banco indisponível';
         try {
-            $pdo->beginTransaction();
-            // deletar músicas do artista
-            $stmt1 = $pdo->prepare("DELETE FROM Musicas WHERE id_artista = :id");
-            $stmt1->execute(['id' => $id]);
-            // deletar albuns do artista
-            $stmt2 = $pdo->prepare("DELETE FROM Albuns WHERE id_artista = :id");
-            $stmt2->execute(['id' => $id]);
-            // deletar artista
-            $stmt3 = $pdo->prepare("DELETE FROM Artistas WHERE id_artista = :id");
-            $stmt3->execute(['id' => $id]);
-            $pdo->commit();
+            $conn->begin_transaction();
+            $stmt1 = $conn->prepare("DELETE FROM musicas WHERE id_artista = ?");
+            $stmt1->bind_param('i',$id); $stmt1->execute();
+            $stmt2 = $conn->prepare("DELETE FROM albuns WHERE id_artista = ?");
+            $stmt2->bind_param('i',$id); $stmt2->execute();
+            $stmt3 = $conn->prepare("DELETE FROM artistas WHERE id_artista = ?");
+            $stmt3->bind_param('i',$id); $stmt3->execute();
+            $conn->commit();
             return true;
         } catch (Throwable $e) {
-            if ($pdo->inTransaction()) $pdo->rollBack();
+            try { $conn->rollback(); } catch (Throwable $_) {}
             error_log("deleteArtistForce error: " . $e->getMessage());
             return 'Erro ao apagar artista e dependências';
         }

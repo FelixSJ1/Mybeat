@@ -55,6 +55,7 @@ if (password_verify($senha, $hashFromDb)) {
 
     unset($_SESSION['error'], $_SESSION['old_email']);
 
+
     header('Location: /Mybeat/app/Views/home_usuario.php');
     exit;
 } else {
