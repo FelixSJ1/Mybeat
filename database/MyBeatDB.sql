@@ -68,3 +68,5 @@ CREATE TABLE Administradores (
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     administrador BOOLEAN NOT NULL DEFAULT TRUE
 );
+
+

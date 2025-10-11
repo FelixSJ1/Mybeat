@@ -92,7 +92,11 @@ function build_search_query($q) {
     <meta charset="utf-8">
     <title>MyBeat - Home do Usuário</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< Updated upstream
     <link href="../../public/css/home_usuario.css" rel="stylesheet">
+=======
+   <link href="../../public/css/home_usuario.css" rel="stylesheet"> 
+>>>>>>> Stashed changes
 </head>
 <body>
 <header>
@@ -152,7 +156,11 @@ function build_search_query($q) {
                 <?php else: ?>
                     <?php foreach ($albums as $al): ?>
                         <div class="album-card card">
+<<<<<<< Updated upstream
                             <a href="../../avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+=======
+                            <a href="../app/Views/listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+>>>>>>> Stashed changes
                                 <div class="cover">
                                     <?php if (!empty($al['capa_album_url'])): ?>
                                         <img src="<?php echo htmlspecialchars($al['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($al['titulo']); ?>">
@@ -163,7 +171,7 @@ function build_search_query($q) {
                             </a>
                             <div class="album-info">
                                 <h3>
-                                    <a href="../../avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>">
+                                    <a href="../avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>">
                                         <?php echo htmlspecialchars($al['titulo']); ?>
                                     </a>
                                 </h3>
