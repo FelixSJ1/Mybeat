@@ -3,8 +3,8 @@ session_start();
 require_once __DIR__ . '/../config/conector.php';
 
 // Configurações do Google OAuth
-define('GOOGLE_CLIENT_ID', '266253581613-frnaairlmq69n04ieqrdvs2gcpt63mvf.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', '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');
+define('GOOGLE_CLIENT_ID', '');
+define('GOOGLE_CLIENT_SECRET', '');
 define('GOOGLE_REDIRECT_URI', 'http://localhost/MyBeat/Mybeat/app/Models/google_callback.php');
 
 if (!isset($_GET['code'])) {
