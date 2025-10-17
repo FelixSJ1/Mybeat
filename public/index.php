@@ -1,3 +1,31 @@
+<?php
+// ROTEADOR PRINCIPAL - Front Controller//
+
+$controllerName = $_GET['controller'] ?? null;
+$action         = $_GET['action'] ?? null;
+
+if ($controllerName && $action) {
+
+    require_once __DIR__ . '/../app/config/conector.php';
+    require_once __DIR__ . '/../app/Controllers/ControllersG.php'; 
+
+    $controllerClassName = ucfirst($controllerName) . 'Controller';
+
+    if (class_exists($controllerClassName)) {
+        $controller = new $controllerClassName($conn);
+
+        if (method_exists($controller, $action)) {
+            $controller->$action();
+            exit; 
+        } else {
+            die("Ação '$action' não encontrada.");
+        }
+    } else {
+        die("Controller '$controllerClassName' não encontrado.");
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

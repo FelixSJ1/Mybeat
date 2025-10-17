@@ -240,7 +240,7 @@ function build_search_query($q) {
                     <?php foreach ($musicas as $m): ?>
                         <li class="musica-item">
                             <div class="cover small-cover">
-                                <a href="../../avaliacao.php?id_album=<?php echo (int)$m['id_album']; ?>">
+                                <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>">
                                     <?php if (!empty($m['capa_album_url'])): ?>
                                         <img src="<?php echo htmlspecialchars($m['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($m['titulo'] ?? $m['titulo_musica']); ?>">
                                     <?php else: ?>
@@ -251,12 +251,12 @@ function build_search_query($q) {
 
                             <div class="info">
                                 <p>
-                                    <a href="../../avaliacao.php?id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
+                                    <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
                                         <?php echo htmlspecialchars($m['titulo'] ?? $m['titulo_musica']); ?>
                                     </a>
                                 </p>
                                 <p><strong>Álbum:</strong>
-                                    <a href="../../avaliacao.php?id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-album">
+                                    <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
                                         <?php echo htmlspecialchars($m['titulo_album'] ?? '—'); ?>
                                     </a>
                                 </p>
