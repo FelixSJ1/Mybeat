@@ -4,9 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Configurações do Google OAuth
-define('GOOGLE_CLIENT_ID', '266253581613-frnaairlmq69n04ieqrdvs2gcpt63mvf.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', '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');
-define('GOOGLE_REDIRECT_URI', 'http://localhost/MyBeat/Mybeat/app/Models/google_callback.php');
+define('GOOGLE_CLIENT_ID', '');
+define('GOOGLE_CLIENT_SECRET', '');
+define('GOOGLE_REDIRECT_URI', '');
 
 // Gerar URL de autenticação do Google
 $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query([
@@ -45,16 +45,17 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
                 <input type="password" name="senha" placeholder="Senha" required>
                 <button type="submit" class="login-button">Entrar</button>
             </form>
-            <div class="social-login">
-                <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="social-icon google-login">
-                    <i class="fab fa-google"></i>
-                </a>
-            </div>
+            
             <div class="extra-links">
                 <p>Não tem conta ainda? <a href="../../app/Views/cadastro.php" class="btn-registrar">Criar conta</a></p>
             </div>
             <div class="extra-links">
                 <p>Já é administrador? <a href="../../app/Views/FaçaLoginMyBeatADM.php" class="signup-link">Faça Login</a></p>
+            </div>
+            <div class="social-login">
+                <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="social-icon google-login">
+                    <i class="fab fa-google"></i>
+                </a>
             </div>
         </div>
     </div>

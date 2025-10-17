@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/conector.php';
 // Configurações do Google OAuth
 define('GOOGLE_CLIENT_ID', '');
 define('GOOGLE_CLIENT_SECRET', '');
-define('GOOGLE_REDIRECT_URI', 'http://localhost/MyBeat/Mybeat/app/Models/google_callback.php');
+define('GOOGLE_REDIRECT_URI', '');
 
 if (!isset($_GET['code'])) {
     $_SESSION['mensagem_erro'] = 'Erro na autenticação com o Google.';
@@ -64,14 +64,14 @@ try {
     $stmt->execute([$user_info['email']]);
     
     if ($stmt->rowCount() > 0) {
-        // Usuário já existe, fazer login
+        // Usuário já existe, fazer login e ir para home_usuario.php
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         $_SESSION['id_usuario'] = $usuario['id_usuario'];
         $_SESSION['email'] = $user_info['email'];
-        header('Location: ../../public/index.php');
+        header('Location: ../Views/home_usuario.php');
         exit();
     } else {
-        // Criar novo usuário
+        // Criar novo usuário e redirecionar para login
         $nome_usuario = explode('@', $user_info['email'])[0]; // Usar parte do email como username
         $nome_exibicao = $user_info['name'] ?? $nome_usuario;
         $foto_perfil = $user_info['picture'] ?? null;
@@ -83,9 +83,9 @@ try {
         $stmt = $pdo->prepare("INSERT INTO Usuarios (nome_usuario, email, hash_senha, nome_exibicao, foto_perfil_url) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$nome_usuario, $user_info['email'], $hash_senha, $nome_exibicao, $foto_perfil]);
         
-        $_SESSION['id_usuario'] = $pdo->lastInsertId();
-        $_SESSION['email'] = $user_info['email'];
-        header('Location: ../../public/index.php');
+        // Redirecionar para a página de login após cadastro
+        $_SESSION['mensagem_sucesso'] = 'Conta criada com sucesso! Faça login para continuar.';
+        header('Location: ../Views/FaçaLoginMyBeat.php');
         exit();
     }
 } catch (PDOException $e) {
