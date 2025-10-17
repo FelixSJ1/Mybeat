@@ -6,7 +6,7 @@
     <title>Avaliar Álbum - MyBeat</title>
 
     
-    <link rel="stylesheet" href="/Mybeat/public/css/avaliacao.css">
+    <link rel="stylesheet" href="../../public/css/avaliacao.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -19,7 +19,7 @@
         <div class="container">
             <div class="logo">
                 <a href="/Mybeat/app/Views/home_usuario.php" class="logo-link">
-                    <img src="/Mybeat/public/images/LogoF.png" alt="Mybeat Logo">
+                    <img src="../../public/images/LogoF.png" alt="Mybeat Logo">
                     <h1>MyBeat</h1>
                 </a>
             </div>

@@ -1,8 +1,38 @@
 <?php
+session_start();
+
+// Verificar se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header('Location: FaçaLoginMyBeat.php');
+    exit();
+}
 
 require_once __DIR__ . '/../config/conector.php';
 require_once __DIR__ . '/../Controllers/ControllersG.php';
 require_once __DIR__ . '/../Models/ModelsG.php';
+
+// Verificar se é o primeiro acesso (biografia vazia)
+try {
+    $pdo = new PDO("mysql:host=localhost;port=3307;dbname=MyBeatDB", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $stmt = $pdo->prepare("SELECT biografia, foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
+    $stmt->execute([$_SESSION['id_usuario']]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Se biografia estiver vazia, é primeiro acesso
+    if ($usuario && (empty($usuario['biografia']) || $usuario['biografia'] === null)) {
+        header('Location: perfilUsuario.php?primeiro_acesso=1');
+        exit();
+    }
+    
+    // Armazenar foto do perfil na sessão para usar no header
+    $foto_perfil = $usuario['foto_perfil_url'] ?? '../../public/images/Perfil_Usuario.png';
+    
+} catch (PDOException $e) {
+    // Em caso de erro, continua normalmente
+    $foto_perfil = '../../public/images/Perfil_Usuario.png';
+}
 
 $albumModel = class_exists('Album') ? new Album($conn) : null;
 $musicaModel = class_exists('Musica') ? new Musica($conn) : null;
@@ -92,9 +122,28 @@ function build_search_query($q) {
     <meta charset="utf-8">
     <title>MyBeat - Home do Usuário</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link href="/Mybeat/public/css/home_usuario.css" rel="stylesheet"> 
+    <link href="../../public/css/home_usuario.css" rel="stylesheet">
+    <style>
+        .user-circle {
+            cursor: pointer;
+        }
+        .user-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
+
+<?php if (!empty($_SESSION['mensagem_sucesso'])): ?>
+    <div style="position: fixed; top: 20px; right: 20px; background: rgba(138, 43, 226, 0.9); color: white; padding: 15px 20px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+        <?php echo htmlspecialchars($_SESSION['mensagem_sucesso']); ?>
+    </div>
+    <?php unset($_SESSION['mensagem_sucesso']); ?>
+<?php endif; ?>
+
 <header>
     <div class="logo">
         <a href="home_usuario.php" class="logo-link">
@@ -111,7 +160,9 @@ function build_search_query($q) {
     </div>
 
     <div class="user-circle" title="Meu Perfil">
-        <img src="../../public/images/Perfil_Usuario.png" alt="Usuário">
+        <a href="perfilUsuario.php" style="display: block; width: 100%; height: 100%;">
+            <img src="<?php echo htmlspecialchars($foto_perfil); ?>" alt="Usuário">
+        </a>
     </div>
 
 </header>
@@ -152,7 +203,7 @@ function build_search_query($q) {
                 <?php else: ?>
                     <?php foreach ($albums as $al): ?>
                         <div class="album-card card">
-                            <a href="/Mybeat/app/Views/listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+                            <a href="avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
                                 <div class="cover">
                                     <?php if (!empty($al['capa_album_url'])): ?>
                                         <img src="<?php echo htmlspecialchars($al['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($al['titulo']); ?>">
@@ -163,7 +214,7 @@ function build_search_query($q) {
                             </a>
                             <div class="album-info">
                                 <h3>
-                                    <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>">
+                                    <a href="avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>">
                                         <?php echo htmlspecialchars($al['titulo']); ?>
                                     </a>
                                 </h3>
@@ -247,6 +298,16 @@ document.getElementById('genreSelect').addEventListener('change', function() {
     window.addEventListener('load', function() {
         setTimeout(function() { carousel.scrollLeft = 0; }, 80);
     });
+    
+    
+    setTimeout(function() {
+        const msg = document.querySelector('[style*="position: fixed"]');
+        if (msg) {
+            msg.style.opacity = '0';
+            msg.style.transition = 'opacity 0.5s';
+            setTimeout(function() { msg.remove(); }, 500);
+        }
+    }, 5000);
 })();
 </script>
 </body>

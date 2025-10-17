@@ -55,8 +55,11 @@ if (password_verify($senha, $hashFromDb)) {
 
     unset($_SESSION['error'], $_SESSION['old_email']);
 
+    header('Location: ../../app/Views/home_usuario.php');
+
 
     header('Location: /Mybeat/app/Views/home_usuario.php');
+
     exit;
 } else {
     redirect_with_message('../../app/Views/FaçaLoginMyBeat.php', 'error', 'E-mail ou senha inválidos.');
