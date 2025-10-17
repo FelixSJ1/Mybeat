@@ -1,5 +1,19 @@
 <?php
 session_start();
+
+// Configurações do Google OAuth
+define('GOOGLE_CLIENT_ID', '266253581613-frnaairlmq69n04ieqrdvs2gcpt63mvf.apps.googleusercontent.com');
+define('GOOGLE_CLIENT_SECRET', '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');
+define('GOOGLE_REDIRECT_URI', 'http://localhost/MyBeat/Mybeat/app/Models/google_callback.php');
+
+// Gerar URL de autenticação do Google
+$google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query([
+    'client_id' => GOOGLE_CLIENT_ID,
+    'redirect_uri' => GOOGLE_REDIRECT_URI,
+    'response_type' => 'code',
+    'scope' => 'email profile',
+    'access_type' => 'online'
+]);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -67,7 +81,7 @@ session_start();
             </div>
 
             <div class="social-login">
-                <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+                <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="social-icon"><i class="fab fa-google"></i></a>
             </div>
         </div>
     </div>

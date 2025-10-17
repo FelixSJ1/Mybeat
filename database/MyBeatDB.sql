@@ -69,4 +69,11 @@ CREATE TABLE Administradores (
     administrador BOOLEAN NOT NULL DEFAULT TRUE
 );
 
-
+CREATE TABLE Seguidores (
+    id_seguidor INT NOT NULL,
+    id_seguido INT NOT NULL,
+    data_seguimento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_seguidor, id_seguido),
+    FOREIGN KEY (id_seguidor) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_seguido) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+);
