@@ -10,6 +10,7 @@
 <body>
 
 <?php
+
 // FRONT CONTROLLER embutido no listar_giovana.php
 
 require_once __DIR__ . '/../config/conector.php';
@@ -25,6 +26,7 @@ switch ($controller) {
     case 'album':    $c = new AlbumController($conn); break;
     case 'musica':   $c = new MusicaController($conn); break;
     case 'avaliacao':$c = new AvaliacaoController($conn); break;
+    case 'avaliacaoUsuario': $c = new AvaliacaoUsuarioController($conn); break; //mudei aquii ->> kauelly//
     default: die("Controller inválido");
 }
 
