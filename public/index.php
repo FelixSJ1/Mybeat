@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// Verificar se o usuário está logado
+$usuario_logado = isset($_SESSION['id_usuario']);
+$nome_usuario = $usuario_logado ? ($_SESSION['nome_exibicao'] ?? $_SESSION['nome_usuario'] ?? 'Usuário') : '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -15,8 +22,14 @@
                 <h1>MyBeat</h1>
             </div>
             <div class="cta-header">
-                <a href="../app/Views/FaçaLoginMyBeat.php" class="btn-login">Login</a>
-                <a href="../app/Views/cadastro.php" class="btn-registrar">Criar conta</a>
+                <?php if ($usuario_logado): ?>
+                    <span class="user-welcome">Olá, <?php echo htmlspecialchars($nome_usuario); ?>!</span>
+                    <a href="../app/Views/home_usuario.php" class="btn-home">Home</a>
+                    <a href="../app/Controllers/logout.php" class="btn-logout">Logout</a>
+                <?php else: ?>
+                    <a href="../app/Views/FaçaLoginMyBeat.php" class="btn-login">Login</a>
+                    <a href="../app/Views/cadastro.php" class="btn-registrar">Criar conta</a>
+                <?php endif; ?>
             </div>
         </div>
     </header>
