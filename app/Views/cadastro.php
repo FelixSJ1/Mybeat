@@ -1,19 +1,5 @@
 <?php
 session_start();
-
-// Configurações do Google OAuth
-define('GOOGLE_CLIENT_ID', '');
-define('GOOGLE_CLIENT_SECRET', '');
-define('GOOGLE_REDIRECT_URI', '');
-
-// Gerar URL de autenticação do Google
-$google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query([
-    'client_id' => GOOGLE_CLIENT_ID,
-    'redirect_uri' => GOOGLE_REDIRECT_URI,
-    'response_type' => 'code',
-    'scope' => 'email profile',
-    'access_type' => 'online'
-]);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -81,7 +67,7 @@ $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_
             </div>
 
             <div class="social-login">
-                <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="social-icon"><i class="fab fa-google"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
             </div>
         </div>
     </div>
