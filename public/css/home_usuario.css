@@ -336,3 +336,11 @@ main {
     min-width: 260px;
     text-align: center;
 }
+
+.search-and-profile-container {
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    color:#ccc;
+    
+}
