@@ -121,7 +121,7 @@ $avaliacoes = $avaliacaoController->getHistoricoUsuario($id_usuario);
                                 <div class="nota-container">
                                     <span class="nota-label">Sua nota:</span>
                                     <span class="nota-valor"><?php echo number_format($av['nota'], 1, ',', '.'); ?></span>
-                                    <span class="nota-max">/10</span>
+                                    <span class="nota-max">/5,0</span>
                                 </div>
                                 
                                 <div class="data-avaliacao">
