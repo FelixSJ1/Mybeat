@@ -13,12 +13,12 @@ require_once __DIR__ . '/../Models/ModelsG.php';
 
 // Verificar se é o primeiro acesso (biografia vazia)
 try {
-    $pdo = new PDO("mysql:host=localhost;port=3307;dbname=MyBeatDB", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    $stmt = $pdo->prepare("SELECT biografia, foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
-    $stmt->execute([$_SESSION['id_usuario']]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare("SELECT biografia, foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
+    $stmt->bind_param("i", $_SESSION['id_usuario']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
+    $stmt->close();
     
     // Se biografia estiver vazia, é primeiro acesso
     if ($usuario && (empty($usuario['biografia']) || $usuario['biografia'] === null)) {
@@ -29,7 +29,7 @@ try {
     // Armazenar foto do perfil na sessão para usar no header
     $foto_perfil = $usuario['foto_perfil_url'] ?? '../../public/images/Perfil_Usuario.png';
     
-} catch (PDOException $e) {
+} catch (Exception $e) {
     // Em caso de erro, continua normalmente
     $foto_perfil = '../../public/images/Perfil_Usuario.png';
 }
@@ -123,17 +123,6 @@ function build_search_query($q) {
     <title>MyBeat - Home do Usuário</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../../public/css/home_usuario.css" rel="stylesheet">
-    <style>
-        .user-circle {
-            cursor: pointer;
-        }
-        .user-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-    </style>
 </head>
 <body>
 
@@ -211,7 +200,7 @@ function build_search_query($q) {
                 <?php else: ?>
                     <?php foreach ($albums as $al): ?>
                         <div class="album-card card">
-                            <a href="avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+                            <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
                                 <div class="cover">
                                     <?php if (!empty($al['capa_album_url'])): ?>
                                         <img src="<?php echo htmlspecialchars($al['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($al['titulo']); ?>">
@@ -222,7 +211,7 @@ function build_search_query($q) {
                             </a>
                             <div class="album-info">
                                 <h3>
-                                    <a href="avaliacao.php?id_album=<?php echo (int)$al['id_album']; ?>">
+                                    <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>">
                                         <?php echo htmlspecialchars($al['titulo']); ?>
                                     </a>
                                 </h3>
@@ -248,7 +237,7 @@ function build_search_query($q) {
                     <?php foreach ($musicas as $m): ?>
                         <li class="musica-item">
                             <div class="cover small-cover">
-                                <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>">
+                                <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>">
                                     <?php if (!empty($m['capa_album_url'])): ?>
                                         <img src="<?php echo htmlspecialchars($m['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($m['titulo'] ?? $m['titulo_musica']); ?>">
                                     <?php else: ?>
@@ -259,12 +248,12 @@ function build_search_query($q) {
 
                             <div class="info">
                                 <p>
-                                    <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
+                                    <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
                                         <?php echo htmlspecialchars($m['titulo'] ?? $m['titulo_musica']); ?>
                                     </a>
                                 </p>
                                 <p><strong>Álbum:</strong>
-                                    <a href="/Mybeat/index.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
+                                    <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$m['id_album']; ?>" class="titulo-musica">
                                         <?php echo htmlspecialchars($m['titulo_album'] ?? '—'); ?>
                                     </a>
                                 </p>

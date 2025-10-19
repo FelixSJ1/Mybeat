@@ -75,5 +75,53 @@ CREATE TABLE Seguidores (
     data_seguimento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_seguidor, id_seguido),
     FOREIGN KEY (id_seguidor) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_seguido) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+    FOREIGN KEY (id_seguido) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+);
+
+
+-- Tabela de Playlists criadas pelos usuários
+CREATE TABLE Playlists (
+    id_playlist INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    nome_playlist VARCHAR(255) NOT NULL,
+    descricao_playlist TEXT,
+    capa_playlist_url VARCHAR(255),
+    playlist_publica BOOLEAN DEFAULT TRUE,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+);
+
+-- Tabela de relacionamento entre Playlists e Músicas
+CREATE TABLE Musicas_Playlist (
+    id_musica_playlist INT AUTO_INCREMENT PRIMARY KEY,
+    id_playlist INT NOT NULL,
+    id_musica INT NOT NULL,
+    ordem_na_playlist INT,
+    data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_playlist) REFERENCES Playlists(id_playlist) ON DELETE CASCADE,
+    FOREIGN KEY (id_musica) REFERENCES Musicas(id_musica) ON DELETE CASCADE,
+    UNIQUE KEY musica_unica_por_playlist (id_playlist, id_musica)
+);
+
+-- Tabela de Músicas curtidas pelos usuários
+CREATE TABLE Musicas_Curtidas (
+    id_curtida_musica INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_musica INT NOT NULL,
+    data_curtida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_musica) REFERENCES Musicas(id_musica) ON DELETE CASCADE,
+    UNIQUE KEY curtida_unica_musica (id_usuario, id_musica)
+);
+
+-- Tabela de Álbuns curtidos pelos usuários
+CREATE TABLE Albuns_Curtidos (
+    id_curtida_album INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_album INT NOT NULL,
+    data_curtida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_album) REFERENCES Albuns(id_album) ON DELETE CASCADE,
+    UNIQUE KEY curtida_unica_album (id_usuario, id_album)
 );

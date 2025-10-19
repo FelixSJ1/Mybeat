@@ -14,16 +14,16 @@ require_once __DIR__ . '/../Controllers/AvaliacaoController.php';
 $id_usuario = $_SESSION['id_usuario'];
 
 try {
-    $pdo = new PDO("mysql:host=localhost;port=3307;dbname=MyBeatDB", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Buscar foto do perfil
-    $stmt = $pdo->prepare("SELECT foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
-    $stmt->execute([$id_usuario]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Buscar foto do perfil usando o conector.php
+    $stmt = $conn->prepare("SELECT foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
+    $stmt->bind_param("i", $id_usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
     $foto_perfil = $usuario['foto_perfil_url'] ?? '../../public/images/Perfil_Usuario.png';
+    $stmt->close();
     
-} catch (PDOException $e) {
+} catch (Exception $e) {
     $foto_perfil = '../../public/images/Perfil_Usuario.png';
 }
 
@@ -91,7 +91,7 @@ $avaliacoes = $avaliacaoController->getHistoricoUsuario($id_usuario);
                 <?php foreach ($avaliacoes as $av): ?>
                     <div class="avaliacao-card">
                         <div class="card-header">
-                            <a href="avaliacao.php?id_album=<?php echo (int)$av['id_album']; ?>" class="album-cover">
+                            <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$av['id_album']; ?>" class="album-cover">
                                 <?php if (!empty($av['capa_album_url'])): ?>
                                     <img src="<?php echo htmlspecialchars($av['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($av['titulo_album']); ?>">
                                 <?php else: ?>
@@ -101,7 +101,7 @@ $avaliacoes = $avaliacaoController->getHistoricoUsuario($id_usuario);
                             
                             <div class="album-info">
                                 <h3>
-                                    <a href="avaliacao.php?id_album=<?php echo (int)$av['id_album']; ?>">
+                                    <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$av['id_album']; ?>">
                                         <?php echo htmlspecialchars($av['titulo_album']); ?>
                                     </a>
                                 </h3>
@@ -121,7 +121,7 @@ $avaliacoes = $avaliacaoController->getHistoricoUsuario($id_usuario);
                                 <div class="nota-container">
                                     <span class="nota-label">Sua nota:</span>
                                     <span class="nota-valor"><?php echo number_format($av['nota'], 1, ',', '.'); ?></span>
-                                    <span class="nota-max">/10</span>
+                                    <span class="nota-max">/5,0</span>
                                 </div>
                                 
                                 <div class="data-avaliacao">
@@ -140,7 +140,7 @@ $avaliacoes = $avaliacaoController->getHistoricoUsuario($id_usuario);
                         </div>
 
                         <div class="card-footer">
-                            <a href="avaliacao.php?id_album=<?php echo (int)$av['id_album']; ?>" class="btn-ver-album">
+                            <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$av['id_album']; ?>" class="btn-ver-album">
                                 Ver Álbum
                             </a>
                         </div>

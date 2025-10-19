@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config/conector.php';
 
 // Configurações do Google OAuth
-define('GOOGLE_CLIENT_ID', '');
+define('GOOGLE_CLIENT_ID', 'rcontent.com');
 define('GOOGLE_CLIENT_SECRET', '');
 define('GOOGLE_REDIRECT_URI', '');
 
@@ -56,21 +56,23 @@ if (!isset($user_info['email'])) {
 
 // Conectar ao banco de dados e verificar se o usuário já existe
 try {
-    $pdo = new PDO("mysql:host=localhost;port=3307;dbname=MyBeatDB", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     // Verificar se o email já está cadastrado
-    $stmt = $pdo->prepare("SELECT id_usuario FROM Usuarios WHERE email = ?");
-    $stmt->execute([$user_info['email']]);
+    $stmt = $conn->prepare("SELECT id_usuario FROM Usuarios WHERE email = ?");
+    $stmt->bind_param("s", $user_info['email']);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
-    if ($stmt->rowCount() > 0) {
+    if ($result->num_rows > 0) {
         // Usuário já existe, fazer login e ir para home_usuario.php
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        $usuario = $result->fetch_assoc();
         $_SESSION['id_usuario'] = $usuario['id_usuario'];
         $_SESSION['email'] = $user_info['email'];
+        $stmt->close();
         header('Location: ../Views/home_usuario.php');
         exit();
     } else {
+        $stmt->close();
+        
         // Criar novo usuário e redirecionar para login
         $nome_usuario = explode('@', $user_info['email'])[0]; // Usar parte do email como username
         $nome_exibicao = $user_info['name'] ?? $nome_usuario;
@@ -80,15 +82,17 @@ try {
         $senha_aleatoria = bin2hex(random_bytes(16));
         $hash_senha = password_hash($senha_aleatoria, PASSWORD_DEFAULT);
         
-        $stmt = $pdo->prepare("INSERT INTO Usuarios (nome_usuario, email, hash_senha, nome_exibicao, foto_perfil_url) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$nome_usuario, $user_info['email'], $hash_senha, $nome_exibicao, $foto_perfil]);
+        $stmt = $conn->prepare("INSERT INTO Usuarios (nome_usuario, email, hash_senha, nome_exibicao, foto_perfil_url) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $nome_usuario, $user_info['email'], $hash_senha, $nome_exibicao, $foto_perfil);
+        $stmt->execute();
+        $stmt->close();
         
         // Redirecionar para a página de login após cadastro
         $_SESSION['mensagem_sucesso'] = 'Conta criada com sucesso! Faça login para continuar.';
-        header('Location: ../Views/FaçaLoginMyBeat.php');
+        header('Location: ../views/FaçaLoginMyBeat.php');
         exit();
     }
-} catch (PDOException $e) {
+} catch (Exception $e) {
     $_SESSION['mensagem_erro'] = 'Erro ao processar cadastro: ' . $e->getMessage();
     header('Location: ../Views/cadastro.php');
     exit();

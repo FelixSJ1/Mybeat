@@ -14,12 +14,12 @@ $mensagem_erro = '';
 
 // Buscar dados atuais do usuário
 try {
-    $pdo = new PDO("mysql:host=localhost;port=3307;dbname=MyBeatDB", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    $stmt = $pdo->prepare("SELECT nome_usuario, nome_exibicao, biografia, foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
-    $stmt->execute([$_SESSION['id_usuario']]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare("SELECT nome_usuario, nome_exibicao, biografia, foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
+    $stmt->bind_param("i", $_SESSION['id_usuario']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
+    $stmt->close();
     
     if (!$usuario) {
         header('Location: FaçaLoginMyBeat.php');
@@ -31,7 +31,7 @@ try {
     $biografia = $usuario['biografia'] ?? '';
     $foto_perfil_url = $usuario['foto_perfil_url'] ?? '';
     
-} catch (PDOException $e) {
+} catch (Exception $e) {
     $mensagem_erro = "Erro ao carregar dados: " . $e->getMessage();
 }
 
@@ -73,14 +73,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if (empty($mensagem_erro)) {
                 // Atualizar banco de dados
-                $stmt = $pdo->prepare("UPDATE Usuarios SET nome_exibicao = ?, biografia = ?, foto_perfil_url = ? WHERE id_usuario = ?");
-                $stmt->execute([$novo_nome_exibicao, $nova_biografia, $nova_foto_url, $_SESSION['id_usuario']]);
+                $stmt = $conn->prepare("UPDATE Usuarios SET nome_exibicao = ?, biografia = ?, foto_perfil_url = ? WHERE id_usuario = ?");
+                $stmt->bind_param("sssi", $novo_nome_exibicao, $nova_biografia, $nova_foto_url, $_SESSION['id_usuario']);
+                $stmt->execute();
+                $stmt->close();
                 
                 $_SESSION['mensagem_sucesso'] = "Perfil atualizado com sucesso!";
                 header('Location: home_usuario.php');
                 exit();
             }
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             $mensagem_erro = "Erro ao atualizar perfil: " . $e->getMessage();
         }
     }
@@ -96,220 +98,7 @@ $contador_bio = strlen($biografia);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - myBeat</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: #1a1a1a;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            border: 1px solid #2a2a2a;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #2a2a2a;
-        }
-
-        .header h1 {
-            color: #ffffff;
-            font-size: 32px;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .header p {
-            color: #888888;
-            font-size: 14px;
-        }
-
-        .mensagem {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .mensagem-sucesso {
-            background: rgba(138, 43, 226, 0.1);
-            color: #a855f7;
-            border-left: 4px solid #a855f7;
-        }
-
-        .mensagem-erro {
-            background: rgba(255, 140, 66, 0.1);
-            color: #ff8c42;
-            border-left: 4px solid #ff8c42;
-        }
-
-        .profile-photo-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .profile-photo-container {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: #2a2a2a;
-            border: 3px solid #3a3a3a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .profile-photo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-photo-container.empty::before {
-            content: '👤';
-            font-size: 60px;
-            color: #555555;
-        }
-
-        .photo-upload-label {
-            display: inline-block;
-            background: linear-gradient(135deg, #a855f7 0%, #ff8c42 100%);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .photo-upload-label:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .form-group input[type="text"],
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #2a2a2a;
-            border-radius: 8px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 14px;
-            background: #0a0a0a;
-            color: #ffffff;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input[type="text"]:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #a855f7;
-            background: #141414;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-            max-height: 200px;
-        }
-
-        .char-count {
-            font-size: 12px;
-            color: #666666;
-            margin-top: 5px;
-            text-align: right;
-        }
-
-        .char-count.warning {
-            color: #ff8c42;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #a855f7 0%, #ff8c42 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #2a2a2a;
-            color: #ffffff;
-            border: 2px solid #3a3a3a;
-        }
-
-        .btn-secondary:hover {
-            background: #3a3a3a;
-            transform: translateY(-2px);
-        }
-
-        .info-box {
-            background: #2a2a2a;
-            padding: 14px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #888888;
-            border-left: 4px solid #ff8c42;
-        }
-
-        .info-box strong {
-            color: #ff8c42;
-        }
-    </style>
+    <link href="../../public/css/perfilUsuario.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
