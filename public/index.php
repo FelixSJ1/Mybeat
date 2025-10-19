@@ -1,31 +1,32 @@
 <?php
-// ROTEADOR PRINCIPAL - Front Controller//
+session_start();
 
-$controllerName = $_GET['controller'] ?? null;
-$action         = $_GET['action'] ?? null;
-
-if ($controllerName && $action) {
-
-    require_once __DIR__ . '/../app/config/conector.php';
-    require_once __DIR__ . '/../app/Controllers/ControllersG.php'; 
-
-    $controllerClassName = ucfirst($controllerName) . 'Controller';
-
-    if (class_exists($controllerClassName)) {
-        $controller = new $controllerClassName($conn);
-
-        if (method_exists($controller, $action)) {
-            $controller->$action();
-            exit; 
-        } else {
-            die("Ação '$action' não encontrada.");
-        }
-    } else {
-        die("Controller '$controllerClassName' não encontrado.");
+// Processar logout se solicitado
+if (isset($_GET['logout']) && $_GET['logout'] === '1') {
+    // Destruir todas as variáveis de sessão
+    $_SESSION = array();
+    
+    // Destruir o cookie da sessão se existir
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
     }
+    
+    // Destruir a sessão
+    session_destroy();
+    
+    // Redirecionar para index.php limpo (sem parâmetro logout)
+    header('Location: index.php');
+    exit();
 }
-?>
 
+// Verificar se o usuário está logado
+$usuario_logado = isset($_SESSION['id_usuario']);
+$nome_usuario = $usuario_logado ? ($_SESSION['nome_exibicao'] ?? $_SESSION['nome_usuario'] ?? 'Usuário') : '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -43,8 +44,14 @@ if ($controllerName && $action) {
                 <h1>MyBeat</h1>
             </div>
             <div class="cta-header">
-                <a href="../app/Views/FaçaLoginMyBeat.php" class="btn-login">Login</a>
-                <a href="../app/Views/cadastro.php" class="btn-registrar">Criar conta</a>
+                <?php if ($usuario_logado): ?>
+                    <span class="user-welcome">Olá, <?php echo htmlspecialchars($nome_usuario); ?>!</span>
+                    <a href="../app/Views/home_usuario.php" class="btn-home">Home</a>
+                    <a href="index.php?logout=1" class="btn-logout">Logout</a>
+                <?php else: ?>
+                    <a href="../app/Views/FaçaLoginMyBeat.php" class="btn-login">Login</a>
+                    <a href="../app/Views/cadastro.php" class="btn-registrar">Criar conta</a>
+                <?php endif; ?>
             </div>
         </div>
     </header>
