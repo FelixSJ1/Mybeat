@@ -148,6 +148,9 @@ function build_search_query($q) {
         </form>
     </div>
 
+    <a href="historico_avaliacoes.php" class="minhas-avaliacoes-btn">Minhas Avaliações</a>
+    <a href="logout.php" class="logout-btn">Sair</a>
+
     <div class="search-and-profile-container">
 
         <a href="SeguidoresMyBeatViews.php" class="followers-button">
@@ -155,7 +158,7 @@ function build_search_query($q) {
         </a>
 
     </div>
-
+    
     <div class="user-circle" title="Meu Perfil">
         <a href="perfilUsuario.php" style="display: block; width: 100%; height: 100%;">
             <img src="<?php echo htmlspecialchars($foto_perfil); ?>" alt="Usuário">
