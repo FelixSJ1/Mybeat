@@ -148,7 +148,21 @@ function build_search_query($q) {
         </form>
     </div>
 
-    <a href="historico_avaliacoes.php" class="minhas-avaliacoes-btn">Minhas Avaliações</a>
+    <?php 
+    // Verifica se o tipo de login da session é admin
+    if (isset($_SESSION['admin_logged']) && $_SESSION['admin_logged'] === true): 
+    ?>
+        <a href="admin.php" class="admin-link-btn" title="Acessar Painel Administrativo">
+            Painel Admin
+        </a>
+    <?php endif; ?>
+
+    <?php 
+    // Verifica o tipo de login da session, se for user normal mostra o botão de minhas avaliações
+    if (!isset($_SESSION['admin_logged']) || $_SESSION['admin_logged'] !== true): 
+    ?>
+        <a href="historico_avaliacoes.php" class="minhas-avaliacoes-btn">Minhas Avaliações</a>
+    <?php endif; ?>
     <a href="logout.php" class="logout-btn">Sair</a>
 
     <div class="user-circle" title="Meu Perfil">
