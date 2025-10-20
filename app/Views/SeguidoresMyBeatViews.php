@@ -36,6 +36,11 @@ if (isset($_GET['termo'])) {
     <div class="results-container">
         <?php if (count($usuarios) > 0): ?>
             <?php foreach ($usuarios as $u): ?>
+                <?php
+                    
+                    if ($u['id_usuario'] == $_SESSION['id_usuario']) continue;
+                    $jaSegue = $controller->model->jaSegue($_SESSION['id_usuario'], $u['id_usuario']);
+                ?>
                 <div class="user-card">
                     <div class="user-avatar">
                         <img src="<?= $u['foto_perfil_url'] ?: '../../public/img/default.png' ?>" width="60" height="60" style="border-radius:50%;">
@@ -45,9 +50,12 @@ if (isset($_GET['termo'])) {
                         <div class="user-username">@<?= htmlspecialchars($u['nome_usuario']) ?></div>
                     </div>
                     <div class="user-actions">
-                        <form method="post" action="../Controllers/SeguidoresMyBeatControllers.php">
+                        <form method="post" action="../Controllers/SeguidoresMyBeatControllers.php" style="display:inline;">
                             <input type="hidden" name="id_seguido" value="<?= $u['id_usuario'] ?>">
-                            <button class="btn btn-follow">Seguir</button>
+                            <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+                            <button type="submit" class="btn <?= $jaSegue ? 'btn-following' : 'btn-follow' ?>">
+                                <?= $jaSegue ? '✅ Seguindo' : '➕ Seguir' ?>
+                            </button>
                         </form>
                         <a href="ShowPerfil.php?id=<?= $u['id_usuario'] ?>" class="btn btn-profile">👤 Ver Perfil</a>
                     </div>

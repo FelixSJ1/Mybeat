@@ -2,17 +2,19 @@
 require_once __DIR__ . '/../Models/SeguidoresMyBeatModels.php';
 
 class SeguidoresMyBeatControllers {
-    private $model;
+    public $model;
 
     public function __construct() {
         $this->model = new SeguidoresMyBeatModels();
     }
 
+    
     public function buscar() {
         $termo = $_GET['termo'] ?? '';
         return $this->model->buscarUsuarios($termo);
     }
 
+    
     public function seguir() {
         session_start();
         if (!isset($_SESSION['id_usuario'])) {
@@ -38,9 +40,14 @@ class SeguidoresMyBeatControllers {
     }
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_seguido'])) {
     $controller = new SeguidoresMyBeatControllers();
     $controller->seguir();
+
+    
+    $redirect = $_POST['redirect'] ?? '../Views/SeguidoresMyBeatViews.php';
+    header("Location: " . $redirect);
     exit;
 }
 ?>

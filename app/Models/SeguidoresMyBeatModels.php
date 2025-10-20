@@ -9,7 +9,6 @@ class SeguidoresMyBeatModels {
         $this->conn = $conn;
     }
 
-    
     public function buscarUsuarios($termo) {
         $sql = "SELECT id_usuario, nome_usuario, nome_exibicao, foto_perfil_url 
                 FROM Usuarios 
@@ -21,7 +20,7 @@ class SeguidoresMyBeatModels {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    
+
     public function seguirUsuario($idSeguidor, $idSeguido) {
         $sql = "INSERT INTO Seguidores (id_seguidor, id_seguido) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sql);
@@ -29,13 +28,14 @@ class SeguidoresMyBeatModels {
         return $stmt->execute();
     }
 
-    
+
     public function deixarDeSeguir($idSeguidor, $idSeguido) {
         $sql = "DELETE FROM Seguidores WHERE id_seguidor = ? AND id_seguido = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ii", $idSeguidor, $idSeguido);
         return $stmt->execute();
     }
+
 
     public function jaSegue($idSeguidor, $idSeguido) {
         $sql = "SELECT 1 FROM Seguidores WHERE id_seguidor = ? AND id_seguido = ?";
@@ -45,7 +45,7 @@ class SeguidoresMyBeatModels {
         return $stmt->get_result()->num_rows > 0;
     }
 
-   
+
     public function listarSeguidores($idUsuario) {
         $sql = "SELECT u.id_usuario, u.nome_usuario, u.nome_exibicao, u.foto_perfil_url
                 FROM Seguidores s
@@ -57,7 +57,7 @@ class SeguidoresMyBeatModels {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-   
+
     public function listarSeguindo($idUsuario) {
         $sql = "SELECT u.id_usuario, u.nome_usuario, u.nome_exibicao, u.foto_perfil_url
                 FROM Seguidores s
