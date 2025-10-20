@@ -152,7 +152,7 @@ function build_search_query($q) {
     // Verifica se o tipo de login da session é admin
     if (isset($_SESSION['admin_logged']) && $_SESSION['admin_logged'] === true): 
     ?>
-        <a href="admin.php" class="admin-link-btn" title="Acessar Painel Administrativo">
+        <a href="admin.php" class="minhas-avaliacoes-btn" title="Acessar Painel Administrativo">
             Painel Admin
         </a>
     <?php endif; ?>
