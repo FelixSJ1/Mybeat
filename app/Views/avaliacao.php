@@ -63,6 +63,13 @@
                             </span>
                         </span>
                     </div>
+    <!-- botão Ver Estatísticas (álbum) - fica abaixo da média/estrelas -->
+    <div class="stats-button-container" style="margin-top:10px; text-align:left;">
+        <a class="action-btn" href="listar_giovana.php?controller=painelmusic&action=show&id_album=<?= (int)($album['id_album'] ?? 0) ?>">
+            Ver estatísticas das avaliações
+        </a>
+    </div>
+
                 </section>
 
                 <!-- Lado direito: ações -->
