@@ -25,6 +25,13 @@
                     <?php echo htmlspecialchars($musica['titulo']); ?>
                 </a>
             </h2>
+    <!-- botão Ver Estatísticas (música) -->
+    <div class="stats-button-container" style="margin-top:10px; text-align:left;">
+        <a class="action-btn" href="listar_giovana.php?controller=painelmusic&action=show&id_musica=<?= (int)($musica['id_musica'] ?? $_GET['id'] ?? 0) ?>">
+            Ver estatísticas das avaliações
+        </a>
+    </div>
+
             <p><strong>Artista:</strong> <?php echo htmlspecialchars($musica['nome_artista']); ?></p>
             <p><strong>Álbum:</strong>
                 <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo $musica['id_album']; ?>" class="titulo-album">
