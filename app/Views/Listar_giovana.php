@@ -1,23 +1,14 @@
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyBeat</title>
-    <link rel="stylesheet" href="../../public/css/PaginaListarGiovana.css">
-</head>
-<body>
-
 <?php
 
 // FRONT CONTROLLER embutido no listar_giovana.php
 
 require_once __DIR__ . '/../config/conector.php';
-
 require_once __DIR__ . '/../Controllers/ControllersG.php';
 require_once __DIR__ . '/../Models/ModelsG.php';
 require_once __DIR__ . '/../Controllers/painelmusiccontroller.php';
+require_once __DIR__ . '/../Controllers/playlistC.php';
+require_once __DIR__ . '/../Models/playlistM.php';
 
 $controller = $_GET['controller'] ?? 'home';
 $action     = $_GET['action'] ?? 'index';
@@ -29,6 +20,7 @@ switch ($controller) {
     case 'avaliacao':$c = new AvaliacaoController($conn); break;
     case 'avaliacaoUsuario': $c = new AvaliacaoUsuarioController($conn); break;
     case 'painelmusic': $c = new PainelMusicController($conn); break;
+    case 'playlist': $c = new PlaylistController($conn); break; // <-- adicionado
     default: die("Controller inválido");
 }
 
