@@ -1,13 +1,24 @@
-<?php
-// listar_giovana.php - Front controller refatorado
 
-// configurações / conexões
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBeat</title>
+    <link rel="stylesheet" href="../../public/css/PaginaListarGiovana.css">
+</head>
+<body>
+
+<?php
+
+// FRONT CONTROLLER embutido no listar_giovana.php
+
 require_once __DIR__ . '/../config/conector.php';
+
 require_once __DIR__ . '/../Controllers/ControllersG.php';
 require_once __DIR__ . '/../Models/ModelsG.php';
-require_once __DIR__ . '/../Controllers/playlistC.php';
-require_once __DIR__ . '/../Models/playlistM.php';
-// rota (controller / action) via GET
+require_once __DIR__ . '/../Controllers/painelmusiccontroller.php';
+
 $controller = $_GET['controller'] ?? 'home';
 $action     = $_GET['action'] ?? 'index';
 
@@ -17,24 +28,21 @@ switch ($controller) {
     case 'musica':   $c = new MusicaController($conn); break;
     case 'avaliacao':$c = new AvaliacaoController($conn); break;
     case 'avaliacaoUsuario': $c = new AvaliacaoUsuarioController($conn); break;
-    case 'playlist': $c = new PlaylistController($conn); break; // <-- adicionado
-    default:
-        http_response_code(404);
-        die("Controller inválido");
+    case 'painelmusic': $c = new PainelMusicController($conn); break;
+    default: die("Controller inválido");
 }
 
-// Se for a rota home/index renderizamos diretamente a view de listagem (início)
+// home/index → renderiza view embutida
 if ($controller === 'home' && $action === 'index') {
-    $q = trim($_GET['q'] ?? '');
-    // supondo que os métodos abaixo existem no HomeController e retornam mysqli_result
-    $albuns  = $c->getAlbums($q);
-    $musicas = $c->getMusicas($q);
-    ?>
+    $q        = $_GET['q'] ?? '';
+    $albuns   = $c->getAlbums($q);
+    $musicas  = $c->getMusicas($q);
+?>
+
     <!DOCTYPE html>
     <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MyBeat - Início</title>
         <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="../../public/css/PaginaListarGiovana.css">
@@ -48,7 +56,7 @@ if ($controller === 'home' && $action === 'index') {
             <form method="GET" action="listar_giovana.php">
                 <input type="hidden" name="controller" value="home">
                 <input type="hidden" name="action" value="index">
-                <input type="text" name="q" placeholder="Buscar músicas ou álbuns..." value="<?php echo htmlspecialchars($q, ENT_QUOTES); ?>">
+                <input type="text" name="q" placeholder="Buscar músicas ou álbuns..." value="<?php echo htmlspecialchars($q); ?>">
             </form>
         </div>
     </header>
@@ -61,26 +69,26 @@ if ($controller === 'home' && $action === 'index') {
                     <?php while ($row = $musicas->fetch_assoc()): ?>
                         <li>
                             <div class="cover">
-                                <a href="listar_giovana.php?controller=musica&action=detalhes&id=<?php echo (int)$row['id_musica']; ?>">
+                                <a href="listar_giovana.php?controller=musica&action=detalhes&id=<?php echo $row['id_musica']; ?>">
                                     <?php if (!empty($row['capa_album_url'])): ?>
-                                        <img src="<?php echo htmlspecialchars($row['capa_album_url'], ENT_QUOTES); ?>" alt="Capa do álbum">
+                                        <img src="<?php echo htmlspecialchars($row['capa_album_url']); ?>" alt="Capa do álbum">
                                     <?php endif; ?>
                                 </a>
                             </div>
                             <div class="info">
                                 <p>
-                                    <a href="listar_giovana.php?controller=musica&action=detalhes&id=<?php echo (int)$row['id_musica']; ?>" class="titulo-musica">
-                                        <?php echo htmlspecialchars($row['titulo_musica'], ENT_QUOTES); ?>
+                                    <a href="listar_giovana.php?controller=musica&action=detalhes&id=<?php echo $row['id_musica']; ?>" class="titulo-musica">
+                                        <?php echo htmlspecialchars($row['titulo_musica']); ?>
                                     </a>
                                 </p>
                                 <p><strong>Álbum:</strong>
-                                    <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo (int)$row['id_album']; ?>" class="titulo-album">
-                                        <?php echo htmlspecialchars($row['titulo_album'], ENT_QUOTES); ?>
+                                    <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo $row['id_album']; ?>" class="titulo-album">
+                                        <?php echo htmlspecialchars($row['titulo_album']); ?>
                                     </a>
                                 </p>
-                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista'], ENT_QUOTES); ?></p>
+                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista']); ?></p>
                                 <p><strong>Duração:</strong> <?php echo gmdate("i:s", (int)$row['duracao_segundos']); ?></p>
-                                <p><strong>Faixa nº:</strong> <?php echo htmlspecialchars($row['numero_faixa'], ENT_QUOTES); ?></p>
+                                <p><strong>Faixa nº:</strong> <?php echo htmlspecialchars($row['numero_faixa']); ?></p>
                             </div>
                         </li>
                     <?php endwhile; ?>
@@ -97,22 +105,22 @@ if ($controller === 'home' && $action === 'index') {
                     <?php while ($row = $albuns->fetch_assoc()): ?>
                         <li>
                             <div class="cover">
-                                <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo (int)$row['id_album']; ?>">
+                                <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo $row['id_album']; ?>">
                                     <?php if (!empty($row['capa_album_url'])): ?>
-                                        <img src="<?php echo htmlspecialchars($row['capa_album_url'], ENT_QUOTES); ?>" alt="Capa do álbum">
+                                        <img src="<?php echo htmlspecialchars($row['capa_album_url']); ?>" alt="Capa do álbum">
                                     <?php endif; ?>
                                 </a>
                             </div>
                             <div class="info">
                                 <p>
-                                    <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo (int)$row['id_album']; ?>" class="titulo-album">
-                                        <?php echo htmlspecialchars($row['titulo'], ENT_QUOTES); ?>
+                                    <a href="listar_giovana.php?controller=album&action=detalhes&id=<?php echo $row['id_album']; ?>" class="titulo-album">
+                                        <?php echo htmlspecialchars($row['titulo']); ?>
                                     </a>
                                 </p>
-                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista'], ENT_QUOTES); ?></p>
-                                <p><strong>Lançamento:</strong> <?php echo htmlspecialchars($row['data_lancamento'], ENT_QUOTES); ?></p>
-                                <p><strong>Gênero:</strong> <?php echo htmlspecialchars($row['genero'], ENT_QUOTES); ?></p>
-                                <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['tipo'], ENT_QUOTES); ?></p>
+                                <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista']); ?></p>
+                                <p><strong>Lançamento:</strong> <?php echo htmlspecialchars($row['data_lancamento']); ?></p>
+                                <p><strong>Gênero:</strong> <?php echo htmlspecialchars($row['genero']); ?></p>
+                                <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['tipo']); ?></p>
                             </div>
                         </li>
                     <?php endwhile; ?>
@@ -128,11 +136,9 @@ if ($controller === 'home' && $action === 'index') {
     exit;
 }
 
-// Para outras rotas, chamamos o método do controller (se existir)
+// outras ações
 if (method_exists($c, $action)) {
-    // se os métodos renderizam views por conta própria, eles farão echo/require das views
     $c->$action();
 } else {
-    http_response_code(404);
     die("Ação inválida");
 }

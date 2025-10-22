@@ -1,12 +1,12 @@
 /* ISOLAMENTO TOTAL DO CSS */
-.avaliacao-page,
+.avaliacao-page, 
 .avaliacao-page * {
   all: revert;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
 
-/* VARIÁVEIS DE TEMA */
+/* VARIÁVEIS DE TEMA*/
 :root {
   --dark-bg: #121212;
   --primary-purple: #9b59b6;
@@ -14,7 +14,6 @@
   --text-light: #ecf0f1;
   --text-dark: #bdc3c7;
   --container-bg: #1e1e1e;
-  --muted-border: #333;
 }
 
 /* BODY E ESTRUTURA GERAL */
@@ -24,7 +23,12 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+}
+
+.avaliacao-page body {
+  margin: 0;
+  background-color: var(--dark-bg);
+  color: var(--text-light);
 }
 
 /* CONTAINERS E CABEÇALHO */
@@ -51,16 +55,20 @@
   align-items: center;
 }
 
+.avaliacao-page .logo {
+  display: flex;
+  align-items: center;
+}
+
 .avaliacao-page .logo img {
   height: 40px;
-  margin-right: 12px;
+  margin-right: 15px;
 }
 
 .avaliacao-page .logo h1 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: var(--primary-purple);
   margin: 0;
-  line-height: 1;
 }
 
 .avaliacao-page .logo-link {
@@ -70,14 +78,27 @@
   color: inherit;
 }
 
-/* PERFIL */
+.avaliacao-page .logo-link img {
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.avaliacao-page .logo-link h1 {
+  font-size: 1.8rem;
+  color: var(--primary-purple);
+  margin: 0;
+  line-height: 1;
+}
+
+
 .avaliacao-page .user-profile {
   width: 40px;
   height: 40px;
   background-color: var(--primary-orange);
   border-radius: 50%;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .avaliacao-page .user-profile:hover {
@@ -88,39 +109,35 @@
 .avaliacao-page .page-layout {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  gap: 18px;
-  margin: 30px auto;
+  gap: 10px;
+  margin: 40px auto;
   max-width: 1200px;
-  align-items: start;
 }
 
-/* CAPA DO ÁLBUM */
 .avaliacao-page .left-panel .album-cover {
-  width: 100%;
-  max-width: 360px;
-  aspect-ratio: 1/1;
+  width: 72%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   display: block;
 }
 
-/* CENTRO (INFORMAÇÕES) */
 .avaliacao-page .center-panel .music-title {
   font-size: 1.8rem;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .avaliacao-page .center-panel .artist-name {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--primary-purple);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .avaliacao-page .center-panel .album-info {
   font-size: 1rem;
   color: var(--text-dark);
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .avaliacao-page .rating-display {
@@ -135,44 +152,34 @@
   margin-left: 10px;
 }
 
-/* PAINEL DIREITO (AÇÕES DO ÁLBUM) */
+/* PAINEL DIREITO (AÇÕES) */
 .avaliacao-page .right-panel {
   background-color: var(--container-bg);
-  padding: 18px;
+  padding: 20px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  align-items: stretch;
+  gap: 15px;
 }
 
-/* BOTÃO PRINCIPAL (álbum) */
 .avaliacao-page .action-btn {
   background: none;
   border: 1px solid var(--primary-purple);
   color: var(--text-light);
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.18s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  transition: 0.3s;
 }
 
-.avaliacao-page .action-btn:hover,
-.avaliacao-page .action-btn:focus {
+.avaliacao-page .action-btn:hover {
   background-color: var(--primary-purple);
   color: var(--dark-bg);
-  outline: none;
-  transform: translateY(-1px);
 }
 
-/* AVALIAÇÃO COM ESTRELAS */
+/* Avaliação com estrelas */
 .avaliacao-page .star-rating-box {
-  margin-top: 6px;
+  margin: 0 auto 1px auto;
   text-align: center;
 }
 
@@ -180,7 +187,7 @@
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .avaliacao-page .star-rating input {
@@ -191,7 +198,7 @@
   font-size: 2rem;
   color: #555;
   cursor: pointer;
-  transition: color 0.12s;
+  transition: color 0.3s;
 }
 
 .avaliacao-page .star-rating input:checked ~ label,
@@ -200,7 +207,7 @@
   color: var(--primary-orange);
 }
 
-/* REVIEW (comentário) */
+/*  REVIEWS */
 .avaliacao-page .review-section {
   max-width: 1170px;
   margin: 0 auto 20px auto;
@@ -211,51 +218,50 @@
 
 .avaliacao-page .review-section h2 {
   color: var(--primary-purple);
-  margin: 0 0 12px 0;
+  margin: 0 auto 20px auto;
 }
 
 .avaliacao-page .review-section textarea {
-  width: 100%;
+  width: 97%;
+  margin: 0 auto 20px auto;
   display: block;
   background-color: var(--dark-bg);
   border: 1px solid #444;
   border-radius: 6px;
   color: var(--text-light);
-  padding: 12px;
+  padding: 15px;
   font-size: 1rem;
-  resize: vertical;
 }
 
 .avaliacao-page .btn-submit {
-  margin-top: 12px;
-  padding: 12px 20px;
+  width: auto;
+  padding: 15px 25px;
   background-color: var(--primary-orange);
   border: none;
   border-radius: 6px;
   color: var(--dark-bg);
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: 0.18s;
+  transition: 0.3s;
 }
 
 .avaliacao-page .btn-submit:hover {
   background-color: #d35400;
-  transform: translateY(-1px);
 }
 
-/* LISTA DE MÚSICAS (faixas) */
+/* LISTA DE MÚSICAS */
 .avaliacao-page .tracklist-section {
   max-width: 1157px;
   margin: 30px auto;
   background-color: var(--container-bg);
-  padding: 16px;
+  padding: 20px;
   border-radius: 8px;
 }
 
 .avaliacao-page .tracklist-section h2 {
   color: var(--primary-purple);
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   text-align: left;
 }
 
@@ -265,113 +271,37 @@
   margin: 0;
 }
 
-/* Cada faixa: layout com esquerda (número+título) e direita (duração + ações) */
-/* --> Aqui: li é relativo e abre espaço (padding-right) para alinhar botões à borda direita */
 .avaliacao-page .tracklist li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
   padding: 10px 12px;
-  border-bottom: 1px solid var(--muted-border);
-  position: relative;            /* necessário para posicionar .track-actions */
-  padding-right: 120px;          /* espaço reservado para os botões no limite direito */
+  border-bottom: 1px solid #333;
 }
 
 .avaliacao-page .tracklist li:last-child {
   border-bottom: none;
 }
 
-/* grupo esquerdo */
-.avaliacao-page .track-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0; /* para truncamento */
-}
-
 .avaliacao-page .track-number {
   color: var(--primary-orange);
-  font-weight: 700;
-  min-width: 26px;
+  font-weight: bold;
 }
 
-/* título com possibilidade de truncar em telas pequenas */
 .avaliacao-page .track-title {
-  flex: 1 1 auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-  margin-right: 8px;
+  flex-grow: 1;
+  margin-left: 10px;
 }
 
-/* grupo direito (duração + botões) */
-.avaliacao-page .track-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-/* duração - ajustar margem para garantir que não fique sob os botões */
 .avaliacao-page .track-duration {
   color: var(--text-dark);
-  font-size: 0.95rem;
-  min-width: 44px;
-  text-align: right;
-  margin-right: 12px; /* espaço entre duração e área dos botões */
+  font-size: 0.9rem;
 }
 
-/* AÇÕES DAS FAIXAS (botões menores) */
-/* Agora os botões ficam no limite direito do li (absolute) */
-.avaliacao-page .track-actions {
-  position: absolute;
-  right: 18px;                     /* distância da borda direita do li (ajuste aqui se quiser) */
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  z-index: 2;
-}
-
-/* Botão menor — mesma identidade visual, porém reduzido */
-.avaliacao-page .track-action-btn {
-  background: none;
-  border: 1px solid var(--primary-purple);
-  color: var(--text-light);
-  padding: 6px 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.95rem;
-  line-height: 1;
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.12s ease;
-}
-
-.avaliacao-page .track-action-btn.track-like { }
-.avaliacao-page .track-action-btn.track-add { }
-
-.avaliacao-page .track-action-btn:hover,
-.avaliacao-page .track-action-btn:focus {
-  background-color: var(--primary-purple);
-  color: var(--dark-bg);
-  transform: translateY(-1px);
-  outline: none;
-}
-
-/* SEM MÚSICAS */
 .avaliacao-page .no-tracks {
   text-align: center;
   color: var(--text-dark);
   padding: 10px;
-  width: 100%;
 }
 
 /* COMENTÁRIOS */
@@ -379,18 +309,18 @@
   max-width: 1157px;
   margin: 30px auto;
   background-color: var(--container-bg);
-  padding: 18px;
+  padding: 20px;
   border-radius: 8px;
 }
 
 .avaliacao-page .comments-section h2 {
   color: var(--primary-purple);
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .avaliacao-page .comment-box {
-  border-bottom: 1px solid var(--muted-border);
-  padding: 12px 0;
+  border-bottom: 1px solid #333;
+  padding: 15px 0;
 }
 
 .avaliacao-page .comment-box:last-child {
@@ -405,13 +335,13 @@
 }
 
 .avaliacao-page .user-name {
-  font-weight: 700;
+  font-weight: bold;
   color: var(--primary-orange);
 }
 
 .avaliacao-page .user-rating {
   color: var(--primary-orange);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 
 .avaliacao-page .comment-text {
@@ -430,9 +360,8 @@
   color: #155724;
   padding: 10px 15px;
   border-radius: 8px;
-  margin: 12px auto;
+  margin-bottom: 15px;
   font-weight: bold;
-  max-width: 1157px;
 }
 
 .avaliacao-page .alert-error {
@@ -440,76 +369,33 @@
   color: #721c24;
   padding: 10px 15px;
   border-radius: 8px;
-  margin: 12px auto;
+  margin-bottom: 15px;
   font-weight: bold;
-  max-width: 1157px;
 }
 
 .avaliacao-page footer {
   background-color: var(--container-bg);
-  padding: 16px 0;
+  padding: 20px 0;
   text-align: center;
   border-top: 1px solid var(--primary-purple);
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .avaliacao-page footer p {
   margin: 0;
   color: var(--text-dark);
-  font-size: 0.95rem;
 }
 
-/* RESPONSIVIDADE BÁSICA */
-@media (max-width: 900px) {
-  .avaliacao-page .page-layout {
-    grid-template-columns: 1fr;
-    padding: 0 12px;
-  }
 
-  .avaliacao-page .right-panel {
-    order: 3;
-    width: 100%;
-  }
-
-  /* Em telas médias, mantemos os botões mais à direita mas reduzimos padding-right */
-  .avaliacao-page .tracklist li {
-    padding-right: 90px;
-  }
-
-  .avaliacao-page .track-action-btn {
-    width: 34px;
-    height: 34px;
-    padding: 5px;
-  }
+/* Estatísticas - botão */
+.stats-button-container {
+    margin-top: 8px;
+    text-align: left;
 }
-
-@media (max-width: 520px) {
-  .avaliacao-page .track-left {
-    gap: 8px;
-  }
-
-  .avaliacao-page .track-title {
-    font-size: 0.95rem;
-  }
-
-  .avaliacao-page .track-duration {
-    display: none; /* economiza espaço, mantendo os botões */
-  }
-
-  /* Em telas pequenas, colocamos os botões em fluxo normal para evitar overlap */
-  .avaliacao-page .tracklist li {
-    padding-right: 12px;
-  }
-
-  .avaliacao-page .track-actions {
-    position: static;
-    transform: none;
-    margin-left: 8px;
-  }
-
-  .avaliacao-page .track-action-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
-  }
+.stats-button-container .action-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
 }
