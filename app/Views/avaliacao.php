@@ -23,9 +23,7 @@
                     <h1>MyBeat</h1>
                 </a>
             </div>
-            <div class="cta-header">
-                <div class="user-profile"></div>
-            </div>
+            
         </div>
     </header>
 
