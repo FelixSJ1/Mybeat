@@ -75,7 +75,7 @@
                 <!-- Lado direito: ações -->
                 <aside class="right-panel">
                     <button type="button" class="action-btn">♡ Curtir</button>
-                    <button type="button" class="action-btn">+ Playlist</button>
+                    <a href="listar_giovana.php?controller=playlist&action=index" class="action-btn album-playlist-btn" role="button" aria-label="Adicionar álbum à playlist">+ Playlist</a>
                     
                     <div class="star-rating-box">
                         <p>Sua Avaliação:</p>
@@ -97,9 +97,32 @@
                     <?php if (!empty($musicas)): ?>
                         <?php foreach ($musicas as $index => $musica): ?>
                             <li>
-                                <span class="track-number"><?= $index + 1 ?>.</span>
-                                <span class="track-title"><?= htmlspecialchars($musica['titulo']) ?></span>
-                                <span class="track-duration"><?= htmlspecialchars($musica['duracao'] ?? '') ?></span>
+                                <div class="track-left">
+                                    <span class="track-number"><?= $index + 1 ?>.</span>
+                                    <span class="track-title"><?= htmlspecialchars($musica['titulo']) ?></span>
+                                </div>
+                                <div class="track-right">
+                                    <span class="track-duration"><?= htmlspecialchars($musica['duracao'] ?? '') ?></span>
+
+                                    <!-- Botões menores (mesmo estilo dos do painel direito, porém reduzidos) -->
+                                    <div class="track-actions">
+                                        <button
+                                            type="button"
+                                            class="track-action-btn track-like"
+                                            data-musica-id="<?= htmlspecialchars($musica['id_musica'] ?? '') ?>"
+                                            aria-label="Curtir faixa <?= htmlspecialchars($musica['titulo']) ?>">
+                                            ♡
+                                        </button>
+
+                                        <!-- Alterado: agora é link para adicionar música às playlists (passa add_music_id) -->
+                                        <a
+                                            href="listar_giovana.php?controller=playlist&action=index&add_music_id=<?= (int)($musica['id_musica'] ?? 0) ?>"
+                                            class="track-action-btn track-add"
+                                            aria-label="Adicionar faixa <?= htmlspecialchars($musica['titulo']) ?> à playlist"
+                                            title="Adicionar à playlist"
+                                        >+</a>
+                                    </div>
+                                </div>
                             </li>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -154,4 +177,3 @@
     </footer>
   </div>
 </body>
-

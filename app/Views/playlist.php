@@ -1,8 +1,4 @@
 <?php
-// app/Views/playlist.php
-// espera: $playlists (array), $q (string), $addingMusicId (int|null), $msg (string)
-
-// Inicia sessão e verifica autenticação
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,8 +9,6 @@ if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     exit;
 }
 
-// O controller deve definir $playlists, $q, $addingMusicId, $msg.
-// Garantimos defaults para evitar notices.
 $q = $q ?? '';
 $addingMusicId = $addingMusicId ?? null;
 $msg = $msg ?? '';
@@ -57,7 +51,7 @@ $msg = $msg ?? '';
         </form>
 
         <div class="new-playlist-wrap">
-            <button type="button" class="btn-new-playlist">+ Nova Playlist</button>
+            <a href="listar_giovana.php?controller=playlist&action=criar" class="btn-new-playlist" role="button">+ Nova Playlist</a>
         </div>
       </div>
       <!-- /BARRA DE BUSCA -->
@@ -96,31 +90,7 @@ $msg = $msg ?? '';
               <div class="playlist-card">
                 <a href="<?= $cardHref ?>" class="playlist-cover-link" title="<?= htmlspecialchars($pl['nome_playlist'], ENT_QUOTES) ?>">
                   <div class="playlist-cover">
-                    <?php
-                        // normaliza e valida caminho da capa
-                        $rawCover = trim((string)($pl['capa_playlist_url'] ?? ''));
-
-                        // se estiver vazio, usa fallback
-                        $coverUrl = $rawCover !== '' ? $rawCover : '/Mybeat/public/images/LogoF.png';
-
-                        // se o valor não começar com "/", considera relativo e adiciona prefixo do app (ajuste se sua app estiver em outro subdiretório)
-                        if ($coverUrl !== '' && $coverUrl[0] !== '/') {
-                            $coverUrl = '/' . ltrim($coverUrl, '/');
-                        }
-
-                        // agora checa se o arquivo realmente existe no servidor; converte URL para path do filesystem
-                        $docRoot = rtrim($_SERVER['DOCUMENT_ROOT'], '/'); // ex: /var/www/html
-                        $serverPath = $docRoot . $coverUrl;
-
-                        if (!file_exists($serverPath) || !is_file($serverPath)) {
-                            // fallback para imagem padrão (garanta que esse arquivo exista)
-                            $coverUrl = '/Mybeat/public/images/LogoF.png';
-                        }
-                    ?>
-                    <img src="<?= htmlspecialchars($coverUrl, ENT_QUOTES) ?>"
-                         alt="<?= htmlspecialchars($pl['nome_playlist'] ?? 'Playlist', ENT_QUOTES) ?>"
-                         loading="lazy"
-                         class="playlist-cover-img">
+                    <img src="<?= htmlspecialchars($pl['capa_playlist_url'] ?: '/Mybeat/public/images/LogoF.png', ENT_QUOTES) ?>" alt="<?= htmlspecialchars($pl['nome_playlist'], ENT_QUOTES) ?>">
                   </div>
                 </a>
 

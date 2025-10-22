@@ -1,7 +1,9 @@
 <?php
 // app/Controllers/playlistC.php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/../Models/playlistM.php';
 
 class PlaylistController {
@@ -13,9 +15,6 @@ class PlaylistController {
         $this->model = new PlaylistModel($conn);
     }
 
-    /**
-     * Mostra playlists do usuário. Se houver ?add_music_id=xx, a view exibirá links para adicionar a música às playlists
-     */
     public function index() {
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: listar_giovana.php?controller=home&action=index');
@@ -35,10 +34,6 @@ class PlaylistController {
         require_once __DIR__ . '/../Views/playlist.php';
     }
 
-    /**
-     * Ação para adicionar a música à playlist
-     * rota: listar_giovana.php?controller=playlist&action=adicionar&playlist_id=XX&music_id=YY
-     */
     public function adicionar() {
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: listar_giovana.php?controller=home&action=index');
@@ -63,7 +58,63 @@ class PlaylistController {
         }
         exit;
     }
-}
 
-// Nota: se você inclui este controller diretamente por require no front controller,
-// o front controller chamará o método apropriado (index/adicionar).
+    public function criar() {
+        if (!isset($_SESSION['id_usuario'])) {
+            header('Location: listar_giovana.php?controller=home&action=index');
+            exit;
+        }
+        // variáveis mínimas para a view
+        $q = '';
+        $addingMusicId = null;
+        $msg = '';
+        require_once __DIR__ . '/../Views/criar_playlist.php';
+    }
+
+    public function salvar() {
+        if (!isset($_SESSION['id_usuario'])) {
+            header('Location: listar_giovana.php?controller=home&action=index');
+            exit;
+        }
+
+        $userId = (int) $_SESSION['id_usuario'];
+        $nome = trim($_POST['nome_playlist'] ?? '');
+        $descricao = trim($_POST['descricao_playlist'] ?? '');
+
+        if ($nome === '') {
+            header('Location: listar_giovana.php?controller=playlist&action=criar&msg=nome_required');
+            exit;
+        }
+
+        // tratar upload opcional
+        $coverUrl = null;
+        if (!empty($_FILES['capa_playlist']['name'])) {
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/Mybeat/public/uploads';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $f = $_FILES['capa_playlist'];
+            if ($f['error'] === UPLOAD_ERR_OK) {
+                $ext = pathinfo($f['name'], PATHINFO_EXTENSION);
+                $safeName = 'pl_' . time() . '_' . bin2hex(random_bytes(6)) . '.' . ($ext ?: 'jpg');
+                $targetPath = $uploadDir . '/' . $safeName;
+
+                if (move_uploaded_file($f['tmp_name'], $targetPath)) {
+                    // url relativa usada no DB (ajuste conforme sua estrutura)
+                    $coverUrl = '/Mybeat/public/uploads/' . $safeName;
+                }
+            }
+            // em caso de erro no upload, simplesmente continua sem capa (pode tratar msg se quiser)
+        }
+
+        $newId = $this->model->createPlaylist($userId, $nome, $descricao, $coverUrl);
+
+        if ($newId) {
+            header('Location: listar_giovana.php?controller=playlist&action=index&msg=created');
+        } else {
+            header('Location: listar_giovana.php?controller=playlist&action=criar&msg=error');
+        }
+        exit;
+    }
+}

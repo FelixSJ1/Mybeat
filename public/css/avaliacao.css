@@ -399,3 +399,123 @@
     font-weight: 600;
     text-decoration: none;
 }
+
+/* ===========================
+   Ajustes: botões de faixa + centralização do + Playlist
+   =========================== */
+
+/* Botões pequenos ao lado de cada faixa */
+.avaliacao-page .track-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* estilo base para os botões de ação da faixa (curtir / adicionar) */
+.avaliacao-page .track-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 32px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(166, 74, 201, 0.12);
+  background: transparent;
+  color: var(--text-light);
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: background-color 0.12s, transform 0.08s;
+}
+
+/* ícone de curtir */
+.avaliacao-page .track-action-btn.track-like {
+  border-color: rgba(230,126,34,0.12);
+}
+
+/* ícone de adicionar (+) */
+.avaliacao-page .track-action-btn.track-add {
+  border-color: rgba(166,74,201,0.12);
+}
+
+/* hover / foco — realce suave */
+.avaliacao-page .track-action-btn:hover,
+.avaliacao-page .track-action-btn:focus {
+  background: rgba(255,255,255,0.03);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+/* Se preferir cores mais evidentes ao hover */
+.avaliacao-page .track-action-btn.track-like:hover { background: rgba(230,126,34,0.12); color: #000; }
+.avaliacao-page .track-action-btn.track-add:hover  { background: rgba(166,74,201,0.12); color: #000; }
+
+/* Remove borda extra em navegadores para <button> nativo */
+.avaliacao-page button.track-action-btn { border: none; }
+.avaliacao-page button.track-action-btn { border: 1px solid rgba(255,255,255,0.04); }
+
+/* ======================================================
+   Ajuste do botão + Playlist (painel direito) — centraliza
+   ====================================================== */
+
+/* Garante que o botão do lado direito fique com o mesmo visual e o texto centralizado */
+.avaliacao-page .album-playlist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;               /* ocupa toda a largura do painel direito */
+  padding: 10px 12px;
+  height: 44px;              /* altura consistente com outros botões */
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--primary-purple);
+  color: var(--text-light);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* hover / foco: troca de cor coerente com o tema */
+.avaliacao-page .album-playlist-btn:hover,
+.avaliacao-page .album-playlist-btn:focus {
+  background-color: var(--primary-purple);
+  color: var(--dark-bg);
+  transform: translateY(-2px);
+}
+
+/* Se o botão for um <a> (link) ou <button>, aplica o mesmo estilo */
+.avaliacao-page a.album-playlist-btn,
+.avaliacao-page button.album-playlist-btn { display:inline-flex; }
+
+/* Garante que o texto do botão não quebre em múltiplas linhas */
+.avaliacao-page .album-playlist-btn { white-space: nowrap; text-align: center; }
+
+/* Responsividade — em telas pequenas deixa o botão com largura natural */
+@media (max-width: 800px) {
+  .avaliacao-page .album-playlist-btn {
+    width: auto;
+    padding: 8px 12px;
+  }
+
+  .avaliacao-page .track-action-btn {
+    min-width: 32px;
+    height: 30px;
+    padding: 5px 6px;
+  }
+}
+.track-action-btn,
+.track-action-btn:link,
+.track-action-btn:visited,
+.track-action-btn:hover,
+.track-action-btn:active {
+    text-decoration: none;  /* remove a linha */
+    display: inline-block;  /* garante que o botão se comporte como botão */
+    cursor: pointer;        /* mantém o cursor de mãozinha */
+}

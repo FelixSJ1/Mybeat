@@ -60,4 +60,26 @@ class PlaylistModel {
             return false;
         }
     }
+
+    public function createPlaylist(int $userId, string $nome, string $descricao = '', ?string $capaUrl = null) {
+        $sql = "INSERT INTO Playlists (id_usuario, nome_playlist, descricao_playlist, capa_playlist_url, data_criacao, data_atualizacao) 
+                VALUES (?, ?, ?, ?, NOW(), NOW())";
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) return false;
+        $stmt->bind_param("isss", $userId, $nome, $descricao, $capaUrl);
+        try {
+            $ok = $stmt->execute();
+            if (!$ok) {
+                $stmt->close();
+                return false;
+            }
+            $id = $stmt->insert_id;
+            $stmt->close();
+            return $id;
+        } catch (mysqli_sql_exception $e) {
+            $stmt->close();
+            return false;
+        }
+    }
 }
+
