@@ -242,3 +242,52 @@
                 width: 100%;
             }
 }
+
+/* ================================================= */
+/* ESTILOS DA BARRA DE NAVEGAÇÃO SUPERIOR (Botão Home) */
+/* ================================================= */
+
+/* 1. ESTILO DA BARRA DE CONTEÚDO (Posicionamento e Fundo) */
+.back-to-home-nav {
+    /* Garante que a barra ocupe a largura total */
+    width: 100%;
+    /* Define a cor de fundo da barra */
+    background-color: #f4f4f8; 
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box; 
+    /* Adiciona margem abaixo da barra para separar do título principal */
+    margin-bottom: 20px; 
+}
+
+/* 2. ESTILO DO CONTAINER DE ALINHAMENTO */
+/* Garante que o botão esteja alinhado com o restante do conteúdo */
+.container-nav-back {
+    width: 90%;
+    max-width: 1200px; 
+    margin: 0 auto;
+    text-align: left; /* Alinha o botão à esquerda */
+}
+
+/* 3. ESTILO DO BOTÃO "HOME" (A cor Laranja!) */
+.btn-voltar-home {
+    /* Define o botão como um bloco para que padding funcione */
+    display: inline-block;
+    /* COR LARANJA PRINCIPAL */
+    background-color: #F59E0B; 
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none; /* Remove o sublinhado */
+    /* Transições suaves */
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 4. EFEITO HOVER */
+.btn-voltar-home:hover {
+    background-color: #D97706; /* Laranja mais escuro no mouse over */
+    transform: translateY(-1px); /* Pequeno efeito de elevação */
+}

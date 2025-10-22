@@ -16,9 +16,16 @@ if (isset($_GET['termo'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Usuários</title>
-    <link rel="stylesheet" href="../../public/css/SeguidoresStyle.css?v=3">
+    <link rel="stylesheet" href="../../public/css/SeguidoresStyle.css?v=4">
 </head>
 <body>
+    <nav class="back-to-home-nav">
+        <div class="container-nav-back">
+            <a href="home_usuario.php" class="btn-voltar-home" title="Voltar para a Página Principal">
+                &#9664; Home
+            </a>
+        </div>
+    </nav>
 <div class="container">
     <div class="header">
         <h1>🔍 Buscar Usuários</h1>

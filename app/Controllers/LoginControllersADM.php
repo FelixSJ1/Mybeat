@@ -56,6 +56,7 @@ class LoginControllersADM
     private function handleSuccess(array $adminData): void
     {
         $_SESSION['admin_logged'] = true;
+        $_SESSION['id_usuario'] = $adminData['id_admin'];
         $_SESSION['admin_id'] = $adminData['id_admin'];
         $_SESSION['admin_nome'] = $adminData['nome_admin'];
         $_SESSION['admin_email'] = $adminData['email'];
