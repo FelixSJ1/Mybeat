@@ -60,7 +60,7 @@
             <!-- Lado direito: ações do álbum -->
             <aside class="right-panel">
                 <button type="button" class="action-btn album-like-btn" aria-label="Curtir álbum">♡ Curtir</button>
-                <button type="button" class="action-btn album-playlist-btn" aria-label="Adicionar álbum à playlist">+ Playlist</button>
+                <a href="listar_giovana.php?controller=playlist&action=index" class="action-btn album-playlist-btn" role="button" aria-label="Adicionar álbum à playlist">+ Playlist</a>
 
                 <div class="star-rating-box">
                     <p>Sua Avaliação:</p>
@@ -100,13 +100,16 @@
                                         ♡
                                     </button>
 
-                                    <button
-                                        type="button"
-                                        class="track-action-btn track-add"
-                                        data-musica-id="<?= htmlspecialchars($musica['id_musica'] ?? '') ?>"
-                                        aria-label="Adicionar faixa <?= htmlspecialchars($musica['titulo']) ?> à playlist">
-                                        +
-                                    </button>
+                                    <!-- substitua o botão track-add por este link -->
+                                    <a
+                                    class="track-action-btn track-add"
+                                    href="listar_giovana.php?controller=playlist&action=index&add_music_id=<?= (int)$musica['id_musica'] ?>"
+                                    aria-label="Adicionar faixa <?= htmlspecialchars($musica['titulo']) ?> à playlist"
+                                    title="Adicionar à playlist"
+                                    >
+                                    +
+                                    </a>
+
                                 </div>
                             </div>
                         </li>
