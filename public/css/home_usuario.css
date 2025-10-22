@@ -424,3 +424,11 @@ main {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(255, 140, 0, 0.3);
 }
+
+.search-and-profile-container {
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    color:#ccc;
+    
+}
