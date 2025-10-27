@@ -125,3 +125,62 @@ CREATE TABLE Albuns_Curtidos (
     FOREIGN KEY (id_album) REFERENCES Albuns(id_album) ON DELETE CASCADE,
     UNIQUE KEY curtida_unica_album (id_usuario, id_album)
 );
+
+
+
+-- Tabela de Grupos
+CREATE TABLE IF NOT EXISTS Grupos (
+    id_grupo INT AUTO_INCREMENT PRIMARY KEY,
+    nome_grupo VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    foto_grupo_url VARCHAR(255) DEFAULT '../../public/images/grupo_default.png',
+    id_criador INT NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    privado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_criador) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    INDEX idx_nome_grupo (nome_grupo),
+    INDEX idx_criador (id_criador)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela de Membros dos Grupos
+CREATE TABLE IF NOT EXISTS Membros_Grupo (
+    id_membro INT AUTO_INCREMENT PRIMARY KEY,
+    id_grupo INT NOT NULL,
+    id_usuario INT NOT NULL,
+    data_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    role ENUM('admin', 'moderador', 'membro') DEFAULT 'membro',
+    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    UNIQUE KEY unique_membro (id_grupo, id_usuario),
+    INDEX idx_grupo (id_grupo),
+    INDEX idx_usuario (id_usuario)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela de Mensagens do Chat
+CREATE TABLE IF NOT EXISTS Mensagens_Grupo (
+    id_mensagem INT AUTO_INCREMENT PRIMARY KEY,
+    id_grupo INT NOT NULL,
+    id_usuario INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    editada BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    INDEX idx_grupo_data (id_grupo, data_envio),
+    INDEX idx_usuario (id_usuario)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela de Convites para Grupos Privados 
+CREATE TABLE IF NOT EXISTS Convites_Grupo (
+    id_convite INT AUTO_INCREMENT PRIMARY KEY,
+    id_grupo INT NOT NULL,
+    id_usuario_convidado INT NOT NULL,
+    id_usuario_convidador INT NOT NULL,
+    status ENUM('pendente', 'aceito', 'recusado') DEFAULT 'pendente',
+    data_convite TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario_convidado) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario_convidador) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE,
+    INDEX idx_usuario_convidado (id_usuario_convidado),
+    INDEX idx_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
