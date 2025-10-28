@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config/conector.php';
 
 // Configurações do Google OAuth
-define('GOOGLE_CLIENT_ID', 'rcontent.com');
+define('GOOGLE_CLIENT_ID', '');
 define('GOOGLE_CLIENT_SECRET', '');
 define('GOOGLE_REDIRECT_URI', '');
 

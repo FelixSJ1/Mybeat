@@ -143,7 +143,12 @@ function build_search_query($q) {
 
     <div class="search-bar">
         <form id="searchForm" method="GET" action="home_usuario.php">
-            <input type="text" name="q" placeholder="Buscar músicas, álbuns ou artistas..." value="<?php echo htmlspecialchars($q); ?>">
+            <div style="position: relative;">
+                <input type="text" name="q" id="searchInput" placeholder="Buscar" value="<?php echo htmlspecialchars($q); ?>">
+                <button type="button" id="voiceSearchBtn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 20px; color: #A64AC9; padding: 5px;">
+                    🎤
+                </button>
+            </div>
             <input type="hidden" name="genre" id="hiddenGenre" value="<?php echo htmlspecialchars($genre); ?>">
         </form>
     </div>
@@ -161,6 +166,7 @@ function build_search_query($q) {
     // Verifica o tipo de login da session, se for user normal mostra o botão de minhas avaliações
     if (!isset($_SESSION['admin_logged']) || $_SESSION['admin_logged'] !== true): 
     ?>
+        <a href="grupos/lista_grupos.php" class="grupos-btn">Grupos</a>
         <a href="historico_avaliacoes.php" class="minhas-avaliacoes-btn">Minhas Avaliações</a>
     <?php endif; ?>
     <a href="logout.php" class="logout-btn">Sair</a>
@@ -291,11 +297,13 @@ function build_search_query($q) {
 </main>
 
 <script>
+// Seleção de gênero
 document.getElementById('genreSelect').addEventListener('change', function() {
     document.getElementById('hiddenGenre').value = this.value;
     document.getElementById('searchForm').submit();
 });
 
+// Carrossel
 (function() {
     const carousel = document.getElementById('carousel');
     const prev = document.getElementById('prevBtn');
@@ -313,7 +321,7 @@ document.getElementById('genreSelect').addEventListener('change', function() {
         setTimeout(function() { carousel.scrollLeft = 0; }, 80);
     });
     
-    
+    // Remover mensagem de sucesso após 5 segundos
     setTimeout(function() {
         const msg = document.querySelector('[style*="position: fixed"]');
         if (msg) {
@@ -322,6 +330,75 @@ document.getElementById('genreSelect').addEventListener('change', function() {
             setTimeout(function() { msg.remove(); }, 500);
         }
     }, 5000);
+})();
+
+// ============================================
+// PESQUISA POR VOZ
+// ============================================
+(function() {
+    const voiceBtn = document.getElementById('voiceSearchBtn');
+    const searchInput = document.getElementById('searchInput');
+    
+    // Verificar se o navegador suporta reconhecimento de voz
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        voiceBtn.style.display = 'none'; // Esconde o botão se não houver suporte
+        return;
+    }
+    
+    // Criar instância do reconhecimento de voz
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    // Configurações do reconhecimento
+    recognition.lang = 'pt-BR'; // Idioma português do Brasil
+    recognition.continuous = false; // Parar após uma frase
+    recognition.interimResults = false; // Não mostrar resultados intermediários
+    
+    // Variável para controlar se está gravando
+    let isRecording = false;
+    
+    // Quando clicar no botão do microfone
+    voiceBtn.addEventListener('click', function() {
+        if (isRecording) {
+            recognition.stop();
+            return;
+        }
+        
+        // Iniciar gravação
+        recognition.start();
+        isRecording = true;
+        voiceBtn.textContent = '🔴'; // Mudar ícone para indicar gravação
+        searchInput.placeholder = 'Ouvindo...';
+    });
+    
+    // Quando o reconhecimento capturar um resultado
+    recognition.addEventListener('result', function(event) {
+        const transcript = event.results[0][0].transcript;
+        searchInput.value = transcript; // Colocar texto no input
+        document.getElementById('searchForm').submit(); // Enviar formulário automaticamente
+    });
+    
+    // Quando o reconhecimento terminar
+    recognition.addEventListener('end', function() {
+        isRecording = false;
+        voiceBtn.textContent = '🎤'; // Voltar ao ícone normal
+        searchInput.placeholder = 'Buscar músicas, álbuns ou artistas...';
+    });
+    
+    // Em caso de erro
+    recognition.addEventListener('error', function(event) {
+        console.error('Erro no reconhecimento de voz:', event.error);
+        isRecording = false;
+        voiceBtn.textContent = '🎤';
+        searchInput.placeholder = 'Buscar músicas, álbuns ou artistas...';
+        
+        // Mensagem amigável para o usuário
+        if (event.error === 'no-speech') {
+            alert('Nenhuma fala foi detectada. Tente novamente.');
+        } else if (event.error === 'not-allowed') {
+            alert('Permissão para usar o microfone foi negada.');
+        }
+    });
 })();
 </script>
 </body>

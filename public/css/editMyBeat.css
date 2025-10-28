@@ -1,0 +1,216 @@
+ /* --- Reset Básico e Padrões do Body --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            background: #0a0a0a; /* Um preto um pouco mais suave */
+            color: #e0e0e0; /* Um branco levemente acinzentado para conforto */
+            font-family: "Open Sans", sans-serif; 
+            line-height: 1.6;
+            max-width: 900px; /* Centraliza o conteúdo em telas largas */
+            margin: 0 auto;
+            padding: 20px; 
+        }
+
+        /* --- Tipografia --- */
+        h1 { 
+            font-family: "Lora", serif; 
+            color: #eb8046; /* Laranja */
+            margin-bottom: 20px; 
+            font-size: 2.2rem;
+            border-bottom: 2px solid #5b3a92; /* Linha roxa */
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-family: "Lora", serif; 
+            color: #eb8046; /* Laranja */
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+
+        .small { 
+            font-size: 0.9rem; 
+            color: #aaa; 
+            font-style: italic;
+        }
+        
+        a { 
+            color: #eb8046; /* Laranja */
+            text-decoration: none; 
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #fff;
+        }
+
+        hr {
+            display: none; /* Vamos esconder o <hr> e usar bordas */
+        }
+
+        /* --- Navegação Principal (Menu) --- */
+        /* Este seletor complexo mira o <p> da navegação sem afetar outros <p> */
+        body > p:not([class]):not([style]) {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #2a2a2a; /* Divisor sutil */
+        }
+
+        body > p:not([class]):not([style]) a {
+            font-family: "Lora", serif;
+            font-weight: bold;
+            color: #5b3a92; /* Roxo */
+            font-size: 1.1rem;
+            margin: 0 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        body > p:not([class]):not([style]) a:hover {
+            color: #eb8046; /* Laranja no hover */
+            background-color: #111;
+        }
+
+        /* --- Cards --- */
+        .card { 
+            background: #111; 
+            border: 1px solid #2a2a2a; /* Borda cinza escura */
+            padding: 20px; /* Mais espaçamento interno */
+            border-radius: 12px; /* Cantos mais arredondados */
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #5b3a92; /* Borda roxa no hover */
+            box-shadow: 0 0 15px rgba(91, 58, 146, 0.4); /* Brilho roxo */
+        }
+
+        /* Link "Editar" dentro dos cards */
+        .card a {
+            background: transparent;
+            border: 2px solid #eb8046;
+            color: #eb8046;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .card a:hover {
+            background: #eb8046;
+            color: #000;
+        }
+
+        /* --- Formulários --- */
+        label { 
+            color: #eb8046; /* Laranja */
+            font-family: "Lora"; 
+            font-weight: bold; 
+            display: block; 
+            margin-top: 16px; 
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], 
+        input[type="number"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #333; /* Borda neutra */
+            background: #0a0a0a; /* Fundo igual ao body */
+            color: #e0e0e0; /* Texto claro */
+            font-family: "Open Sans", sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Foco moderno com as cores do tema */
+        input[type="text"]:focus, 
+        input[type="number"]:focus, 
+        select:focus, 
+        textarea:focus {
+            border-color: #5b3a92; /* Borda roxa ao focar */
+            box-shadow: 0 0 10px rgba(91, 58, 146, 0.5); /* Brilho roxo */
+            outline: none; /* Remove o outline padrão do navegador */
+        }
+
+        textarea { 
+            min-height: 120px; 
+            resize: vertical; /* Permite apenas redimensionar verticalmente */
+        }
+
+        /* --- Botão Principal --- */
+        .btn { 
+            background: #eb8046; /* Laranja */
+            color: #000; /* Texto preto para contraste */
+            border: none;
+            padding: 12px 20px; /* Botão mais "clicável" */
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #fff; /* Hover branco */
+            color: #000;
+            box-shadow: 0 0 15px rgba(235, 128, 70, 0.5); /* Brilho laranja */
+        }
+
+        /* --- Ícone de Usuário --- */
+        .user-icon { 
+            position: fixed; 
+            top: 20px; 
+            right: 25px; 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%;
+            background-color: #5b3a92; /* Fundo roxo */
+            color: #fff; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border: 2px solid #eb8046; /* Borda laranja */
+            box-shadow: 0 0 10px rgba(235, 128, 70, 0.4); /* Brilho laranja */
+            transition: all 0.3s ease;
+        }
+        
+        .user-icon:hover {
+            transform: scale(1.1);
+            background-color: #eb8046; /* Inverte as cores no hover */
+            color: #000;
+            border-color: #5b3a92;
+            box-shadow: 0 0 15px rgba(91, 58, 146, 0.6); /* Brilho roxo */
+        }
+        
+        /* --- Mensagens de Sucesso/Erro (Apenas melhorando a fonte) --- */
+        p[style*="color:lightgreen"] {
+            font-weight: bold;
+            background: rgba(144, 238, 144, 0.1);
+            border: 1px solid lightgreen;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        p[style*="color:red"] {
+            font-weight: bold;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid red;
+            padding: 10px;
+            border-radius: 8px;
+        }
