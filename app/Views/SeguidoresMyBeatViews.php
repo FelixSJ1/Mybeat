@@ -8,6 +8,8 @@ $usuarios = [];
 if (isset($_GET['termo'])) {
     $usuarios = $controller->buscar();
 }
+
+$nomeUsuarioLogado = $_SESSION['nome_exibicao'] ?? 'Meu Perfil';
 ?>
 
 <!DOCTYPE html>
@@ -27,11 +29,18 @@ if (isset($_GET['termo'])) {
         </div>
     </nav>
 <div class="container">
-    <div class="header">
-        <h1>🔍 Buscar Usuários</h1>
-        <p>Encontre e siga outros amantes de música</p>
-    </div>
+    
+    <div class="search-and-profile-header">
+        
+        <div class="header-busca">
+            <h1>🔍 Buscar Usuários</h1>
+            <p>Encontre e siga outros amantes de música</p>
+        </div>
 
+        <a href="ShowPerfil.php" class="btn-meu-perfil" title="Ver seu perfil e seguidores">
+            Meu Perfil: @<?= htmlspecialchars($nomeUsuarioLogado) ?>
+        </a>
+    </div>
     <form class="search-box" method="get">
         <div class="search-input-wrapper">
             <span class="search-icon">🔎</span>

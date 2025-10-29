@@ -7,6 +7,15 @@ class SeguidoresMyBeatControllers {
     public function __construct() {
         $this->model = new SeguidoresMyBeatModels();
     }
+    
+    // 🆕 NOVO MÉTODO: Liga a busca do Model à View/Página de Perfil
+    public function buscarDadosUsuarioPorId(int $id): ?array 
+    {
+        if ($id <= 0) {
+            return null;
+        }
+        return $this->model->buscarDadosUsuarioPorId($id); 
+    }
 
     
     public function buscar() {

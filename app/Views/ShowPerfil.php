@@ -5,11 +5,27 @@ require_once __DIR__ . '/../Controllers/SeguidoresMyBeatControllers.php';
 $controller = new SeguidoresMyBeatControllers();
 
 $idUsuario = $_GET['id'] ?? 0;
+
 $seguidores = $controller->listarSeguidores($idUsuario);
 $seguindo = $controller->listarSeguindo($idUsuario);
 
-$nomeUsuario = !empty($_SESSION['nome_exibicao']) ? $_SESSION['nome_exibicao'] : 'Usuário';
-$fotoUsuario = !empty($_SESSION['foto_perfil_url']) ? $_SESSION['foto_perfil_url'] : '../../public/img/avatar_padrao.png';
+
+
+$nomeUsuario = 'Usuário'; 
+$fotoUsuario = '../../public/img/Perfil_Usuario.png'; 
+
+if ($idUsuario > 0) {
+    
+    $dadosPerfil = $controller->buscarDadosUsuarioPorId($idUsuario); 
+    
+    if ($dadosPerfil) {
+        $nomeUsuario = $dadosPerfil['nome_usuario'] ?? $nomeUsuario;
+        $fotoUsuario = $dadosPerfil['foto_perfil_url'] ?? $fotoUsuario;
+    } 
+} else {
+    $nomeUsuario = !empty($_SESSION['nome_exibicao']) ? $_SESSION['nome_exibicao'] : $nomeUsuario;
+    $fotoUsuario = !empty($_SESSION['foto_perfil_url']) ? $_SESSION['foto_perfil_url'] : $fotoUsuario;
+}
 ?>
 
 <!DOCTYPE html>

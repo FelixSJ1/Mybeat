@@ -19,6 +19,23 @@ class SeguidoresMyBeatModels {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    
+    // 🆕 NOVO MÉTODO: Busca dados de um usuário pelo ID
+    public function buscarDadosUsuarioPorId(int $idUsuario): ?array
+    {
+        $sql = "SELECT nome_usuario, foto_perfil_url 
+                FROM Usuarios 
+                WHERE id_usuario = ?";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $idUsuario); // "i" para integer
+        $stmt->execute();
+        
+        $resultado = $stmt->get_result();
+        
+        // Retorna a linha como um array associativo ou null
+        return $resultado->fetch_assoc();
+    }
 
 
     public function seguirUsuario($idSeguidor, $idSeguido) {
