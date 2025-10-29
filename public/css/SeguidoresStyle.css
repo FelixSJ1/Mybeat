@@ -256,19 +256,18 @@
     width: 90%;
     max-width: 1200px; 
     margin: 0 auto;
-    text-align: left;
+    text-align: left; 
 }
 
-/* 3. ESTILO DO BOTÃO "HOME" (A cor Laranja!) */
 .btn-voltar-home {
-    display: inline-block;  
+    display: inline-block;
     background-color: #F59E0B; 
     color: #ffffff;
     padding: 10px 18px;
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.95rem;
-    text-decoration: none;
+    text-decoration: none; 
     transition: background-color 0.3s ease, transform 0.2s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
