@@ -113,6 +113,7 @@ body {
     color: #b3b3b3;
     text-transform: uppercase;
     font-weight: 400;
+    text-align: right;
 }
 
 .col-index { width: 5%; text-align: center; }
@@ -326,4 +327,19 @@ header {
     object-fit: cover;
     display: block;
     border-radius: 50%; 
+}
+
+.liked-songs-table th.col-title,
+.liked-songs-table th.col-album {
+    text-align: left;
+}
+
+.liked-songs-table th.col-index,
+.liked-songs-table th.col-like {
+    text-align: center;
+}
+
+.liked-songs-table th.col-duration {
+    text-align: right;
+    padding-right: 10px; 
 }
