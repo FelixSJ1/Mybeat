@@ -3,7 +3,7 @@ class GrupoController {
     private $db;
     private $grupoModel;
     private $testing = false; // 🔹 ligar e desligar o modo de teste
-
+    //Documentaçao nova para atualização
     public function __construct($db, $testing = false) {
         $this->db = $db;
         $this->grupoModel = new Grupo($db);

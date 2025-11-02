@@ -7,6 +7,7 @@
          displayDetailsOnTestsThatTriggerWarnings="true">
     
     <!-- Suítes de Teste -->
+    <!--TESTANDO O CÓDIGO DOCUMENTAÇÃO-->
     <testsuites>
         <testsuite name="Unit Tests">
             <directory>tests/unit</directory>

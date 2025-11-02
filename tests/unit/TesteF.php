@@ -2,10 +2,17 @@
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../../app/Controllers/GrupoController.php';
+
 require_once __DIR__ . '/../../app/Models/Grupo.php';
+
 require_once __DIR__ . '/../../app/Models/Chat.php';
 
+
+//testando o código
+
+
 // ==================== STUBS PARA MYSQLI ====================
+//testando o código
 
 class MockMysqliResult {
     public $num_rows = 0;
