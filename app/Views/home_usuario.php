@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+$has_temp_notifications = isset($_SESSION['notificacoes_temporarias']) && count($_SESSION['notificacoes_temporarias']) > 0;
 // Verificar se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     header('Location: FaçaLoginMyBeat.php');
@@ -171,12 +172,15 @@ function build_search_query($q) {
     <?php endif; ?>
     <a href="logout.php" class="logout-btn">Sair</a>
 
-    <div class="search-and-profile-container">
-
-        <a href="SeguidoresMyBeatViews.php" class="followers-button">
-            👥
+    <div class="interaction-icons-container"> 
+        
+        <a href="notificacoes_seguidores.php" class="notification-button" title="Notificações de Seguidores">
+            🔔
         </a>
 
+        <a href="SeguidoresMyBeatViews.php" class="followers-button" title="Buscar Usuários">
+            👥
+        </a>
     </div>
     
     <div class="user-circle" title="Meu Perfil">

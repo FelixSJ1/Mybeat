@@ -8,7 +8,7 @@ class SeguidoresMyBeatControllers {
         $this->model = new SeguidoresMyBeatModels();
     }
     
-    // 🆕 NOVO MÉTODO: Liga a busca do Model à View/Página de Perfil
+   
     public function buscarDadosUsuarioPorId(int $id): ?array 
     {
         if ($id <= 0) {
@@ -46,6 +46,15 @@ class SeguidoresMyBeatControllers {
 
     public function listarSeguindo($idUsuario) {
         return $this->model->listarSeguindo($idUsuario);
+    }
+
+   
+    public function listarNotificacoesSimples(int $idUsuarioLogado): array 
+    {
+        
+        return $this->model->getSeguidoresRecentes($idUsuarioLogado);
+        
+
     }
 }
 

@@ -85,5 +85,33 @@ class SeguidoresMyBeatModels {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getSeguidoresRecentes(int $idUsuarioLogado): array {
+    
+
+        $query = "SELECT 
+                s.id_seguidor AS id_usuario_acao, 
+                s.data_seguimento AS data_hora, 
+                u.nome_exibicao AS nome_exibicao_acao, 
+                u.foto_perfil_url AS foto_perfil_acao
+              FROM Seguidores s
+              JOIN Usuarios u ON s.id_seguidor = u.id_usuario
+              WHERE s.id_seguido = ?
+              ORDER BY s.data_seguimento DESC
+              LIMIT 50"; // Limita para não carregar a lista toda
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $idUsuarioLogado);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+    
+        $notificacoes = [];
+        while ($row = $resultado->fetch_assoc()) {
+            $row['tipo_acao'] = 'SEGUIU'; 
+            $notificacoes[] = $row;
+        }
+        $stmt->close();
+        return $notificacoes;
+    }
 }
 ?>
