@@ -10,6 +10,7 @@ if (!isset($_SESSION['id_usuario'])) {
 require_once __DIR__ . '/../config/conector.php';
 require_once __DIR__ . '/../Controllers/ControllersG.php';
 require_once __DIR__ . '/../Models/ModelsG.php';
+require_once __DIR__ . '/../Models/HomeExtrasModel.php';
 
 // Verificar se é o primeiro acesso (biografia vazia)
 try {
@@ -249,6 +250,90 @@ function build_search_query($q) {
             <button class="carousel-btn right" id="nextBtn" aria-label="Próximo">&gt;</button>
         </div>
     </section>
+
+    
+<!-- Populares da semana -->
+<?php
+$extras = isset($extras) ? $extras : new HomeExtras($conn);
+$popularesSemana = $extras->getPopularesSemana(12);
+?>
+<?php if (!empty($popularesSemana) && count($popularesSemana) > 0): ?>
+<section class="section">
+    <h2 class="section-title">Populares da semana</h2>
+    <div class="carousel-wrap">
+        <button class="carousel-btn left" aria-label="Anterior" id="prevWeekBtn">&lt;</button>
+        <div class="carousel" role="list">
+            <?php foreach ($popularesSemana as $al): ?>
+                <div class="album-card card">
+                    <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+                        <div class="cover">
+                            <?php if (!empty($al['capa_album_url'])): ?>
+                                <img src="<?php echo htmlspecialchars($al['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($al['titulo']); ?>">
+                            <?php else: ?>
+                                <div class="no-cover">Sem capa</div>
+                            <?php endif; ?>
+                        </div>
+                    </a>
+                    <div class="album-info">
+                        <h3>
+                            <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>">
+                                <?php echo htmlspecialchars($al['titulo']); ?>
+                            </a>
+                        </h3>
+                        <p class="small">por <?php echo htmlspecialchars($al['nome_artista'] ?? '—'); ?></p>
+                        <p class="meta"><?php echo htmlspecialchars($al['genero'] ?? '—'); ?> · <?php echo htmlspecialchars($al['data_lancamento'] ?? '—'); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button class="carousel-btn right" id="nextWeekBtn" aria-label="Próximo">&gt;</button>
+    </div>
+</section>
+<?php endif; ?>
+<!-- Porque você avaliou (inserido) -->
+<?php
+$evaluationBlock = null;
+if (isset($_SESSION['id_usuario'])) {
+    $evaluationBlock = $extras->findEvaluationWithSimilar((int)$_SESSION['id_usuario'], 12, 1, 12);
+}
+?>
+<?php if (!empty($evaluationBlock) && !empty($evaluationBlock['similar'])): ?>
+    <?php $userLast = $evaluationBlock['evaluation']; $similarByGenre = $evaluationBlock['similar']; ?>
+    <section class="section">
+        <h2 class="section-title">Porque você avaliou <?php echo htmlspecialchars($userLast['titulo']); ?>:</h2>
+        <div class="carousel-wrap">
+            <button class="carousel-btn left" aria-label="Anterior" id="prevWhyBtn">&lt;</button>
+            <div class="carousel" role="list">
+                <?php foreach ($similarByGenre as $al): ?>
+                    <div class="album-card card">
+                        <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>" class="cover-link">
+                            <div class="cover">
+                                <?php if (!empty($al['capa_album_url'])): ?>
+                                    <img src="<?php echo htmlspecialchars($al['capa_album_url']); ?>" alt="<?php echo htmlspecialchars($al['titulo']); ?>">
+                                <?php else: ?>
+                                    <div class="no-cover">Sem capa</div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                        <div class="album-info">
+                            <h3>
+                                <a href="listar_giovana.php?controller=avaliacaoUsuario&action=avaliar&id_album=<?php echo (int)$al['id_album']; ?>">
+                                    <?php echo htmlspecialchars($al['titulo']); ?>
+                                </a>
+                            </h3>
+                            <p class="small">por <?php echo htmlspecialchars($al['nome_artista'] ?? '—'); ?></p>
+                            <p class="meta"><?php echo htmlspecialchars($al['genero'] ?? '—'); ?> · <?php echo htmlspecialchars($al['data_lancamento'] ?? '—'); ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <button class="carousel-btn right" id="nextWhyBtn" aria-label="Próximo">&gt;</button>
+        </div>
+    </section>
+<?php endif; ?>
+<!-- end porque -->
+
+    
 
     <section class="musicas-section">
         <h2>Músicas</h2>
