@@ -4,11 +4,10 @@ require_once __DIR__ . '/../Models/Chat.php';
 
 class GrupoController {
     private $grupoModel;
-    private $chatModel;
-    private $conn;
-    
-    public function __construct($db) {
-        $this->conn = $db;
+    private $testing = false; // 🔹 ligar e desligar o modo de teste
+
+    public function __construct($db, $testing = false) {
+        $this->db = $db;
         $this->grupoModel = new Grupo($db);
         $this->chatModel = new Chat($db);
     }
