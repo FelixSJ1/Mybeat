@@ -2,7 +2,7 @@
 class GrupoController {
     private $db;
     private $grupoModel;
-    private $testing = false; // 🔹 indica se está rodando em modo de teste
+    private $testing = false; // 🔹 ligar e desligar o modo de teste
 
     public function __construct($db, $testing = false) {
         $this->db = $db;
