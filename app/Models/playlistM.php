@@ -41,6 +41,47 @@ class PlaylistModel {
     }
 
     /**
+     * Retorna as músicas de uma playlist com informações de álbum e artista.
+     * Campos retornados (exemplo): id_musica_playlist, id_playlist, id_musica, ordem_na_playlist,
+     * data_adicao, titulo, duracao_segundos, numero_faixa, album_titulo, capa_album_url, artista_nome
+     */
+    public function getMusicasByPlaylist(int $playlistId): array {
+        $sql = "
+            SELECT
+                mp.id_musica_playlist,
+                mp.id_playlist,
+                m.id_musica,
+                mp.ordem_na_playlist,
+                DATE_FORMAT(mp.data_adicao, '%Y-%m-%d') AS data_adicao,
+                m.titulo,
+                m.duracao_segundos,
+                m.numero_faixa,
+                al.titulo AS album_titulo,
+                COALESCE(al.capa_album_url, '/Mybeat/public/images/LogoF.png') AS capa_album_url,
+                ar.nome AS artista_nome
+            FROM Musicas_Playlist mp
+            INNER JOIN Musicas m ON mp.id_musica = m.id_musica
+            LEFT JOIN Albuns al ON m.id_album = al.id_album
+            LEFT JOIN Artistas ar ON m.id_artista = ar.id_artista
+            WHERE mp.id_playlist = ?
+            ORDER BY
+              CASE WHEN mp.ordem_na_playlist IS NULL THEN 1 ELSE 0 END,
+              mp.ordem_na_playlist ASC,
+              mp.data_adicao ASC
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) return [];
+        $stmt->bind_param("i", $playlistId);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $rows = $res->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        return $rows ?: [];
+    }
+
+    /**
      * Adiciona música a uma playlist (retorna true se adicionou, false se já existia ou erro)
      */
     public function addMusicToPlaylist(int $playlistId, int $musicId): bool {
@@ -82,4 +123,3 @@ class PlaylistModel {
         }
     }
 }
-

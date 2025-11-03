@@ -20,7 +20,7 @@ switch ($controller) {
     case 'avaliacao':$c = new AvaliacaoController($conn); break;
     case 'avaliacaoUsuario': $c = new AvaliacaoUsuarioController($conn); break;
     case 'painelmusic': $c = new PainelMusicController($conn); break;
-    case 'playlist': $c = new PlaylistController($conn); break; // <-- adicionado
+    case 'playlist': $c = new PlaylistController($conn); break; 
     default: die("Controller inválido");
 }
 
