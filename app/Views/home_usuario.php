@@ -167,21 +167,19 @@ function build_search_query($q) {
     // Verifica o tipo de login da session, se for user normal mostra o botão de minhas avaliações
     if (!isset($_SESSION['admin_logged']) || $_SESSION['admin_logged'] !== true): 
     ?>
-        <a href="grupos/lista_grupos.php" class="grupos-btn">Grupos</a>
-        <a href="historico_avaliacoes.php" class="minhas-avaliacoes-btn">Minhas Avaliações</a>
+        
+        
     <?php endif; ?>
-    <a href="logout.php" class="logout-btn">Sair</a>
+    
 
     <div class="search-and-profile-container">
 
-        <a href="SeguidoresMyBeatViews.php" class="followers-button">
-            👥
-        </a>
+        
 
     </div>
     
     <div class="user-circle" title="Meu Perfil">
-        <a href="perfilUsuario.php" style="display: block; width: 100%; height: 100%;">
+        <a id="profileMenuToggle"  href="#"  style="display: block; width: 100%; height: 100%;">
             <img src="<?php echo htmlspecialchars($foto_perfil); ?>" alt="Usuário">
         </a>
     </div>
@@ -486,5 +484,105 @@ document.getElementById('genreSelect').addEventListener('change', function() {
     });
 })();
 </script>
+
+<?php
+// Sidebar data (robust) - ensures variables match perfilUsuario.php expectations
+if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
+
+// Ensure $conn available
+if (!isset($conn) && file_exists(__DIR__ . '/../config/conector.php')) {
+    require_once __DIR__ . '/../config/conector.php';
+}
+
+// If perfilUsuario.php defines individual variables, prefer them; otherwise fetch from DB and define both forms.
+$fetched = array();
+if (!isset($nome_exibicao) || !isset($nome_usuario) || !isset($foto_perfil_url)) {
+    if (isset($_SESSION['id_usuario']) && isset($conn)) {
+        $stmt = $conn->prepare("SELECT nome_usuario, nome_exibicao, email, foto_perfil_url FROM Usuarios WHERE id_usuario = ?");
+        if ($stmt) {
+            $stmt->bind_param("i", $_SESSION['id_usuario']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $fetched = $result ? $result->fetch_assoc() : array();
+            $stmt->close();
+        }
+    }
+}
+
+// Normalize variables: favor explicitly defined variables (from perfilUsuario), else use fetched values
+if (!isset($nome_exibicao) || $nome_exibicao === '') {
+    $nome_exibicao = isset($fetched['nome_exibicao']) ? $fetched['nome_exibicao'] : (isset($usuario['nome_exibicao']) ? $usuario['nome_exibicao'] : '');
+}
+if (!isset($nome_usuario) || $nome_usuario === '') {
+    $nome_usuario = isset($fetched['nome_usuario']) ? $fetched['nome_usuario'] : (isset($usuario['nome_usuario']) ? $usuario['nome_usuario'] : '');
+}
+if (!isset($foto_perfil_url) || $foto_perfil_url === '') {
+    $foto_perfil_url = isset($fetched['foto_perfil_url']) ? $fetched['foto_perfil_url'] : (isset($foto_perfil) ? $foto_perfil : '');
+}
+if (!isset($email) || $email === '') {
+    $email = isset($fetched['email']) ? $fetched['email'] : (isset($usuario['email']) ? $usuario['email'] : '');
+}
+
+// Also populate $usuario array for backward compatibility
+if (!isset($usuario) || !is_array($usuario) || empty($usuario)) {
+    $usuario = array(
+        'nome_usuario' => $nome_usuario ?? '',
+        'nome_exibicao' => $nome_exibicao ?? '',
+        'email' => $email ?? '',
+        'foto_perfil_url' => $foto_perfil_url ?? ''
+    );
+}
+
+// Sidebar display variables
+$sidebar_nome = !empty($nome_exibicao) ? $nome_exibicao : (!empty($nome_usuario) ? $nome_usuario : 'Usuário');
+$sidebar_handle = !empty($nome_usuario) ? (strpos($nome_usuario, '@') === 0 ? $nome_usuario : '@'.$nome_usuario) : '';
+$sidebar_foto = !empty($foto_perfil_url) ? $foto_perfil_url : (isset($foto_perfil) && !empty($foto_perfil) ? $foto_perfil : '/Mybeat/public/images/Perfil_Usuario.png');
+?>
+<div id="profileSidebar" class="profile-sidebar" aria-hidden="true" style="display:none;">
+  <div class="profile-sidebar-inner">
+    <div class="profile-header">
+      <img class="sidebar-profile-pic" src="<?php echo htmlspecialchars($sidebar_foto); ?>" alt="Foto de perfil">
+      <div class="profile-meta">
+        <div class="profile-name"><?php echo htmlspecialchars($sidebar_nome); ?></div>
+        <div class="profile-handle"><?php echo htmlspecialchars($sidebar_handle); ?></div>
+        <a href="perfilUsuario.php" class="edit-profile-btn">Editar perfil</a>
+      </div>
+    </div>
+    <nav class="profile-links">
+      <a class="profile-item" href="SeguidoresMyBeatViews.php"><img src="/Mybeat/public/images/buscar_usuarios.png" class="ico" alt="Buscar"> Buscar usuários</a>
+      <a class="profile-item" href="grupos/lista_grupos.php"><img src="/Mybeat/public/images/grupos.png" class="ico" alt="Grupos"> Grupos</a>
+      <a class="profile-item" href="historico_avaliacoes.php"><img src="/Mybeat/public/images/minhas_avaliacoes.png" class="ico" alt="Avaliações"> Minhas avaliações</a>
+      <a class="profile-item" href="playlist_listagem.php"><img src="/Mybeat/public/images/minhas_playlist.png" class="ico" alt="Playlist"> Minhas playlist</a>
+      <a class="profile-item" href="logout.php"><img src="/Mybeat/public/images/sair.png" class="ico" alt="Sair"> Sair</a>
+    </nav>
+    <button id="closeProfileSidebar" class="close-profile">Fechar</button>
+  </div>
+</div>
+<div id="profileOverlay" class="profile-overlay" style="display:none;"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var toggle = document.getElementById('profileMenuToggle');
+    var sidebar = document.getElementById('profileSidebar');
+    var overlay = document.getElementById('profileOverlay');
+    var closeBtn = document.getElementById('closeProfileSidebar');
+    function openSidebar() {
+        if (!sidebar) return;
+        sidebar.style.display = 'block';
+        sidebar.setAttribute('aria-hidden','false');
+        if (overlay) overlay.style.display = 'block';
+    }
+    function closeSidebar() {
+        if (!sidebar) return;
+        sidebar.style.display = 'none';
+        sidebar.setAttribute('aria-hidden','true');
+        if (overlay) overlay.style.display = 'none';
+    }
+    if(toggle) toggle.addEventListener('click', function(e){ e.preventDefault(); openSidebar(); });
+    if(overlay) overlay.addEventListener('click', closeSidebar);
+    if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+});
+</script>
+
 </body>
 </html>
