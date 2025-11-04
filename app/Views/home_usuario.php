@@ -179,8 +179,6 @@ function build_search_query($q) {
             🔔
         </a>
 
-        
-
     </div>
     
     <div class="user-circle" title="Meu Perfil">

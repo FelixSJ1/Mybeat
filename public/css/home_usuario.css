@@ -874,3 +874,13 @@ main {
 .profile-item { visibility: visible !important; opacity: 1 !important; }
 
 /* === FIM DOS ESTILOS DO SIDEBAR === */
+
+/* ==== NOTIFICAÇÃO ====*/
+
+.notification-button {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer; 
+}
+
+/* ==== NOTIFICAÇÃO ====*/
