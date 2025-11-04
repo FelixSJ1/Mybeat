@@ -113,7 +113,7 @@ class TesteG extends TestCase
 
     public function testGetByIdReturnsRowOrNull()
     {
-        $row = ['id_playlist'=>2,'nome_playlist'=>'B'];
+        $row = ['id_playlist'=>2,'nome_playlist'=>'B','descricao_playlist'=>'desc B','capa_playlist_url'=>null,'data_criacao'=>'2025-02-02'];
         $result = new class($row) {
             private $row;
             public function __construct($row) { $this->row = $row; }
@@ -210,7 +210,14 @@ class TesteG extends TestCase
         // stub de model que será injetado no controller
         $stubModel = new class {
             public function getByUser($id, $q='') {
-                return [['id_playlist'=>10,'nome_playlist'=>'TestPlaylist']];
+                return [[
+                    'id_playlist'=>10,
+                    'id_usuario'=>$id,
+                    'nome_playlist'=>'TestPlaylist',
+                    'descricao_playlist'=>'descrição teste',
+                    'capa_playlist_url'=>null,
+                    'data_criacao'=>'2025-03-03'
+                ]];
             }
         };
 
@@ -239,7 +246,13 @@ class TesteG extends TestCase
 
         $stubModel = new class {
             public function getById($id) {
-                return ['id_playlist'=>$id,'nome_playlist'=>'Detalhes'];
+                return [
+                    'id_playlist'=>$id,
+                    'nome_playlist'=>'Detalhes',
+                    'descricao_playlist'=>'desc detalhes',
+                    'capa_playlist_url'=>null,
+                    'data_criacao'=>'2025-04-04'
+                ];
             }
             public function getMusicasByPlaylist($id) {
                 return [['titulo'=>'M1']];
