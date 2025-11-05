@@ -173,7 +173,7 @@ class AvaliacaoUController {
 
         $id_usuario_logado = (int)$_SESSION['id_usuario'];
         $albuns = $this->albumModel->getAlbunsCurtidosPorUsuario($id_usuario_logado);
-        require __DIR__ . '/../views/meus_albuns_curtidos.php';
+        require __DIR__ . '/../views/CurtidasAlbuns.php';
     }
 } 
 
