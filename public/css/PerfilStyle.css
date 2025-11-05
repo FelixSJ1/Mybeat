@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #7b3ff3; 
-    --accent-color: #ff8c42; 
-    --text-color: #581ab6;
-    --background-color: #0d0d0d; 
+    --primary-color: #7b3ff3;
+    --accent-color: #ff8c42;
+    --text-color: #e6e6e6;
+    --background-color: #0d0d0d;
     --card-background: #1c1c1c;
     --border-color: #2e2e2e;
     --hover-shadow: 0 0 15px rgba(123, 63, 243, 0.4);
@@ -23,13 +23,14 @@ body {
 .container {
     width: 100%;
     max-width: 860px;
-    background-color: #181818; 
+    background-color: #181818;
     border-radius: 16px;
     overflow: hidden;
     margin: 30px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
+/* === Cabeçalho do perfil === */
 .profile-header {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: #e68a4d;
@@ -74,8 +75,9 @@ body {
     font-size: 1em;
 }
 
+/* === Conteúdo principal === */
 .profile-content {
-    background-color: #1c1c1c; 
+    background-color: #1c1c1c;
     color: #e19b2c;
     padding: 25px;
     border-top: 1px solid var(--border-color);
@@ -96,31 +98,88 @@ body {
     padding-bottom: 8px;
 }
 
+/* === Lista de usuários === */
 .lista-usuarios {
     list-style: none;
     padding: 0;
     margin-bottom: 30px;
 }
 
-.lista-usuarios li {
+/* === Item de usuário === */
+.usuario-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #111;
     padding: 10px 14px;
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color var(--transition), transform var(--transition);
     border-radius: 8px;
-    color: var(--text-color);
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition), transform var(--transition);
 }
 
-.lista-usuarios li:hover {
-    background-color: var(--primary-color);
+.usuario-item:hover {
+    background-color: #181818;
     transform: translateX(4px);
 }
 
+.info-usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* === Foto miniatura === */
+.foto-mini {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+    transition: transform var(--transition);
+}
+
+.foto-mini:hover {
+    transform: scale(1.1);
+}
+
+/* === Nome do usuário === */
+.nome-link {
+    color: #b488f9;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+.nome-link:hover {
+    color: var(--accent-color);
+}
+
+/* === Botão "Ver perfil" === */
+.botao-ver {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.botao-ver:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+/* === Mensagens vazias === */
 .no-results {
     color: #999;
     text-align: center;
     font-style: italic;
 }
 
+/* === Responsividade === */
 @media (max-width: 650px) {
     .avatar-large {
         width: 100px;
@@ -137,5 +196,10 @@ body {
 
     .lista-usuarios li {
         font-size: 0.95em;
+    }
+
+    .foto-mini {
+        width: 36px;
+        height: 36px;
     }
 }

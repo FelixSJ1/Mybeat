@@ -1,0 +1,147 @@
+/*
+ * Arquivo: notificacoes_style.css
+ * Cores:
+ * - Preto (Fundo): #0b0b0b
+ * - Roxo (Destaque Principal): #A64AC9
+ * - Laranja (Destaque Secundário): #EB8046
+ * - Branco/Cinza Claro (Texto): #E0E0E0
+ */
+
+/* ========================================================================
+   ESTILOS BASE E ESTRUTURA
+   ======================================================================== */
+
+body {
+    background-color: #0b0b0b; /* Fundo principal preto */
+    color: #E0E0E0; /* Cor do texto padrão */
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container-notificacoes {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #151517; /* Um tom de cinza escuro para o container */
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* ========================================================================
+   HEADER E BOTÃO VOLTAR
+   ======================================================================== */
+
+.header-notificacoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #222;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.header-notificacoes h1 {
+    font-size: 32px;
+    color: #A64AC9; /* Roxo vibrante para o título */
+    margin: 0;
+    font-family: 'Lora', serif;
+    font-weight: 700;
+}
+
+.btn-voltar-home {
+    text-decoration: none;
+    color: #E0E0E0;
+    padding: 10px 18px;
+    background-color: #EB8046; /* Laranja/Dourado para o botão de ação */
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-voltar-home:hover {
+    background-color: #ff9d1a;
+    transform: translateY(-2px);
+}
+
+/* ========================================================================
+   LISTA DE NOTIFICAÇÕES
+   ======================================================================== */
+
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os itens */
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    background-color: #1e1e20; /* Fundo do item levemente mais claro */
+    border-radius: 10px;
+    border-left: 5px solid #A64AC9; /* Borda roxa para destaque */
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* Efeito ao passar o mouse */
+.notification-item:hover {
+    background-color: #28282b;
+    box-shadow: 0 4px 12px rgba(166, 74, 201, 0.15); /* Sombra roxa sutil */
+}
+
+.notification-avatar-link {
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.notification-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #EB8046; /* Borda laranja no avatar */
+}
+
+.notification-body {
+    flex-grow: 1;
+    font-size: 16px;
+}
+
+.notification-body p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Link do nome de usuário */
+.username-link {
+    color: #EB8046; /* Laranja para o nome de usuário */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.username-link:hover {
+    text-decoration: underline;
+    color: #ff9d1a;
+}
+
+/* Cor e estilo para o tempo/data */
+.notification-time {
+    display: block;
+    font-size: 13px;
+    color: #999999;
+    margin-top: 5px;
+}
+
+/* Mensagem de lista vazia */
+.empty-message {
+    text-align: center;
+    color: #555555;
+    padding: 50px;
+    font-style: italic;
+    font-size: 18px;
+    background: #1e1e20;
+    border-radius: 10px;
+}
