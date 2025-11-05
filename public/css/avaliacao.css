@@ -354,7 +354,30 @@
   text-align: center;
 }
 
-/* ALERTAS E FOOTER */
+.toast-notification {
+  position: fixed; 
+  top: 20px;
+  right: 20px;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  /*font-weight: bold;*/
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out; 
+  font-family: 'Roboto', sans-serif;
+}
+
+.toast-notification.toast-success {
+  background: rgba(155, 89, 182, 0.9); 
+}
+
+
+.toast-notification.toast-info {
+  background: rgba(155, 89, 182, 0.9); 
+}
+
 .avaliacao-page .alert-success {
   background-color: #d4edda;
   color: #155724;

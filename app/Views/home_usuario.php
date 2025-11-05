@@ -10,6 +10,7 @@ if (!isset($_SESSION['id_usuario'])) {
 require_once __DIR__ . '/../config/conector.php';
 require_once __DIR__ . '/../Controllers/ControllersG.php';
 require_once __DIR__ . '/../Models/ModelsG.php';
+require_once __DIR__ . '/../Models/playlistM.php';
 
 // Verificar se é o primeiro acesso (biografia vazia)
 try {
@@ -37,6 +38,16 @@ try {
 $albumModel = class_exists('Album') ? new Album($conn) : null;
 $musicaModel = class_exists('Musica') ? new Musica($conn) : null;
 $homeController = class_exists('HomeController') ? new HomeController($conn) : null;
+
+$homeController = class_exists('HomeController') ? new HomeController($conn) : null;
+
+$id_usuario_logado = (int)$_SESSION['id_usuario'];
+$playlistModel = new PlaylistModel($conn);
+
+$likedPlaylistId = null;
+if ($playlistModel) {
+    $likedPlaylistId = $playlistModel->getOrCreateLikedPlaylist($id_usuario_logado);
+}
 
 $q = $_GET['q'] ?? '';
 $genre = $_GET['genre'] ?? '';
@@ -287,6 +298,26 @@ function build_search_query($q) {
                                         <span class="duracao"><?php echo gmdate("i:s", (int)$m['duracao_segundos']); ?></span>
                                     <?php endif; ?>
                                 </p>
+                            </div>
+                            <div class="like-action">
+                                <?php
+                                if (isset($m['id_musica']) && $playlistModel && $likedPlaylistId):
+            
+                                    // 2. Verifica se a música JÁ ESTÁ na playlist de curtidas
+                                    $curtido = $playlistModel->isTrackInPlaylist($likedPlaylistId, (int)$m['id_musica']);
+
+                                    $action = $curtido ? 'unlike_track' : 'like_track';
+                                ?>
+                                    <form method="POST" action="../Controllers/CurtidaC.php" class="like-form">
+                                        <input type="hidden" name="id_musica" value="<?= $m['id_musica'] ?>">
+                                        <input type="hidden" name="action" value="<?= $action ?>">
+                                        <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+                
+                                        <button type="submit" class="like-button <?= $curtido ? 'liked' : '' ?>" title="<?= $curtido ? 'Descurtir' : 'Curtir' ?>">
+                                            <?= $curtido ? '❤️' : '♡' ?>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
                             </div>
                         </li>
                     <?php endforeach; ?>

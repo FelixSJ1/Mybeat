@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,8 +16,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-
-
 
 <body>
   <div class="avaliacao-page">
@@ -61,18 +65,39 @@
                             </span>
                         </span>
                     </div>
-    <!-- botão Ver Estatísticas (álbum) - fica abaixo da média/estrelas -->
-    <div class="stats-button-container" style="margin-top:10px; text-align:left;">
-        <a class="action-btn" href="listar_giovana.php?controller=painelmusic&action=show&id_album=<?= (int)($album['id_album'] ?? 0) ?>">
-            Ver estatísticas das avaliações
-        </a>
-    </div>
+                    <!-- botão Ver Estatísticas (álbum) - fica abaixo da média/estrelas -->
+                    <div class="stats-button-container" style="margin-top:10px; text-align:left;">
+                        <a class="action-btn" href="listar_giovana.php?controller=painelmusic&action=show&id_album=<?= (int)($album['id_album'] ?? 0) ?>">
+                            Ver estatísticas das avaliações
+                        </a>
+                    </div>
 
                 </section>
 
                 <!-- Lado direito: ações -->
                 <aside class="right-panel">
-                    <button type="button" class="action-btn">♡ Curtir</button>
+                    <?php if (isset($isAlbumCurtido) && $isAlbumCurtido): ?>
+                    
+                        <button type="submit" 
+                                class="action-btn" 
+                                title="Remover álbum dos curtidos"
+                                formaction="listar_giovana.php?controller=avaliacaoUsuario&action=curtirAlbum&id_album=<?= (int)($album['id_album'] ?? 0) ?>"
+                                formmethod="POST"
+                                style="color: #ff8b3d; border-color: #ff8b3d;"> ♥ Curtido
+                        </button>
+                
+                    <?php else: ?>
+                    
+                        <button type="submit" 
+                                class="action-btn" 
+                                title="Adicionar álbum aos curtidos"
+                                formaction="listar_giovana.php?controller=avaliacaoUsuario&action=curtirAlbum&id_album=<?= (int)($album['id_album'] ?? 0) ?>"
+                                formmethod="POST">
+                            ♡ Curtir Álbum
+                        </button>
+
+                    <?php endif; ?>
+                   
                     <a href="listar_giovana.php?controller=playlist&action=index" class="action-btn album-playlist-btn" role="button" aria-label="Adicionar álbum à playlist">+ Playlist</a>
                     
                     <div class="star-rating-box">
@@ -104,13 +129,12 @@
 
                                     <!-- Botões menores (mesmo estilo dos do painel direito, porém reduzidos) -->
                                     <div class="track-actions">
-                                        <button
-                                            type="button"
+                                        <a
+                                            href="listar_giovana.php?controller=avaliacaoUsuario&action=curtirMusica&id_musica=<?= (int)($musica['id_musica'] ?? 0) ?>&id_album=<?= (int)($album['id_album'] ?? 0) ?>&from=avaliacao"
                                             class="track-action-btn track-like"
-                                            data-musica-id="<?= htmlspecialchars($musica['id_musica'] ?? '') ?>"
-                                            aria-label="Curtir faixa <?= htmlspecialchars($musica['titulo']) ?>">
-                                            ♡
-                                        </button>
+                                            title="Curtir faixa <?= htmlspecialchars($musica['titulo']) ?>"
+                                        >♡</a>
+
 
                                         <!-- Alterado: agora é link para adicionar música às playlists (passa add_music_id) -->
                                         <a
@@ -139,11 +163,23 @@
                 <button type="submit" class="btn-submit">Salvar</button>
             </section>
           </form>
-            <?php if (!empty($_GET['msg']) && $_GET['msg'] === 'success'): ?>
-                <div class="alert-success">✅ Comentário adicionado com sucesso!</div>
-            <?php elseif (!empty($_GET['msg']) && $_GET['msg'] === 'error'): ?>
-                <div class="alert-error">❌ Erro ao salvar o comentário.</div>
-            <?php endif; ?>
+           <?php
+          
+            if (isset($_SESSION['flash_message']) && !empty($_SESSION['flash_message'])) {
+                
+                $toast_type = 'toast-info'; 
+                if ($_SESSION['flash_message_type'] === 'alert-success') {
+                    $toast_type = 'toast-success'; 
+                }
+
+                echo '<div class="toast-notification ' . $toast_type . '">' 
+                   . htmlspecialchars($_SESSION['flash_message']) 
+                   . '</div>';
+                
+                unset($_SESSION['flash_message']);
+                unset($_SESSION['flash_message_type']);
+            }
+            ?>
 
             <!-- COMENTÁRIOS E AVALIAÇÕES EXISTENTES -->
             <section class="comments-section">
@@ -167,11 +203,28 @@
                 <?php endif; ?>
             </section>
         
-
     <footer>
         <div class="container">
             <p>&copy; 2025 MyBeat. Todos os direitos reservados.</p>
         </div>
     </footer>
   </div>
+<script>
+(function() {
+   
+    setTimeout(function() {
+        
+        const msg = document.querySelector('.toast-notification');
+        
+        if (msg) {
+            msg.style.opacity = '0';
+            
+            setTimeout(function() { 
+                msg.remove(); 
+            }, 500); 
+        }
+    }, 5000);
+})();
+</script>
+
 </body>

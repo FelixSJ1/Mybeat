@@ -1,5 +1,8 @@
 
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // FRONT CONTROLLER embutido no listar_giovana.php
 
@@ -9,6 +12,7 @@ require_once __DIR__ . '/../Models/ModelsG.php';
 require_once __DIR__ . '/../Controllers/painelmusiccontroller.php';
 require_once __DIR__ . '/../Controllers/playlistC.php';
 require_once __DIR__ . '/../Models/playlistM.php';
+require_once __DIR__ . '/../Controllers/AvaliacaoUController.php';//aquiiiiiiiiiiiiiiiiii
 
 $controller = $_GET['controller'] ?? 'home';
 $action     = $_GET['action'] ?? 'index';
@@ -18,7 +22,7 @@ switch ($controller) {
     case 'album':    $c = new AlbumController($conn); break;
     case 'musica':   $c = new MusicaController($conn); break;
     case 'avaliacao':$c = new AvaliacaoController($conn); break;
-    case 'avaliacaoUsuario': $c = new AvaliacaoUsuarioController($conn); break;
+    case 'avaliacaoUsuario': $c = new AvaliacaoUController($conn); break;
     case 'painelmusic': $c = new PainelMusicController($conn); break;
     case 'playlist': $c = new PlaylistController($conn); break; // <-- adicionado
     default: die("Controller inválido");
@@ -26,6 +30,15 @@ switch ($controller) {
 
 // home/index → renderiza view embutida
 if ($controller === 'home' && $action === 'index') {
+    if (!isset($_SESSION['id_usuario'])) { 
+        header('Location: FaçaLoginMyBeat.php'); 
+        exit();
+    }
+    $id_usuario_logado = (int)$_SESSION['id_usuario'];
+    $playlistModel = new PlaylistModel($conn); 
+    
+    // Pega o ID da playlist "Músicas Curtidas" (ou cria uma se não existir)
+    $likedPlaylistId = $playlistModel->getOrCreateLikedPlaylist($id_usuario_logado);
     $q        = $_GET['q'] ?? '';
     $albuns   = $c->getAlbums($q);
     $musicas  = $c->getMusicas($q);
@@ -81,6 +94,27 @@ if ($controller === 'home' && $action === 'index') {
                                 <p><strong>Artista:</strong> <?php echo htmlspecialchars($row['nome_artista']); ?></p>
                                 <p><strong>Duração:</strong> <?php echo gmdate("i:s", (int)$row['duracao_segundos']); ?></p>
                                 <p><strong>Faixa nº:</strong> <?php echo htmlspecialchars($row['numero_faixa']); ?></p>
+                            </div>
+
+                            <div class="like-action">
+                                <?php
+                                if (isset($row['id_musica']) && isset($playlistModel) && isset($likedPlaylistId)):
+                                    // 2. Verifica se a música JÁ ESTÁ na playlist
+                                    $curtido = $playlistModel->isTrackInPlaylist($likedPlaylistId, (int)$row['id_musica']);
+
+                                    $action = $curtido ? 'unlike_track' : 'like_track';
+                                ?>
+                                    <!-- 4. O Formulário aponta para o CurtidaC.php (LikeController) -->
+                                    <form method="POST" action="../Controllers/CurtidaC.php" class="like-form">
+                                        <input type="hidden" name="id_musica" value="<?= $row['id_musica'] ?>">
+                                        <input type="hidden" name="action" value="<?= $action ?>">
+                                        <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+                
+                                        <button type="submit" class="like-button <?= $curtido ? 'liked' : '' ?>" title="<?= $curtido ? 'Descurtir' : 'Curtir' ?>">
+                                            <?= $curtido ? '❤️' : '♡' ?>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
                             </div>
                         </li>
                     <?php endwhile; ?>

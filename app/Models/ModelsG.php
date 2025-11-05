@@ -106,6 +106,67 @@ class Album {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
+    /* FUNÇÕES DE ÁLBUNS CURTIDOS */
+    public function isAlbumCurtido(int $id_usuario, int $id_album): bool
+    {
+        $sql = "SELECT COUNT(*) as total FROM albuns_curtidos WHERE id_usuario = ? AND id_album = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $id_usuario, $id_album);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        
+        return $result['total'] > 0;
+    }
+    public function curtirAlbum(int $id_usuario, int $id_album): bool
+    {
+        $sql = "INSERT IGNORE INTO albuns_curtidos (id_usuario, id_album, data_curtida) VALUES (?, ?, NOW())";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $id_usuario, $id_album);
+        $success = $stmt->execute();
+        $stmt->close();
+        
+        return $success;
+    }
+    public function descurtirAlbum(int $id_usuario, int $id_album): bool
+    {
+        $sql = "DELETE FROM albuns_curtidos WHERE id_usuario = ? AND id_album = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $id_usuario, $id_album);
+        $success = $stmt->execute();
+        $stmt->close();
+        
+        return $success;
+    }
+
+    /* FUNÇÕES DE ÁLBUNS CURTIDOS */
+    public function getAlbunsCurtidosPorUsuario(int $id_usuario)
+    {
+        $sql = "SELECT 
+                    a.*, 
+                    ar.nome AS nome_artista,
+                    ac.data_curtida
+                FROM 
+                    albuns_curtidos ac
+                JOIN 
+                    Albuns a ON ac.id_album = a.id_album
+                JOIN 
+                    Artistas ar ON a.id_artista = ar.id_artista
+                WHERE 
+                    ac.id_usuario = ?
+                ORDER BY 
+                    ac.data_curtida DESC";
+        
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            return false; 
+        }
+        
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        return $stmt->get_result(); 
+    }
 }
 
 class Musica {
