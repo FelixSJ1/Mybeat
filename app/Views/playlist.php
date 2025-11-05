@@ -22,6 +22,7 @@ $msg = $msg ?? '';
 
     <link rel="stylesheet" href="/Mybeat/public/css/playlist.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Mybeat/public/css/acessibilidade.css">
 </head>
 <body>
   <div class="playlist-page">
@@ -114,5 +115,7 @@ $msg = $msg ?? '';
     </div>
   </footer>
   </div>
+  <script src="/Mybeat/public/js/acessibilidade.js" defer></script>
+  <script src="/Mybeat/public/js/playlist-voice.js" defer></script>
 </body>
 </html>
