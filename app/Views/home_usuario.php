@@ -586,7 +586,6 @@ $sidebar_foto = !empty($foto_perfil_url) ? $foto_perfil_url : (isset($foto_perfi
       <a class="profile-item" href="SeguidoresMyBeatViews.php"><img src="/Mybeat/public/images/buscar_usuarios.png" class="ico" alt="Buscar"> Buscar usuários</a>
       <a class="profile-item" href="grupos/lista_grupos.php"><img src="/Mybeat/public/images/grupos.png" class="ico" alt="Grupos"> Grupos</a>
       <a class="profile-item" href="historico_avaliacoes.php"><img src="/Mybeat/public/images/minhas_avaliacoes.png" class="ico" alt="Avaliações"> Minhas avaliações</a>
-      <a class="profile-item" href="playlist_listagem.php"><img src="/Mybeat/public/images/minhas_playlist.png" class="ico" alt="Playlist"> Minhas playlist</a>
       <a class="profile-item" href="listar_giovana.php?controller=avaliacaoUsuario&action=mostrarAlbunsCurtidos"><img src="/Mybeat/public/images/heart.png" class="ico" alt="Curtidos"> Álbuns Curtidos</a>
       <a class="profile-item" href="Listar_giovana.php?controller=playlist&action=index"><img src="/Mybeat/public/images/minhas_playlist.png" class="ico" alt="Playlist"> Minhas playlist</a>
       <a class="profile-item" href="logout.php"><img src="/Mybeat/public/images/sair.png" class="ico" alt="Sair"> Sair</a>
