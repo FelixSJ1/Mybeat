@@ -7,6 +7,15 @@ class SeguidoresMyBeatControllers {
     public function __construct() {
         $this->model = new SeguidoresMyBeatModels();
     }
+    
+   
+    public function buscarDadosUsuarioPorId(int $id): ?array 
+    {
+        if ($id <= 0) {
+            return null;
+        }
+        return $this->model->buscarDadosUsuarioPorId($id); 
+    }
 
     
     public function buscar() {
@@ -37,6 +46,15 @@ class SeguidoresMyBeatControllers {
 
     public function listarSeguindo($idUsuario) {
         return $this->model->listarSeguindo($idUsuario);
+    }
+
+   
+    public function listarNotificacoesSimples(int $idUsuarioLogado): array 
+    {
+        
+        return $this->model->getSeguidoresRecentes($idUsuarioLogado);
+        
+
     }
 }
 

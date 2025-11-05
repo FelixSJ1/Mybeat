@@ -243,51 +243,87 @@
             }
 }
 
-/* ================================================= */
-/* ESTILOS DA BARRA DE NAVEGAÇÃO SUPERIOR (Botão Home) */
-/* ================================================= */
-
-/* 1. ESTILO DA BARRA DE CONTEÚDO (Posicionamento e Fundo) */
 .back-to-home-nav {
-    /* Garante que a barra ocupe a largura total */
+    
     width: 100%;
-    /* Define a cor de fundo da barra */
     background-color: #f4f4f8; 
     padding: 12px 0;
     border-bottom: 1px solid #ddd;
     box-sizing: border-box; 
-    /* Adiciona margem abaixo da barra para separar do título principal */
     margin-bottom: 20px; 
 }
 
-/* 2. ESTILO DO CONTAINER DE ALINHAMENTO */
-/* Garante que o botão esteja alinhado com o restante do conteúdo */
 .container-nav-back {
     width: 90%;
     max-width: 1200px; 
     margin: 0 auto;
-    text-align: left; /* Alinha o botão à esquerda */
+    text-align: left; 
 }
 
-/* 3. ESTILO DO BOTÃO "HOME" (A cor Laranja!) */
 .btn-voltar-home {
-    /* Define o botão como um bloco para que padding funcione */
+    
     display: inline-block;
-    /* COR LARANJA PRINCIPAL */
     background-color: #F59E0B; 
     color: #ffffff;
     padding: 10px 18px;
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.95rem;
-    text-decoration: none; /* Remove o sublinhado */
-    /* Transições suaves */
+    text-decoration: none; 
     transition: background-color 0.3s ease, transform 0.2s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* 4. EFEITO HOVER */
 .btn-voltar-home:hover {
-    background-color: #D97706; /* Laranja mais escuro no mouse over */
-    transform: translateY(-1px); /* Pequeno efeito de elevação */
+    background-color: #D97706; 
+    transform: translateY(-1px); 
+}
+
+
+
+.search-and-profile-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.header-busca {
+    padding: 10px 0;
+}
+
+
+.btn-meu-perfil {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); 
+    color: #fff; 
+    text-decoration: none;
+    
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: 600;
+    white-space: nowrap;
+    
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-meu-perfil:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(123, 63, 243, 0.6);
+}
+
+@media (max-width: 650px) {
+    .search-and-profile-header {
+        flex-direction: column; 
+        gap: 15px;
+        align-items: flex-start;
+    }
+    .btn-meu-perfil {
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+    }
 }
