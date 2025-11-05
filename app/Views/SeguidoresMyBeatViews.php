@@ -23,11 +23,9 @@ $idUsuarioLogado = $_SESSION['id_usuario'] ?? 0;
 </head>
 <body>
     <nav class="back-to-home-nav">
-        <div class="container-nav-back">
             <a href="home_usuario.php" class="btn-voltar-home" title="Voltar para a Página Principal">
                 &#9664; Home
             </a>
-        </div>
     </nav>
 
     <div class="container">
