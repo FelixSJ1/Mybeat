@@ -276,3 +276,52 @@
     background-color: #D97706; 
     transform: translateY(-1px); 
 }
+
+
+
+.search-and-profile-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.header-busca {
+    padding: 10px 0;
+}
+
+
+.btn-meu-perfil {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); 
+    color: #fff; 
+    text-decoration: none;
+    
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: 600;
+    white-space: nowrap;
+    
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-meu-perfil:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(123, 63, 243, 0.6);
+}
+
+@media (max-width: 650px) {
+    .search-and-profile-header {
+        flex-direction: column; 
+        gap: 15px;
+        align-items: flex-start;
+    }
+    .btn-meu-perfil {
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+    }
+}
