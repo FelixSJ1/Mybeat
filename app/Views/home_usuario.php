@@ -11,6 +11,7 @@ if (!isset($_SESSION['id_usuario'])) {
 require_once __DIR__ . '/../config/conector.php';
 require_once __DIR__ . '/../Controllers/ControllersG.php';
 require_once __DIR__ . '/../Models/ModelsG.php';
+require_once __DIR__ . '/../Models/playlistM.php';
 require_once __DIR__ . '/../Models/HomeExtrasModel.php';
 
 // Verificar se é o primeiro acesso (biografia vazia)
@@ -39,6 +40,16 @@ try {
 $albumModel = class_exists('Album') ? new Album($conn) : null;
 $musicaModel = class_exists('Musica') ? new Musica($conn) : null;
 $homeController = class_exists('HomeController') ? new HomeController($conn) : null;
+
+$homeController = class_exists('HomeController') ? new HomeController($conn) : null;
+
+$id_usuario_logado = (int)$_SESSION['id_usuario'];
+$playlistModel = new PlaylistModel($conn);
+
+$likedPlaylistId = null;
+if ($playlistModel) {
+    $likedPlaylistId = $playlistModel->getOrCreateLikedPlaylist($id_usuario_logado);
+}
 
 $q = $_GET['q'] ?? '';
 $genre = $_GET['genre'] ?? '';
@@ -374,6 +385,26 @@ if (isset($_SESSION['id_usuario'])) {
                                     <?php endif; ?>
                                 </p>
                             </div>
+                            <div class="like-action">
+                                <?php
+                                if (isset($m['id_musica']) && $playlistModel && $likedPlaylistId):
+            
+                                    // 2. Verifica se a música JÁ ESTÁ na playlist de curtidas
+                                    $curtido = $playlistModel->isTrackInPlaylist($likedPlaylistId, (int)$m['id_musica']);
+
+                                    $action = $curtido ? 'unlike_track' : 'like_track';
+                                ?>
+                                    <form method="POST" action="../Controllers/CurtidaC.php" class="like-form">
+                                        <input type="hidden" name="id_musica" value="<?= $m['id_musica'] ?>">
+                                        <input type="hidden" name="action" value="<?= $action ?>">
+                                        <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+                
+                                        <button type="submit" class="like-button <?= $curtido ? 'liked' : '' ?>" title="<?= $curtido ? 'Descurtir' : 'Curtir' ?>">
+                                            <?= $curtido ? '❤️' : '♡' ?>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -555,6 +586,8 @@ $sidebar_foto = !empty($foto_perfil_url) ? $foto_perfil_url : (isset($foto_perfi
       <a class="profile-item" href="SeguidoresMyBeatViews.php"><img src="/Mybeat/public/images/buscar_usuarios.png" class="ico" alt="Buscar"> Buscar usuários</a>
       <a class="profile-item" href="grupos/lista_grupos.php"><img src="/Mybeat/public/images/grupos.png" class="ico" alt="Grupos"> Grupos</a>
       <a class="profile-item" href="historico_avaliacoes.php"><img src="/Mybeat/public/images/minhas_avaliacoes.png" class="ico" alt="Avaliações"> Minhas avaliações</a>
+      <a class="profile-item" href="playlist_listagem.php"><img src="/Mybeat/public/images/minhas_playlist.png" class="ico" alt="Playlist"> Minhas playlist</a>
+      <a class="profile-item" href="listar_giovana.php?controller=avaliacaoUsuario&action=mostrarAlbunsCurtidos"><img src="/Mybeat/public/images/heart.png" class="ico" alt="Curtidos"> Álbuns Curtidos</a>
       <a class="profile-item" href="Listar_giovana.php?controller=playlist&action=index"><img src="/Mybeat/public/images/minhas_playlist.png" class="ico" alt="Playlist"> Minhas playlist</a>
       <a class="profile-item" href="logout.php"><img src="/Mybeat/public/images/sair.png" class="ico" alt="Sair"> Sair</a>
     </nav>

@@ -244,9 +244,8 @@
 }
 
 .back-to-home-nav {
-    
     width: 100%;
-    background-color: #f4f4f8; 
+    background-color: #3a3a3a; 
     padding: 12px 0;
     border-bottom: 1px solid #ddd;
     box-sizing: border-box; 
@@ -261,7 +260,6 @@
 }
 
 .btn-voltar-home {
-    
     display: inline-block;
     background-color: #F59E0B; 
     color: #ffffff;
