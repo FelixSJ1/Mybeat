@@ -21,6 +21,7 @@ $playlists = $playlists ?? [];
 
     <link rel="stylesheet" href="/Mybeat/public/css/playlist.css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Mybeat/public/css/acessibilidade.css">
 </head>
 <body>
   <div class="playlist-page">
@@ -92,5 +93,7 @@ $playlists = $playlists ?? [];
     </div>
   </footer>
   </div>
+  <script src="/Mybeat/public/js/acessibilidade.js" defer></script>
+  <script src="/Mybeat/public/js/avaliacao-voice.js" defer></script>
 </body>
 </html>

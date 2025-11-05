@@ -99,6 +99,7 @@ $contador_bio = strlen($biografia);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - myBeat</title>
     <link href="../../public/css/perfilUsuario.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Mybeat/public/css/acessibilidade.css">
 </head>
 <body>
     <div class="container">
@@ -191,5 +192,7 @@ $contador_bio = strlen($biografia);
             </div>
         </form>
     </div>
+    <script src="/Mybeat/public/js/acessibilidade.js" defer></script>
+    <script src="/Mybeat/public/js/perfilUsuario-voice.js" defer></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="/Mybeat/public/css/avaliacao.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Mybeat/public/css/acessibilidade.css">
 </head>
 
 <body>
@@ -226,5 +227,6 @@ if (session_status() === PHP_SESSION_NONE) {
     }, 5000);
 })();
 </script>
-
+<script src="/Mybeat/public/js/acessibilidade.js" defer></script>
+<script src="/Mybeat/public/js/avaliacao-voice.js" defer></script>
 </body>
