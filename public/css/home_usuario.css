@@ -3,6 +3,7 @@
     --page-side-padding: 24px;
 }
 
+/* reset básico */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,6 +18,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* containers principais */
 header,
 .filter-bar,
 main {
@@ -96,6 +98,7 @@ header {
     border-radius: 50%;
 }
 
+/* BARRA DE FILTROS */
 .filter-bar {
     display: flex;
     align-items: center;
@@ -131,6 +134,7 @@ header {
     transition: box-shadow 0.12s, transform 0.08s;
 }
 
+/* seta padrão do select (triângulo) */
 .filter-item::after {
     content: "";
     position: absolute;
@@ -143,6 +147,11 @@ header {
     border-right: 6px solid transparent;
     border-top: 7px solid rgba(255, 255, 255, 0.95);
     pointer-events: none;
+}
+
+/* remover a seta APENAS para o item que tiver a classe .no-arrow */
+.filter-item.no-arrow::after {
+    display: none;
 }
 
 .spacer { flex: 1; }
@@ -448,224 +457,194 @@ main {
     transform: scale(1.1);
 }
 
+/* ---------- Botão "Minhas Playlists" (versão reduzida) ---------- */
+/* Use este botão como link (<a class="filter-btn">) dentro de <div class="filter-item no-arrow"> */
+.filter-bar .filter-btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 
+    background: #EB8046;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
 
-/*PAGINA DE CRIAR OS GRUPOS E BUSCÁ-LOS*/
- body {
-            background: #0b0b0b;
-            color: #ffffff;
-            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    /* tamanho reduzido solicitado */
+    height: 34px;           /* altura menor */
+    padding: 6px 16px;      /* padding horizontal reduzido */
+    min-width: 130px;       /* largura mínima reduzida */
+    font-size: 12px;        /* texto menor */
 
-        .container {
-            max-width: 1200px;
-            margin: 80px auto 20px;
-            padding: 20px;
-        }
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.12s, transform 0.08s, background-color 0.12s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    white-space: nowrap;
+}
 
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #151515;
-        }
+/* hover/focus coerente */
+.filter-bar .filter-btn:hover,
+.filter-bar .filter-btn:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(235, 128, 70, 0.12);
+    outline: none;
+    background-color: #ff9d1a;
+    color: #0b0b0b;
+}
 
-        .page-header h1 {
-            font-size: 32px;
-            margin: 0;
-            color: #A64AC9;
-            font-family: 'Lora', serif;
-        }
+/* responsividade — garante largura total em dispositivos menores */
+@media (max-width: 600px) {
+    .filter-bar .filter-btn,
+    .filter-bar select {
+        width: 100%;
+        min-width: auto;
+    }
+}
 
-        .btn-criar {
-            background: linear-gradient(135deg, #a855f7 0%, #EB8046 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(166, 74, 201, 0.3);
-        }
+/* Seção de grupos / criação / grid (mantido do original) */
+.container {
+    max-width: 1200px;
+    margin: 80px auto 20px;
+    padding: 20px;
+}
 
-        .btn-criar:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(166, 74, 201, 0.5);
-        }
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #151515;
+}
 
-        .search-section {
-            margin-bottom: 30px;
-        }
+.page-header h1 {
+    font-size: 32px;
+    margin: 0;
+    color: #A64AC9;
+    font-family: 'Lora', serif;
+}
 
-        .search-box {
-            width: 100%;
-            max-width: 500px;
-            padding: 12px 16px;
-            border: 2px solid #A64AC9;
-            border-radius: 22px;
-            background: transparent;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
+.btn-criar {
+    background: linear-gradient(135deg, #a855f7 0%, #EB8046 100%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(166, 74, 201, 0.3);
+}
 
-        .search-box:focus {
-            border-color: #EB8046;
-        }
+.btn-criar:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(166, 74, 201, 0.5);
+}
 
-        .section-title {
-            font-size: 24px;
-            margin: 30px 0 20px;
-            color: #A64AC9;
-            font-family: 'Lora', serif;
-        }
+/* restante das classes de grid, cartões e mensagens (mantidas) */
+.search-section { margin-bottom: 30px; }
 
-        .grupos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+.search-box {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 16px;
+    border: 2px solid #A64AC9;
+    border-radius: 22px;
+    background: transparent;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+.search-box:focus { border-color: #EB8046; }
 
-        .grupo-card {
-            background: #151517;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(166, 74, 201, 0.18);
-            transition: all 0.3s ease;
-        }
+.section-title {
+    font-size: 24px;
+    margin: 30px 0 20px;
+    color: #A64AC9;
+    font-family: 'Lora', serif;
+}
 
-        .grupo-card:hover {
-            transform: translateY(-5px);
-            border-color: #A64AC9;
-            box-shadow: 0 8px 16px rgba(166, 74, 201, 0.2);
-        }
+.grupos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
 
-        .grupo-header {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
+.grupo-card {
+    background: #151517;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(166, 74, 201, 0.18);
+    transition: all 0.3s ease;
+}
+.grupo-card:hover {
+    transform: translateY(-5px);
+    border-color: #A64AC9;
+    box-shadow: 0 8px 16px rgba(166, 74, 201, 0.2);
+}
 
-        .grupo-foto {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #222;
-            border: 2px solid #A64AC9;
-        }
+.grupo-header { display: flex; gap: 15px; margin-bottom: 15px; }
+.grupo-foto { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; background: #222; border: 2px solid #A64AC9; }
+.grupo-info h3 { margin: 0 0 5px 0; font-size: 18px; color: #ffffff; }
+.grupo-meta { font-size: 12px; color: #bbb; }
+.grupo-descricao { color: #ccc; font-size: 14px; margin: 15px 0; line-height: 1.5; }
 
-        .grupo-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 18px;
-            color: #ffffff;
-        }
+.grupo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(166, 74, 201, 0.18);
+}
 
-        .grupo-meta {
-            font-size: 12px;
-            color: #bbb;
-        }
+.btn-entrar, .btn-acessar {
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+.btn-entrar { background: #A64AC9; color: white; border: none; cursor: pointer; }
+.btn-entrar:hover { background: #9333ea; transform: translateY(-2px); }
+.btn-acessar { background: #EB8046; color: white; }
+.btn-acessar:hover { background: #ff9d1a; transform: translateY(-2px); }
 
-        .grupo-descricao {
-            color: #ccc;
-            font-size: 14px;
-            margin: 15px 0;
-            line-height: 1.5;
-        }
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px dashed #222;
+}
+.empty-state h3 { font-size: 24px; margin-bottom: 10px; color: #A64AC9; }
 
-        .grupo-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(166, 74, 201, 0.18);
-        }
+.mensagem { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; }
+.mensagem-sucesso { background: rgba(138, 43, 226, 0.2); color: #a855f7; border-left: 4px solid #a855f7; }
+.mensagem-erro { background: rgba(235, 128, 70, 0.2); color: #EB8046; border-left: 4px solid #EB8046; }
 
-        .btn-entrar, .btn-acessar {
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn-entrar {
-            background: #A64AC9;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-entrar:hover {
-            background: #9333ea;
-            transform: translateY(-2px);
-        }
-
-        .btn-acessar {
-            background: #EB8046;
-            color: white;
-        }
-
-        .btn-acessar:hover {
-            background: #ff9d1a;
-            transform: translateY(-2px);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            border: 1px dashed #222;
-        }
-
-        .empty-state h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #A64AC9;
-        }
-
-        .mensagem {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .mensagem-sucesso {
-            background: rgba(138, 43, 226, 0.2);
-            color: #a855f7;
-            border-left: 4px solid #a855f7;
-        }
-
-        .mensagem-erro {
-            background: rgba(235, 128, 70, 0.2);
-            color: #EB8046;
-            border-left: 4px solid #EB8046;
-        }
-
-        .btn-voltar {
-            background: #222;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
+.btn-voltar {
+    background: #222;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.btn-voltar:hover { background: #333; transform: translateY(-2px); }
 
         .btn-voltar:hover {
             background: #333;
