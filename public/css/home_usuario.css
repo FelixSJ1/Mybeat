@@ -671,3 +671,206 @@ main {
             background: #333;
             transform: translateY(-2px);
         }
+/* ============================
+   STYLES PARA SIDEBAR / PAINEL
+   ============================ */
+
+/* Container da sidebar */
+.profile-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 320px;
+  max-width: 92vw;
+  background: #000; /* fundo preto */
+  color: #fff;
+  box-shadow: -8px 0 24px rgba(0,0,0,0.6);
+  z-index: 2200;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+/* Inner para alinhar conteúdo verticalmente */
+.profile-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 12px;
+}
+
+/* Cabeçalho (foto + nome + editar) */
+.profile-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* Avatar do usuário: continua redondo (opcional) */
+.sidebar-profile-pic {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.12);
+  flex: 0 0 64px;
+}
+
+/* Metadados ao lado do avatar */
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Nome em destaque */
+.profile-name {
+  font-weight: 700;
+  font-size: 20px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Handle (ex: @ricardo) */
+.profile-handle {
+  color: #cfcfcf;
+  font-size: 14px;
+  margin-top: -2px;
+}
+
+/* Botão de editar perfil (pequeno) */
+.edit-profile-btn {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: none;
+}
+.edit-profile-btn:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+/* Lista de links do painel */
+.profile-links {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 6px;
+}
+
+/* Cada item: ícone + texto */
+.profile-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 4px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 8px;
+  transition: background .15s ease, transform .08s ease;
+}
+.profile-item:hover {
+  background: rgba(255,255,255,0.03);
+  transform: translateY(-1px);
+}
+
+/* --- ICONE: remover fundo, borda redonda e sombra --- */
+/* container do ícone (pode ser uma <img> dentro) */
+.profile-item .ico {
+  width: 48px;            /* espaço reservado para o ícone */
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;  /* remove o laranja */
+  border-radius: 0 !important;         /* não redondo */
+  box-shadow: none !important;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+}
+
+/* se o ícone for uma imagem dentro do elemento .ico */
+.profile-item .ico img,
+.profile-item img.ico {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;    /* mantem proporção sem cortar */
+  border-radius: 0 !important;
+  background: transparent !important;
+  display: block;
+}
+
+/* caso os ícones sejam SVG embutidos, garantir fill/contrast */
+.profile-item .ico svg {
+  width: 36px;
+  height: 36px;
+  fill: currentColor; /* se quiser herdar cor; ou remova para usar cores do SVG */
+}
+
+/* Texto do item (may be <span> ou conteúdo do anchor) */
+.profile-item span,
+.profile-item .item-text {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.1;
+}
+
+/* Botão fechar */
+.close-profile {
+  margin-top: auto;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Overlay: ao abrir o painel */
+.profile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 2100;
+  display: none;
+}
+
+/* quando visível, mostrar o overlay (JS controla display) */
+.profile-overlay.active { display: block; }
+
+/* Responsividade: em telas pequenas o painel ocupa a largura inteira */
+@media (max-width: 520px) {
+  .profile-sidebar {
+    width: 100vw;
+    right: 0;
+    padding: 20px;
+  }
+  .sidebar-profile-pic { width: 56px; height: 56px; }
+  .profile-item .ico { width: 44px; height: 44px; }
+  .profile-item .ico img { width: 32px; height: 32px; }
+}
+
+/* Forçar sobreposição das regras antigas (caso existam regras que pintem ícone de laranja) */
+.profile-item .ico,
+.profile-item .ico img,
+.profile-item img.ico {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+}
+
+/* Caso exista classe que esconda o texto no desktop, forçar visibilidade */
+.profile-item { visibility: visible !important; opacity: 1 !important; }
+
+/* === FIM DOS ESTILOS DO SIDEBAR === */
