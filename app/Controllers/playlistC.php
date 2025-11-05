@@ -4,7 +4,9 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 require_once __DIR__ . '/../Models/playlistM.php';
+// REMOVIDO: include global de views - as views serão incluídas dentro dos métodos
 
 class PlaylistController {
     private $model;
@@ -15,6 +17,7 @@ class PlaylistController {
         $this->model = new PlaylistModel($conn);
     }
 
+    // index: mostra listagem de playlists OU a tela de adicionar música quando for o caso
     public function index() {
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: listar_giovana.php?controller=home&action=index');
@@ -25,13 +28,22 @@ class PlaylistController {
         $q = trim($_GET['q'] ?? '');
         $playlists = $this->model->getByUser($userId, $q);
 
-        // se vier um music id para adicionar
+        // se vier um music id para adicionar (fluxo: clicar no + de uma música)
         $addingMusicId = isset($_GET['add_music_id']) ? (int) $_GET['add_music_id'] : null;
 
         // mensagem de resultado (adicionado / já existe / erro)
         $msg = $_GET['msg'] ?? '';
 
-        require_once __DIR__ . '/../Views/playlist.php';
+        // Se for fluxo de adicionar música, carregar a view que trata disso (playlist.php)
+        if ($addingMusicId !== null && $addingMusicId > 0) {
+            // playlist.php espera $playlists, $addingMusicId, $q, $msg (verifique se a view usa essas variáveis)
+            require_once __DIR__ . '/../Views/playlist.php';
+            return;
+        }
+
+        // Caso contrário: mostrar a listagem de playlists (view independente)
+        // playlist_listagem.php inicia sessão por conta própria e espera $playlists e $q
+        require_once __DIR__ . '/../Views/playlist_listagem.php';
     }
 
     public function adicionar() {
@@ -105,7 +117,7 @@ class PlaylistController {
                     $coverUrl = '/Mybeat/public/uploads/' . $safeName;
                 }
             }
-            // em caso de erro no upload, simplesmente continua sem capa (pode tratar msg se quiser)
+            // em caso de erro no upload, simplesmente continua sem capa
         }
 
         $newId = $this->model->createPlaylist($userId, $nome, $descricao, $coverUrl);
@@ -116,5 +128,25 @@ class PlaylistController {
             header('Location: listar_giovana.php?controller=playlist&action=criar&msg=error');
         }
         exit;
+    }
+
+    public function detalhes() {
+        // id pode vir como id ou id_playlist
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : (isset($_GET['id_playlist']) ? (int) $_GET['id_playlist'] : 0);
+        if ($id <= 0) {
+            header('Location: listar_giovana.php?controller=playlist&action=index&msg=invalid_id');
+            exit;
+        }
+
+        // buscar playlist
+        $playlist = $this->model->getById($id);
+        if (!$playlist) {
+            $playlist = null;
+            $musicas = [];
+        } else {
+            $musicas = $this->model->getMusicasByPlaylist($id);
+        }
+
+        require_once __DIR__ . '/../Views/playlist_detalhes.php';
     }
 }

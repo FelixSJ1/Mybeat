@@ -25,11 +25,17 @@
   flex-direction: column;
 }
 
-.avaliacao-page body {
+html, body {
+  height: 100%;
   margin: 0;
+  padding: 0;
   background-color: var(--dark-bg);
-  color: var(--text-light);
 }
+
+.avaliacao-page {
+  min-height: 100vh;
+}
+
 
 /* CONTAINERS E CABEÇALHO */
 .avaliacao-page .container {
