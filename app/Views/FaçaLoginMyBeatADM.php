@@ -31,7 +31,13 @@ unset($_SESSION['old_email_adm'], $_SESSION['error']);
                     <?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?>
                 </div>
             <?php endif; ?>
-
+            <div style="margin-top: 1.5rem; text-align: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <a href="./face_login_admin.php" 
+                   style="color: #EB8046; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                    <span style="font-size: 1.2rem;">🔐</span>
+                    Entrar com Reconhecimento Facial
+                </a>
+            </div>
             <form action="../../app/Controllers/LoginControllersADM.php" method="POST" class="login-form">
                 <input type="email" name="email" placeholder="E-mail" required
                        value="<?php echo htmlspecialchars($old_email_adm, ENT_QUOTES); ?>">
