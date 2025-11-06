@@ -509,7 +509,7 @@ $sidebar_foto = !empty($foto_perfil_url) ? $foto_perfil_url : (isset($foto_perfi
       <div class="profile-meta">
         <div class="profile-name"><?php echo htmlspecialchars($sidebar_nome); ?></div>
         <div class="profile-handle"><?php echo htmlspecialchars($sidebar_handle); ?></div>
-        <a href="perfilUsuario.php" class="edit-profile-btn">Editar perfil</a>
+        <a href="Perfil_completo.php" class="edit-profile-btn">Editar perfil</a>
       </div>
     </div>
     <nav class="profile-links">
