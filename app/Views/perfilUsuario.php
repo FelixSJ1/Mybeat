@@ -195,7 +195,7 @@ $contador_bio = strlen($biografia);
         <form method="POST" enctype="multipart/form-data">
             <!-- Banner -->
             <div class="banner-section">
-                <label>Banner do Perfil</label>
+                
                 <div class="banner-preview <?php echo empty($banner_url) ? 'empty' : ''; ?>">
                     <?php if (!empty($banner_url)): ?>
                         <img src="<?php echo htmlspecialchars($banner_url); ?>" alt="Banner do perfil">
