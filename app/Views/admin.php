@@ -118,6 +118,26 @@ if (!isset($reviews) || !is_array($reviews)) $reviews = [];
       <a class="big-button orange" href="./home_usuario.php" title="Voltar para Home">Voltar ao site</a>
     </div>
   </div>
+  <?php
+// Verifica se já tem face cadastrada
+$face_registered = false;
+if (isset($conn) && $conn instanceof mysqli && isset($_SESSION['admin_id'])) {
+    $check_stmt = $conn->prepare("SELECT face_registered FROM Administradores WHERE id_admin = ?");
+    $check_stmt->bind_param("i", $_SESSION['admin_id']);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+    if ($row = $check_result->fetch_assoc()) {
+        $face_registered = (bool)$row['face_registered'];
+    }
+    $check_stmt->close();
+}
+?>
+<a class="big-button" href="./register_face_admin.php" 
+   title="<?= $face_registered ? 'Gerenciar' : 'Cadastrar' ?> reconhecimento facial" 
+   style="background: <?= $face_registered ? '#22c55e' : '#6366f1' ?> !important; border-color: <?= $face_registered ? '#22c55e' : '#6366f1' ?> !important;">
+    <?= $face_registered ? '✓' : '🔐' ?> Reconhecimento Facial
+</a>
+
 
   <section class="admin-actions" style="margin-top:1rem;">
     <a class="big-button" href="./AdicaoDeDadosF.php">Adicionar Dados</a>
