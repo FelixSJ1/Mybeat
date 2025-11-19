@@ -136,6 +136,8 @@ function build_search_query($q) {
     <title>MyBeat - Home do Usuário</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../../public/css/home_usuario.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/Mybeat/public/css/acessibilidade.css">
 </head>
 <body>
 
@@ -158,10 +160,8 @@ function build_search_query($q) {
         <form id="searchForm" method="GET" action="home_usuario.php">
             <div style="position: relative;">
                 <input type="text" name="q" id="searchInput" placeholder="Buscar" value="<?php echo htmlspecialchars($q); ?>">
-                <button type="button" id="voiceSearchBtn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 20px; color: #A64AC9; padding: 5px;">
-                    🎤
-                </button>
-            </div>
+                
+                </div>
             <input type="hidden" name="genre" id="hiddenGenre" value="<?php echo htmlspecialchars($genre); ?>">
         </form>
     </div>
@@ -264,7 +264,6 @@ function build_search_query($q) {
     </section>
 
     
-<!-- Populares da semana -->
 <?php
 $extras = isset($extras) ? $extras : new HomeExtras($conn);
 $popularesSemana = $extras->getPopularesSemana(12);
@@ -302,7 +301,6 @@ $popularesSemana = $extras->getPopularesSemana(12);
     </div>
 </section>
 <?php endif; ?>
-<!-- Porque você avaliou (inserido) -->
 <?php
 $evaluationBlock = null;
 if (isset($_SESSION['id_usuario'])) {
@@ -343,11 +341,7 @@ if (isset($_SESSION['id_usuario'])) {
         </div>
     </section>
 <?php endif; ?>
-<!-- end porque -->
-
-    
-
-    <section class="musicas-section">
+<section class="musicas-section">
         <h2>Músicas</h2>
         <div class="musicas">
             <ul>
@@ -450,73 +444,9 @@ document.getElementById('genreSelect').addEventListener('change', function() {
 })();
 
 // ============================================
-// PESQUISA POR VOZ
+// MODIFICAÇÃO: Bloco "PESQUISA POR VOZ" removido
 // ============================================
-(function() {
-    const voiceBtn = document.getElementById('voiceSearchBtn');
-    const searchInput = document.getElementById('searchInput');
-    
-    // Verificar se o navegador suporta reconhecimento de voz
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        voiceBtn.style.display = 'none'; // Esconde o botão se não houver suporte
-        return;
-    }
-    
-    // Criar instância do reconhecimento de voz
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    
-    // Configurações do reconhecimento
-    recognition.lang = 'pt-BR'; // Idioma português do Brasil
-    recognition.continuous = false; // Parar após uma frase
-    recognition.interimResults = false; // Não mostrar resultados intermediários
-    
-    // Variável para controlar se está gravando
-    let isRecording = false;
-    
-    // Quando clicar no botão do microfone
-    voiceBtn.addEventListener('click', function() {
-        if (isRecording) {
-            recognition.stop();
-            return;
-        }
-        
-        // Iniciar gravação
-        recognition.start();
-        isRecording = true;
-        voiceBtn.textContent = '🔴'; // Mudar ícone para indicar gravação
-        searchInput.placeholder = 'Ouvindo...';
-    });
-    
-    // Quando o reconhecimento capturar um resultado
-    recognition.addEventListener('result', function(event) {
-        const transcript = event.results[0][0].transcript;
-        searchInput.value = transcript; // Colocar texto no input
-        document.getElementById('searchForm').submit(); // Enviar formulário automaticamente
-    });
-    
-    // Quando o reconhecimento terminar
-    recognition.addEventListener('end', function() {
-        isRecording = false;
-        voiceBtn.textContent = '🎤'; // Voltar ao ícone normal
-        searchInput.placeholder = 'Buscar músicas, álbuns ou artistas...';
-    });
-    
-    // Em caso de erro
-    recognition.addEventListener('error', function(event) {
-        console.error('Erro no reconhecimento de voz:', event.error);
-        isRecording = false;
-        voiceBtn.textContent = '🎤';
-        searchInput.placeholder = 'Buscar músicas, álbuns ou artistas...';
-        
-        // Mensagem amigável para o usuário
-        if (event.error === 'no-speech') {
-            alert('Nenhuma fala foi detectada. Tente novamente.');
-        } else if (event.error === 'not-allowed') {
-            alert('Permissão para usar o microfone foi negada.');
-        }
-    });
-})();
+
 </script>
 
 <?php
@@ -579,7 +509,7 @@ $sidebar_foto = !empty($foto_perfil_url) ? $foto_perfil_url : (isset($foto_perfi
       <div class="profile-meta">
         <div class="profile-name"><?php echo htmlspecialchars($sidebar_nome); ?></div>
         <div class="profile-handle"><?php echo htmlspecialchars($sidebar_handle); ?></div>
-        <a href="perfilUsuario.php" class="edit-profile-btn">Editar perfil</a>
+        <a href="Perfil_completo.php" class="edit-profile-btn">Editar perfil</a>
       </div>
     </div>
     <nav class="profile-links">
@@ -618,6 +548,8 @@ document.addEventListener('DOMContentLoaded', function(){
     if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
 });
 </script>
+
+<script src="/Mybeat/public/js/acessibilidade.js" defer></script>
 
 </body>
 </html>
