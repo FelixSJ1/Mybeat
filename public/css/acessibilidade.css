@@ -1,0 +1,60 @@
+/* public/css/acessibilidade.css */
+
+/* Botão flutuante para ativar os comandos de voz */
+#voice-command-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #A64AC9; /* Cor primária do MyBeat */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#voice-command-button:hover {
+    background-color: #c06eff;
+    transform: scale(1.05);
+}
+
+/* Estilo para quando estiver gravando */
+#voice-command-button.recording {
+    background-color: #EB8046; /* Cor de destaque */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(235, 128, 70, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(235, 128, 70, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(235, 128, 70, 0);
+    }
+}
+
+/* Feedback para Leitor de Tela (ARIA-Live) 
+   Este elemento é invisível, mas será lido em voz alta.
+*/
+.acessibilidade-feedback {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

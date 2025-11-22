@@ -1,0 +1,268 @@
+/* style.css */
+:root {
+    --dark-bg: #121212;
+    --primary-purple: #9b59b6;
+    --primary-orange: #e67e22;
+    --text-light: #ecf0f1;
+    --text-dark: #bdc3c7;
+    --container-bg: #1e1e1e;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: var(--container-bg);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--primary-purple);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    color: var(--primary-purple);
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--primary-orange);
+}
+
+.cta-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cta-header .user-welcome {
+    color: var(--text-light);
+    font-weight: 400;
+    margin-right: 10px;
+}
+
+.cta-header .btn-login,
+.cta-header .btn-registrar,
+.cta-header .btn-home,
+.cta-header .btn-logout {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cta-header .btn-login {
+    color: var(--text-light);
+}
+
+.cta-header .btn-login:hover {
+    color: var(--primary-orange);
+}
+
+.cta-header .btn-registrar {
+    background-color: var(--primary-orange);
+    color: var(--dark-bg);
+}
+
+.cta-header .btn-registrar:hover {
+    background-color: #d35400;
+}
+
+.cta-header .btn-home {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+}
+
+.cta-header .btn-home:hover {
+    background-color: #8e44ad;
+}
+
+.cta-header .btn-logout {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--primary-orange);
+}
+
+.cta-header .btn-logout:hover {
+    background-color: var(--primary-orange);
+    color: var(--dark-bg);
+}
+
+/* Hero Section */
+.hero {
+    background-image: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)), url('https://images.pexels.com/photos/164829/pexels-photo-164829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+}
+
+.btn-registrar-hero {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.btn-registrar-hero:hover {
+    background-color: #8e44ad;
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: 80px;
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: var(--primary-purple);
+}
+
+.steps {
+    display: flex;
+    justify-content: space-around;
+}
+
+.step {
+    max-width: 300px; /*antes era 300*/
+}
+
+.step2 img{
+
+height: 110px;
+margin-bottom: 5px;
+
+}
+.step img {
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    color: var(--primary-orange);
+    margin-bottom: 15px;
+}
+
+.step p {
+    color: var(--text-dark);
+}
+
+.step2 h3 {
+    font-size: 1.5rem;
+    color: var(--primary-orange);
+    margin-bottom: 15px;
+}
+
+.step2 p {
+    color: var(--text-dark);
+}
+/* CTA Section */
+.cta-section {
+    background-image: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9)), url('https://images.pexels.com/photos/33597/guitar-classical-guitar-acoustic-guitar-electric-guitar.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+}
+
+.btn-registrar-cta {
+    background-color: var(--primary-orange);
+    color: var(--dark-bg);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.btn-registrar-cta:hover {
+    background-color: #d35400;
+}
+
+/* Footer */
+footer {
+    background-color: var(--container-bg);
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid var(--primary-purple);
+}
+
+footer p {
+    margin: 0;
+    color: var(--text-dark);
+}

@@ -1,0 +1,193 @@
+/* === Tema principal === */
+:root {
+    --primary-color: #5B3A92;      /* Roxo */
+    --secondary-color: #EB8046;    /* Laranja */
+    --background-dark: #0a0a0a;    /* Fundo escuro */
+    --form-background: #111;       /* Fundo dos blocos */
+    --input-background: #0f0f0f;   /* Campos mais escuros */
+    --border-color: #2a2a2a;       /* Bordas sutis */
+    --text-light: #e0e0e0;
+    --text-muted: #aaa;
+}
+
+/* === Reset e base === */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* === Cabeçalho === */
+header {
+    background-color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+header .page-title {
+    font-family: "Lora", serif;
+    font-size: 2.2rem;
+    color: var(--text-light);
+    margin: 0;
+}
+
+/* === Estrutura principal === */
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* === Seções de formulário === */
+.form-section {
+    background-color: var(--form-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 0 15px rgba(91, 58, 146, 0.3);
+    transition: all 0.3s ease;
+}
+
+.form-section:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(91, 58, 146, 0.5);
+}
+
+.form-title {
+    font-family: "Lora", serif;
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* === Campos e labels === */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-family: "Lora", serif;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--input-background);
+    color: var(--text-light);
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(91, 58, 146, 0.5);
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* === Botões === */
+.btn-submit {
+    display: inline-block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 0 15px rgba(235, 128, 70, 0.5);
+    transform: translateY(-2px);
+}
+
+/* === Mensagens === */
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alert:empty {
+    display: none;
+}
+
+.alert:contains("sucesso"),
+.alert[style*="color:lightgreen"] {
+    background-color: rgba(144, 238, 144, 0.1);
+    border: 1px solid lightgreen;
+    color: lightgreen;
+}
+
+.alert:contains("Erro"),
+.alert[style*="color:red"] {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid red;
+    color: red;
+}
+
+/* === Scrollbar discreta === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+/* === Responsividade === */
+@media (max-width: 600px) {
+    .form-section {
+        padding: 20px;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .btn-submit {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+}

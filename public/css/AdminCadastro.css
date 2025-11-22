@@ -1,0 +1,194 @@
+/* AdminCadastro.css - VERSÃO PARA ADMINISTRADORES */
+
+/* --- Configurações Gerais e Fundo --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Efeito de brilho */
+.background-glow::before,
+.background-glow::after {
+    content: '';
+    position: absolute;
+    filter: blur(150px);
+    opacity: 0.3;
+    border-radius: 50%;
+}
+
+.background-glow::before {
+    background: #9a33ff;
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    left: -10%;
+}
+
+.background-glow::after {
+    background: #9a33ff;
+    width: 350px;
+    height: 350px;
+    bottom: -15%;
+    right: -15%;
+}
+
+/* --- Container Principal --- */
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+/* --- Caixa do Formulário (Efeito Vidro) --- */
+.form-box {
+    width: 400px;
+    padding: 40px;
+    background: rgba(25, 25, 25, 0.6);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    text-align: center;
+}
+
+/* --- Logo e Título --- */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;       /* Espaço entre texto e imagem */
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.logo span {
+    color: #ffffff;   /* Cor do texto */
+}
+
+.logo img {
+    width: 40px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.form-box h2 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #cccccc;
+}
+
+/* --- Campos de Input --- */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: transparent;
+    border: 1.5px solid #555;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+    background-color: #212121;
+    padding: 0 5px;
+}
+
+.input-group input:focus,
+.input-group input:valid {
+    border-color: #4d84e2;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+    top: 0;
+    font-size: 12px;
+    color: #4d84e2;
+}
+
+/* Destaque do primeiro campo em azul primário */
+.input-group:nth-child(1) input:focus,
+.input-group:nth-child(1) input:valid {
+    border-color: #007bff;
+}
+.input-group:nth-child(1) input:focus + label,
+.input-group:nth-child(1) input:valid + label {
+    color: #007bff;
+}
+
+/* --- Botão de Cadastrar --- */
+.btn-register {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #8000ff, #b366ff);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.btn-register:hover {
+    background: linear-gradient(45deg, #9a33ff, #d299ff);
+}
+
+/* --- Links --- */
+.login-link p, .login-link a {
+    color: #aaa;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.login-link a {
+    color: #9a33ff;
+    font-weight: 600;
+}
+
+/* --- Mensagens de Sucesso e Erro --- */
+.mensagem-erro {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    border: 1px solid #ff4d4d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mensagem-sucesso {
+    color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid #4CAF50;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
