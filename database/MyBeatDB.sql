@@ -1,8 +1,3 @@
--- =====================================================
--- MYBEAT DATABASE - VERSÃO COMPLETA
--- Sistema de Avaliação e Compartilhamento Musical
--- =====================================================
-
 -- Criar banco de dados
 CREATE DATABASE IF NOT EXISTS MyBeatDB;
 USE MyBeatDB;
@@ -102,9 +97,12 @@ CREATE TABLE Administradores (
     nome_admin VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     hash_senha VARCHAR(255) NOT NULL,
+    face_descriptor TEXT,
+    face_registered BOOLEAN DEFAULT FALSE,
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     administrador BOOLEAN NOT NULL DEFAULT TRUE,
-    INDEX idx_email_admin (email)
+    INDEX idx_email_admin (email),
+    INDEX idx_face_registered (face_registered)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
