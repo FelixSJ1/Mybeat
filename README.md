@@ -27,6 +27,7 @@ Este projeto utiliza PHP, MySQL e XAMPP.
 Siga os passos abaixo para configurar o ambiente e rodar o sistema localmente.
 
 git clone https://github.com/FelixSJ1/Mybeat.git
+
 cd Mybeat
 
 
